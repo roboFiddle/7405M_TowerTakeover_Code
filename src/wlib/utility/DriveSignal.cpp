@@ -16,10 +16,7 @@ namespace lib::util {
   }
   std::string DriveSignal::toCSV() {
     std::ostringstream stringStream;
-    stringStream << "DriveSignal,";
-    stringStream << std::to_string(left_voltage_);
-    stringStream << ",";
-    stringStream << std::to_string(right_voltage_);
+    stringStream << "DriveSignal," << std::to_string(left_voltage_) << "," << std::to_string(right_voltage_);
     return stringStream.str();
   }
 }

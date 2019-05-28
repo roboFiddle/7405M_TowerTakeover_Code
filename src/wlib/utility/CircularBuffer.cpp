@@ -31,6 +31,6 @@ namespace lib::util {
     return (samples_.size() == num_windows_);
   }
   template<typename T> std::shared_ptr<std::list<T>> CircularBuffer<T>::get_list() {
-    return std::shared_ptr<std::list<T>>(samples_);
+    return std::make_shared<std::list<T>>(samples_);
   }
 }
