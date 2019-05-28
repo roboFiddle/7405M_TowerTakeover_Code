@@ -9,7 +9,7 @@
 
 namespace lib::geometry {
   class Twist2d {
-      double dx, dy, dtheta;
+      double dx_, dy_, dtheta_;
       Twist2d(double dx, double dy, double dtheta);
       Twist2d scaled(double scale);
       double norm();
