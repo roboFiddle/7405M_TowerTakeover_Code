@@ -7,7 +7,6 @@
 #include "../geometry/Pose2dWithCurvature.hpp"
 #include <cmath>
 #include <vector>
-#include <stdio.h>
 
 namespace spline {
     std::vector<geometry::Pose2dWithCurvature> SplineGenerator::parameterizeSpline(Spline *s, double maxDx, double maxDy, double maxDTheta, double t0, double t1) {
