@@ -1,0 +1,14 @@
+//
+// Created by alexweiss on 7/4/19.
+//
+
+#ifndef INC_7405M_CODE_DRIVECHARACTERIZATION_HPP
+#define INC_7405M_CODE_DRIVECHARACTERIZATION_HPP
+
+
+class DriveCharacterization {
+
+};
+
+
+#endif //INC_7405M_CODE_DRIVECHARACTERIZATION_HPP

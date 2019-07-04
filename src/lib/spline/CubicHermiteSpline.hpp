@@ -12,7 +12,7 @@
 
 
 namespace spline {
-    class CubicHermiteSpline {
+    class CubicHermiteSpline : public Spline {
     public:
         double ax_, bx_, cx_, dx_;
         double ay_, by_, cy_, dy_;

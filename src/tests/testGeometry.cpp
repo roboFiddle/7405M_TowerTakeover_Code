@@ -11,8 +11,6 @@
 #include <cmath>
 #include <stdio.h>
 
-#define EPSILON .001
-
 namespace test {
     void testGeometry::testRotation2d() {
         geometry::Rotation2d rot1 = geometry::Rotation2d();

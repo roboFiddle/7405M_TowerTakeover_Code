@@ -11,6 +11,8 @@ namespace test {
     class testSpline {
     public:
         static void testCubicSpline();
+        static void testQuinticSpline();
+        static void testSplineGenerator();
     };
 }
 
