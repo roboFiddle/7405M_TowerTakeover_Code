@@ -11,7 +11,8 @@ namespace geometry {
       Translation2d(0,0);
     }
     Translation2d::Translation2d(Translation2d start, Translation2d end) {
-      Translation2d(end.x_ - start.x_, end.y_ - start.y_);
+      x_ = end.x_ - start.x_;
+      y_ = end.y_ - start.y_;
     }
     Translation2d::Translation2d(double x, double y) {
       x_ = x;
