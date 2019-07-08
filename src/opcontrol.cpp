@@ -1,11 +1,6 @@
 #include "main.h"
-#include "lib/geometry/Rotation2d.hpp"
-#include "lib/geometry/Translation2d.hpp"
-#include "lib/geometry/Pose2d.hpp"
-#include "lib/geometry/Twist2d.hpp"
-#include "lib/spline/CubicHermiteSpline.hpp"
-#include "lib/spline/QuinticHermiteSpline.hpp"
-#include "lib/spline/SplineGenerator.hpp"
+
+#include "lib/utility/PolynomialRegression.hpp"
 
 
 #include <stdio.h>
@@ -24,23 +19,19 @@
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-    geometry::Pose2d p1(geometry::Translation2d(0, 0), geometry::Rotation2d::fromDegrees(0));
-    geometry::Pose2d p2(geometry::Translation2d(1, 3), geometry::Rotation2d::fromDegrees(-45));
-    geometry::Pose2d p3(geometry::Translation2d(2, 2), geometry::Rotation2d::fromDegrees(0));
-    geometry::Pose2d p4(geometry::Translation2d(3, 5), geometry::Rotation2d::fromDegrees(45));
-    geometry::Pose2d p5(geometry::Translation2d(4, 7), geometry::Rotation2d::fromDegrees(90));
 
-    std::vector<spline::QuinticHermiteSpline> splines;
-    splines.push_back(spline::QuinticHermiteSpline(p1,p2));
-    splines.push_back(spline::QuinticHermiteSpline(p2,p3));
-    splines.push_back(spline::QuinticHermiteSpline(p3,p4));
-    splines.push_back(spline::QuinticHermiteSpline(p4,p5));
+    std::vector<util::Point> points;
+    points.push_back(util::Point(0,1));
+    points.push_back(util::Point(1,3));
+    points.push_back(util::Point(3,13));
+    points.push_back(util::Point(5,31));
 
-    spline::QuinticHermiteSpline::optimizeSpline(&splines);
+    util::PolynomialRegression test(points, 2);
 
-    std::vector<geometry::Pose2dWithCurvature> samples = spline::SplineGenerator::parameterizeSplines(&splines);
+    std::printf("%d \n", test.coeffs_.size());
 
-    for (geometry::Pose2dWithCurvature sample : samples) {
-        std::printf("(%f, %f)\n", sample.translation().x(), sample.translation().y());
+    for (int i = 0; i < 3; i++) {
+        std::printf("(%d, %f)\n", i, test.beta(i));
     }
+  std::printf("(%d, %f)\n", 12, test.predict(12));
 }

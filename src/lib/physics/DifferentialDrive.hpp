@@ -51,12 +51,12 @@ namespace physics {
         public:
             double curvature = 0.0;  // m^-1
             double dcurvature = 0.0;  // m^-1/m
-            ChassisState chassis_velocity = new ChassisState();  // m/s
-            ChassisState chassis_acceleration = new ChassisState();  // m/s^2
-            WheelState wheel_velocity = new WheelState();  // rad/s
-            WheelState wheel_acceleration = new WheelState();  // rad/s^2
-            WheelState voltage = new WheelState();  // V
-            WheelState wheel_torque = new WheelState(); // N m
+            ChassisState chassis_velocity;  // m/s
+            ChassisState chassis_acceleration;  // m/s^2
+            WheelState wheel_velocity;  // rad/s
+            WheelState wheel_acceleration;  // rad/s^2
+            WheelState voltage;  // V
+            WheelState wheel_torque; // N m
             std::string toCSV();
             std::string toString();
         };
@@ -85,12 +85,12 @@ namespace physics {
         DriveDynamics solveInverseDynamics(WheelState wheel_velocity, WheelState wheel_acceleration);
 
         // Assumptions about dynamics: velocities and accelerations provided, curvature and dcurvature computed.
-        void solveInverseDynamics(DriveDynamics dynamics);
+        void solveInverseDynamics(DriveDynamics* dynamics);
         double getMaxAbsVelocity(double curvature, double max_abs_voltage);
 
         // Curvature is redundant here in the case that chassis_velocity is not purely angular.  It is the responsibility of
         // the caller to ensure that curvature = angular vel / linear vel in these cases.
-        MinMax getMinMaxAcceleration(final ChassisState chassis_velocity, double curvature, double max_abs_voltage);
+        MinMax getMinMaxAcceleration(ChassisState chassis_velocity, double curvature, double max_abs_voltage);
     };
 }
 
