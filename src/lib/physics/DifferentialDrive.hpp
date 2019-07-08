@@ -31,8 +31,14 @@ namespace physics {
         public:
             double linear_;
             double angular_;
-            ChassisState(double linear, double angular);
-            ChassisState();
+            ChassisState(double linear, double angular) {
+              linear_ = linear;
+              angular_ = angular;
+            }
+            ChassisState() {
+              linear_ = 0;
+              angular_ = 0;
+            }
             std::string toString();
         };
 
@@ -40,10 +46,23 @@ namespace physics {
         public:
             double left_;
             double right_;
-            WheelState(double left, double right);
-            WheelState();
-            double get(bool get_left);
-            void set(bool set_left, double val);
+            WheelState(double left, double right) {
+              left_ = left;
+              right_ = right;
+            }
+            WheelState() {
+              left_ = 0;
+              right_ = 0;
+            }
+            double get(bool get_left) {
+              return (get_left ? left_ : right_);
+            }
+            void set(bool set_left, double val) {
+              if(set_left)
+                left_ = val;
+              else
+                right_ = val;
+            }
             std::string toString();
         };
 

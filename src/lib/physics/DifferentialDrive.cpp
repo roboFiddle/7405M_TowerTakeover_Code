@@ -200,10 +200,10 @@ namespace physics {
         //TODO IMPORTANT: CALCULATE VARIABLE TORQUE -- CURRENTLY WRONG
         if (left) {
           variable_torque = -drag_torque * mass_ * wheel_radius_ + fixed_torque *
-              (linear_term + angular_term)) / (linear_term - angular_term);
+              (linear_term + angular_term) / (linear_term - angular_term);
         } else {
           variable_torque = drag_torque * mass_ * wheel_radius_ + fixed_torque *
-              (linear_term - angular_term)) / (linear_term + angular_term);
+              (linear_term - angular_term) / (linear_term + angular_term);
         }
 
         double variable_voltage = variable_transmission->get_voltage_for_torque(wheel_velocities.get(!left), variable_torque);

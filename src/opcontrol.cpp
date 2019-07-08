@@ -1,6 +1,6 @@
 #include "main.h"
 
-#include "lib/utility/PolynomialRegression.hpp"
+#include "tests/testPhysics.hpp"
 
 
 #include <stdio.h>
@@ -20,7 +20,7 @@
  */
 void opcontrol() {
 
-    std::vector<util::Point> points;
+    /* std::vector<util::Point> points;
     points.push_back(util::Point(0,1));
     points.push_back(util::Point(1,3));
     points.push_back(util::Point(3,13));
@@ -33,5 +33,6 @@ void opcontrol() {
     for (int i = 0; i < 3; i++) {
         std::printf("(%d, %f)\n", i, test.beta(i));
     }
-  std::printf("(%d, %f)\n", 12, test.predict(12));
+  std::printf("(%d, %f)\n", 12, test.predict(12)); */
+    test::testPhysics::testDifferentialDrive();
 }

@@ -22,23 +22,23 @@ namespace physics {
     return friction_voltage_;
   }
   double DCMotorTransmission::free_speed_at_voltage(double voltage) {
-    if (voltage > 0) {
-      return MAX(0.0, voltage - friction_voltage()) * speed_per_volt();
-    } else if (voltage < 0) {
-      return MIN(0.0, voltage + friction_voltage()) * speed_per_volt();
+    if (voltage > 0 && voltage - friction_voltage() > 0) {
+      return (voltage - friction_voltage()) * speed_per_volt();
+    } else if (voltage < 0 && voltage + friction_voltage() < 0) {
+      return (voltage + friction_voltage()) * speed_per_volt();
     } else {
       return 0.0;
     }
   }
   double DCMotorTransmission::get_torque_at_voltage(double speed, double voltage) {
     double effective_voltage = voltage;
-    if (speed > EPSILON) {
+    if (speed > 0) {
       effective_voltage -= friction_voltage(); // Forward motion, rolling friction.
-    } else if (speed < -EPSILON) {
+    } else if (speed < -0) {
       effective_voltage += friction_voltage(); // Reverse motion, rolling friction.
-    } else if (voltage > EPSILON) {
+    } else if (voltage > 0) {
       effective_voltage = MAX(0.0, voltage - friction_voltage()); // System is static, forward torque.
-    } else if (voltage < -EPSILON) {
+    } else if (voltage < -0) {
       effective_voltage = MIN(0.0, voltage + friction_voltage()); // System is static, reverse torque.
     } else {
       return 0.0; // System is idle.
@@ -47,13 +47,13 @@ namespace physics {
   }
   double DCMotorTransmission::get_voltage_for_torque(double speed, double torque) {
     double friction_voltage_offset;
-    if (speed > EPSILON) {
+    if (speed > 0) {
       friction_voltage_offset = friction_voltage(); // Forward motion, rolling friction.
-    } else if (speed < -EPSILON) {
+    } else if (speed < -0) {
       friction_voltage_offset = -friction_voltage(); // Reverse motion, rolling friction.
-    } else if (torque > EPSILON) {
+    } else if (torque > 0) {
       friction_voltage_offset = friction_voltage(); // System is static, forward torque.
-    } else if (torque < -EPSILON) {
+    } else if (torque < -0) {
       friction_voltage_offset = -friction_voltage(); // System is static, reverse torque.
     } else {
       return 0.0; // System is idle.
