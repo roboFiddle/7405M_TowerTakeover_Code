@@ -8,7 +8,8 @@
 
 namespace geometry {
     Translation2d::Translation2d() {
-      Translation2d(0,0);
+      x_ = 0;
+      y_ = 0;
     }
     Translation2d::Translation2d(Translation2d start, Translation2d end) {
       x_ = end.x_ - start.x_;

@@ -124,7 +124,7 @@ namespace test {
     }
 
     void testGeometry::testTranslation2d() {
-        geometry::Translation2d pos1 = geometry::Translation2d();
+        geometry::Translation2d pos1;
         assertEquals(0, pos1.x(), EPSILON);
         assertEquals(0, pos1.y(), EPSILON);
         assertEquals(0, pos1.norm(), EPSILON);

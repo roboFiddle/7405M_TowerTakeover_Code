@@ -1,6 +1,6 @@
 #include "main.h"
 
-#include "tests/testPhysics.hpp"
+#include "tests/testGeometry.hpp"
 
 
 #include <stdio.h>
@@ -34,5 +34,8 @@ void opcontrol() {
         std::printf("(%d, %f)\n", i, test.beta(i));
     }
   std::printf("(%d, %f)\n", 12, test.predict(12)); */
-    test::testPhysics::testDifferentialDrive();
+    test::testGeometry::testRotation2d();
+    test::testGeometry::testTranslation2d();
+    test::testGeometry::testPose2d();
+    test::testGeometry::testTwist();
 }
