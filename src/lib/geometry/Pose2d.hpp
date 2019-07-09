@@ -1,13 +1,14 @@
 #ifndef CODE_V1_POSE2D_HPP
 #define CODE_V1_POSE2D_HPP
 
+#include "interfaces/IPose2d.hpp"
 #include "Translation2d.hpp"
 #include "Rotation2d.hpp"
 #include "Twist2d.hpp"
 #include <string>
 
 namespace geometry {
-  class Pose2d {
+  class Pose2d : IPose2d<Pose2d> {
     protected:
       Translation2d translation_;
       Rotation2d rotation_;
@@ -18,6 +19,7 @@ namespace geometry {
       Pose2d(Translation2d translation, Rotation2d rotation);
       Translation2d translation() const;
       Rotation2d rotation() const;
+      Pose2d pose();
       Pose2d transformBy(Pose2d other);
       Pose2d inverse();
       Pose2d normal();

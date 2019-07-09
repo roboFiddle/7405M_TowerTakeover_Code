@@ -5,6 +5,9 @@
 
 namespace geometry {
   template<typename T> class ITranslation2d : State<T> {
+    virtual T translation() = 0;
+    virtual double x() = 0;
+    virtual double y() = 0;
   };
 }
 

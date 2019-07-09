@@ -1,6 +1,7 @@
 #ifndef CODE_V1_TWIST2D_HPP
 #define CODE_V1_TWIST2D_HPP
 
+#include "interfaces/State.hpp"
 #include <string>
 
 /**

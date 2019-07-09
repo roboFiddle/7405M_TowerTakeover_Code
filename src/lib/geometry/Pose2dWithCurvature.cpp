@@ -36,6 +36,9 @@ namespace geometry {
         curvature_ = curvature;
         dcurvature_ds_ = dcurvature_ds;
     }
+    Pose2dWithCurvature Pose2dWithCurvature::getPose() {
+      return Pose2dWithCurvature(pose_, curvature_, dcurvature_ds_);
+    }
     Pose2d Pose2dWithCurvature::pose() {
         return pose_;
     }

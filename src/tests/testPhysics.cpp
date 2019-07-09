@@ -200,12 +200,6 @@ namespace test {
         physics::DifferentialDrive::ChassisState(feet_to_meters(10.0), degrees_to_radians(45.0)),
         physics::DifferentialDrive::ChassisState(feet_to_meters(2.0), degrees_to_radians(9.0)));
 
-
-    std::printf("%f %f %f \n", 1.0, dynamics.wheel_torque.left_, 0.5);
-    std::printf("%f %f %f \n", 1.0, dynamics.wheel_torque.right_, 0.5);
-    std::printf("%f %f %f \n", 11.0, dynamics.voltage.left_, 1.0);
-    std::printf("%f %f %f \n", 14.0, dynamics.voltage.right_, 1.0);
-
     assertEquals(1.0, dynamics.wheel_torque.left_, 0.5);
     assertEquals(1.0, dynamics.wheel_torque.right_, 0.5);
     assertEquals(11.0, dynamics.voltage.left_, 1.0);

@@ -7,9 +7,9 @@
 namespace geometry {
   class Pose2d;
 
-  template<typename T> IPose2d :  IRotation2d<T>, ITranslation2d<T> {
+  template<typename T> class IPose2d :  IRotation2d<T>, ITranslation2d<T> {
     public:
-      virtual Pose2d getPose() = 0;
+      virtual Pose2d pose() = 0;
       virtual T transformBy(Pose2d transform) = 0;
       virtual T mirror() = 0;
   };

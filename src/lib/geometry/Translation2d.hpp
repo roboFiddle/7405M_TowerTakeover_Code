@@ -13,6 +13,7 @@ namespace geometry {
         Translation2d();
         Translation2d(double x, double y);
         Translation2d(Translation2d start, Translation2d end);
+        Translation2d translation();
         double norm();
         double x();
         double y();

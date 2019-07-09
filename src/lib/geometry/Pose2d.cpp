@@ -25,6 +25,9 @@ namespace geometry {
         translation_ = Translation2d(other->translation().x(), other->translation().y());
         rotation_ = Rotation2d::fromRadians(other->rotation().getRadians());
     }
+    Pose2d Pose2d::pose() {
+      return Pose2d(translation_, rotation_);
+    }
     Translation2d Pose2d::translation() const{
         return translation_;
     }

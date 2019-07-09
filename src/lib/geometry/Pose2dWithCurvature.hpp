@@ -4,10 +4,13 @@
 #include "Pose2d.hpp"
 #include "Rotation2d.hpp"
 #include "Translation2d.hpp"
+#include "interfaces/State.hpp"
+#include "interfaces/IPose2d.hpp"
+#include "interfaces/ICurvature.hpp"
 #include <string>
 
 namespace geometry {
-  class Pose2dWithCurvature {
+  class Pose2dWithCurvature : IPose2d<Pose2dWithCurvature>, ICurvature<Pose2dWithCurvature> {
     private:
       Pose2d pose_;
       double curvature_;
@@ -19,6 +22,7 @@ namespace geometry {
       Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, double curvature);
       Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, double curvature, double dcurvature_ds);
       Pose2d pose();
+      Pose2dWithCurvature getPose();
       Pose2dWithCurvature transformBy(Pose2d transform);
       Pose2dWithCurvature mirror();
       double curvature();

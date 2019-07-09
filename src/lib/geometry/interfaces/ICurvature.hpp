@@ -2,10 +2,10 @@
 #define CODE_V1_ICURVATURE_HPP
 
 namespace geometry {
-   template<typename T> ICurvature : State<T> {
+   template<typename T> class ICurvature : State<T> {
      public:
-       virtual double getCurvature() = 0;
-       virtual double getDCurvatureDs() = 0;
+       virtual double curvature() = 0;
+       virtual double dcurvature() = 0;
     };
 }
 

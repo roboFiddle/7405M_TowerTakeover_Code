@@ -18,6 +18,9 @@ namespace geometry {
       x_ = x;
       y_ = y;
     }
+    Translation2d Translation2d::translation() {
+      return Translation2d(x_, y_);
+    }
     double Translation2d::norm() {
       return std::sqrt(x_ * x_ + y_ * y_);
     }
