@@ -2,6 +2,7 @@
 #define CODE_V1_TWIST2D_HPP
 
 #include "interfaces/State.hpp"
+#include "../utility/Units.hpp"
 #include <string>
 
 /**
@@ -11,10 +12,11 @@
 namespace geometry {
   class Twist2d {
     public:
-      double dx_, dy_, dtheta_;
-      Twist2d(double dx, double dy, double dtheta);
+      units::QLength dx_, dy_;
+      units::Angle dtheta_;
+      Twist2d(units::QLength dx, units::QLength dy, units::Angle dtheta);
       Twist2d scaled(double scale);
-      double norm();
+      units::QLength norm();
       double curvature();
       std::string toString();
   };

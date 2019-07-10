@@ -9,14 +9,14 @@
 namespace spline {
     QuinticHermiteSpline::QuinticHermiteSpline(geometry::Pose2d p0, geometry::Pose2d p1) {
         double scale = 1.2 * p0.translation().distance(p1.translation());
-        x0_ = p0.translation().x();
-        x1_ = p1.translation().x();
+        x0_ = p0.translation().x().getValue();
+        x1_ = p1.translation().x().getValue();
         dx0_ = p0.rotation().cos() * scale;
         dx1_ = p1.rotation().cos() * scale;
         ddx0_ = 0;
         ddx1_ = 0;
-        y0_ = p0.translation().y();
-        y1_ = p1.translation().y();
+        y0_ = p0.translation().y().getValue();
+        y1_ = p1.translation().y().getValue();
         dy0_ = p0.rotation().sin() * scale;
         dy1_ = p1.rotation().sin() * scale;
         ddy0_ = 0;
@@ -241,9 +241,9 @@ namespace spline {
 
     }
     double QuinticHermiteSpline::fitParabola(geometry::Translation2d p1, geometry::Translation2d p2, geometry::Translation2d p3) {
-        double A = (p3.x() * (p2.y() - p1.y()) + p2.x() * (p1.y() - p3.y()) + p1.x() * (p3.y() - p2.y()));
+        double A = (p3.x() * (p2.y() - p1.y()) + p2.x() * (p1.y() - p3.y()) + p1.x() * (p3.y() - p2.y())).getValue();
         double B = (p3.x() * p3.x() * (p1.y() - p2.y()) + p2.x() * p2.x() * (p3.y() - p1.y()) + p1.x() * p1.x() *
-                                                                                                (p2.y() - p3.y()));
+                                                                                                (p2.y() - p3.y())).getValue();
         return -B / (2 * A);
     }
 

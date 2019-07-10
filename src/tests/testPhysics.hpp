@@ -20,6 +20,7 @@ namespace test {
     static double meters_to_feet(double m);
     static double degrees_to_radians(double deg);
    public:
+    static void unitTester();
     static void testDriveCharacterization();
     static void testDCMotorTransmission();
     static void testDifferentialDrive();

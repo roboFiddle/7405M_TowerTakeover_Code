@@ -2,6 +2,7 @@
 #define CODE_V1_ROTATION2D_HPP
 
 #include "interfaces/IRotation2d.hpp"
+#include "../utility/Units.hpp"
 
 namespace geometry {
 
@@ -12,12 +13,15 @@ namespace geometry {
         double cos_angle_;
         double sin_angle_;
     public:
-        Rotation2d() : Rotation2d(1,0) {};
+        Rotation2d();
         Rotation2d(Translation2d other);
+        Rotation2d(units::Angle a);
+        Rotation2d(units::QLength x, units::QLength y);
         Rotation2d(double x, double y);
         double cos();
         double sin();
         double tan();
+        units::Angle getAngle();
         double getRadians();
         double getDegrees();
         Rotation2d rotateBy(Rotation2d other);
@@ -31,6 +35,7 @@ namespace geometry {
         std::string toCSV();
         std::string toString();
 
+        static Rotation2d fromAngle(units::Angle angle);
         static Rotation2d fromRadians(double angle_radians);
         static Rotation2d fromDegrees(double angle_degrees);
     };

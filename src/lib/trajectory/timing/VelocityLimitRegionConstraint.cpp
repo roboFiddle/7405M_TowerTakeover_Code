@@ -20,7 +20,7 @@ namespace trajectory {
     }
     return INFINITY;
   }
-  template<class S> MinMaxAcceleration VelocityLimitRegionConstraint<S>::getMinMaxAcceleration(S state, double velocity) {
-    return MinMaxAcceleration::kNoLimits;
+  template<class S> physics::DifferentialDrive::MinMaxAcceleration VelocityLimitRegionConstraint<S>::getMinMaxAcceleration(S state, double velocity) {
+    return physics::DifferentialDrive::MinMaxAcceleration::kNoLimits;
   }
 }

@@ -12,12 +12,12 @@ namespace spline{
     CubicHermiteSpline::CubicHermiteSpline(geometry::Pose2d p0, geometry::Pose2d p1) {
         double x0, x1, dx0, dx1, y0, y1, dy0, dy1;
         double scale = 2 * p0.translation().distance(p1.translation());
-        x0 = p0.translation().x();
-        x1 = p1.translation().x();
+        x0 = p0.translation().x().getValue();
+        x1 = p1.translation().x().getValue();
         dx0 = p0.rotation().cos() * scale;
         dx1 = p1.rotation().cos() * scale;
-        y0 = p0.translation().y();
-        y1 = p1.translation().y();
+        y0 = p0.translation().y().getValue();
+        y1 = p1.translation().y().getValue();
         dy0 = p0.rotation().sin() * scale;
         dy1 = p1.rotation().sin() * scale;
         ax_ = dx0 + dx1 + 2 * x0 - 2 * x1;

@@ -64,7 +64,7 @@ namespace spline {
         geometry::Pose2d transformation(geometry::Translation2d(p0, p1).rotateBy(r0.inverse()), r1.rotateBy(r0.inverse()));
         geometry::Twist2d twist = geometry::Pose2d::log(transformation);
 
-        if (std::fabs(twist.dy_) > maxDy || std::fabs(twist.dx_) > maxDx || std::fabs(twist.dtheta_) > maxDTheta) {
+        if (std::fabs(twist.dy_.getValue()) > maxDy || std::fabs(twist.dx_.getValue()) > maxDx || std::fabs(twist.dtheta_.getValue()) > maxDTheta) {
             getSegmentArc(s, rv, t0, (t0 + t1) / 2, maxDx, maxDy, maxDTheta);
             getSegmentArc(s, rv, (t0 + t1) / 2, t1, maxDx, maxDy, maxDTheta);
         } else {

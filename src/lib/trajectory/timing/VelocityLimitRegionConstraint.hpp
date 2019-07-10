@@ -8,6 +8,7 @@
 #include "TimingConstraint.hpp"
 #include "../../geometry/interfaces/ITranslation2d.hpp"
 #include "../../geometry/Translation2d.hpp"
+#include "../../physics/DifferentialDrive.hpp"
 #include <type_traits>
 
 namespace trajectory {
@@ -21,7 +22,7 @@ namespace trajectory {
    public:
     VelocityLimitRegionConstraint(geometry::Translation2d min_corner, geometry::Translation2d max_corner, double velocity_limit);
     double getMaxVelocity(S state);
-    MinMaxAcceleration getMinMaxAcceleration(S state, double velocity);
+    physics::DifferentialDrive::MinMaxAcceleration getMinMaxAcceleration(S state, double velocity);
 
   };
 }

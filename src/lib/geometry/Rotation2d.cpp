@@ -7,13 +7,23 @@
 #include <math.h>
 #include <string>
 #include <sstream>
+#include <stdio.h>
 
 namespace geometry {
-
+    Rotation2d::Rotation2d() {
+      sin_angle_ = 0.0;
+      cos_angle_ = 1.0;
+    }
     Rotation2d::Rotation2d(Translation2d other) {
-      Rotation2d(other.x(), other.y());
+      Rotation2d(other.x().getValue(), other.y().getValue());
     }
 
+    Rotation2d::Rotation2d(units::Angle a) {
+      Rotation2d(units::cos(a), units::sin(a));
+    }
+    Rotation2d::Rotation2d(units::QLength x, units::QLength y) {
+      Rotation2d(x.getValue(), y.getValue());
+    }
     Rotation2d::Rotation2d(double x, double y) {
       double magnitude = std::hypot(x,y);
       sin_angle_ = y / magnitude;
@@ -34,11 +44,14 @@ namespace geometry {
       }
       return sin_angle_ / cos_angle_;
     }
+    units::Angle Rotation2d::getAngle() {
+      return std::atan2(sin_angle_, cos_angle_) * units::radian;
+    }
     double Rotation2d::getRadians() {
-      return std::atan2(sin_angle_, cos_angle_);
+      return getAngle().Convert(units::radian);
     }
     double Rotation2d::getDegrees() {
-      return getRadians() * 180.0 / M_PI;
+      return getAngle().Convert(units::degree);
     }
     Rotation2d Rotation2d::rotateBy(Rotation2d other) {
       return Rotation2d(cos_angle_ * other.cos_angle_ - sin_angle_ * other.sin_angle_,
@@ -51,7 +64,7 @@ namespace geometry {
       return Rotation2d(cos_angle_, -sin_angle_);
     }
     bool Rotation2d::isParallel(Rotation2d other) {
-      return FEQUALS(Translation2d::cross(toTranslation(), other.toTranslation()), 0.0);
+      return FEQUALS(Translation2d::cross(toTranslation(), other.toTranslation()), 0.0*units::metre2);
     }
     Translation2d Rotation2d::toTranslation() {
       return Translation2d(cos_angle_, sin_angle_);
@@ -76,10 +89,13 @@ namespace geometry {
       return toCSV();
     }
 
+    Rotation2d Rotation2d::fromAngle(units::Angle angle) {
+      return Rotation2d(units::cos(angle), units::sin(angle));
+    }
     Rotation2d Rotation2d::fromRadians(double angle_radians) {
-      return Rotation2d(std::cos(angle_radians), std::sin(angle_radians));
+      return fromAngle(angle_radians * units::radian);
     }
     Rotation2d Rotation2d::fromDegrees(double angle_degrees) {
-      return fromRadians(angle_degrees * M_PI / 180.0);
+      return fromAngle(angle_degrees * units::degree);
     }
 }

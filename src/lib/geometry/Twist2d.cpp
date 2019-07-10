@@ -8,7 +8,7 @@
 #include <sstream>
 
 namespace geometry {
-    Twist2d::Twist2d(double dx, double dy, double dtheta) {
+    Twist2d::Twist2d(units::QLength dx, units::QLength dy, units::Angle dtheta) {
         dx_ = dx;
         dy_ = dy;
         dtheta_ = dtheta;
@@ -16,20 +16,20 @@ namespace geometry {
     Twist2d Twist2d::scaled(double scale) {
         return Twist2d(dx_ * scale, dy_ * scale, dtheta_ * scale);
     }
-    double Twist2d::norm() {
-        if (dy_ == 0.0)
-            return fabs(dx_);
-        return hypot(dx_, dy_);
+    units::QLength Twist2d::norm() {
+        if (dy_ == 0.0*units::metre)
+            return fabs(dx_.getValue());
+        return hypot(dx_.getValue(), dy_.getValue());
     }
     double Twist2d::curvature() {
-        if (fabs(dtheta_) < EPSILON && norm() < EPSILON)
+        if (fabs(dtheta_.getValue()) < EPSILON && norm() < EPSILON*units::metre)
             return 0.0;
-        return dtheta_ / norm();
+        return (dtheta_ / norm()).getValue();
     }
     std::string Twist2d::toString() {
         std::ostringstream stringStream;
-        stringStream << "Twist2d," << std::to_string(dx_) << "," << std::to_string(dy_);
-        stringStream << "," << std::to_string(dtheta_);
+        stringStream << "Twist2d," << std::to_string(dx_.getValue()) << "," << std::to_string(dy_.getValue());
+        stringStream << "," << std::to_string(dtheta_.getValue());
         return stringStream.str();
     }
 }

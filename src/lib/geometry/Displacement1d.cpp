@@ -5,11 +5,11 @@
 #include <sstream>
 
 namespace geometry {
-  Displacement1d::Displacement1d(double displacement) {
+  Displacement1d::Displacement1d(units::QLength displacement) {
     displacement_ = displacement;
   }
   double Displacement1d::distance(Displacement1d other) {
-    return std::fabs(displacement_ - other.displacement_);
+    return std::fabs((displacement_ - other.displacement_).getValue());
   }
   bool Displacement1d::operator==(Displacement1d other) {
     return displacement_ == other.displacement_;
@@ -20,7 +20,7 @@ namespace geometry {
   std::string Displacement1d::toCSV() {
     std::ostringstream stringStream;
     stringStream << "Displacement1d,";
-    stringStream << std::to_string(displacement_);
+    stringStream << std::to_string(displacement_.getValue());
     return stringStream.str();
   }
   std::string Displacement1d::toString() {

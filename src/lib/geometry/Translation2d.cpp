@@ -15,20 +15,20 @@ namespace geometry {
       x_ = end.x_ - start.x_;
       y_ = end.y_ - start.y_;
     }
-    Translation2d::Translation2d(double x, double y) {
+    Translation2d::Translation2d(units::QLength x, units::QLength y) {
       x_ = x;
       y_ = y;
     }
     Translation2d Translation2d::translation() {
       return Translation2d(x_, y_);
     }
-    double Translation2d::norm() {
-      return std::sqrt(x_ * x_ + y_ * y_);
+    units::QLength Translation2d::norm() {
+      return units::Qsqrt(x_ * x_ + y_ * y_);
     }
-    double Translation2d::x() {
+    units::QLength Translation2d::x() {
       return x_;
     }
-    double Translation2d::y() {
+    units::QLength Translation2d::y() {
       return y_;
     }
     Translation2d Translation2d::translateBy(Translation2d other) {
@@ -41,7 +41,7 @@ namespace geometry {
       return Rotation2d(x_, y_);
     }
     Translation2d Translation2d::inverse() {
-      return Translation2d(-x_, -y_);
+      return Translation2d(x_ * -1, y_ * -1);
     }
     Translation2d Translation2d::interpolate(Translation2d other, double x) {
       x = LIMIT(x, 0.0, 1.0);
@@ -57,24 +57,24 @@ namespace geometry {
       return FEQUALS(x_, other.x_) && FEQUALS(y_, other.y_);
     }
     double Translation2d::distance(Translation2d other) {
-      return inverse().translateBy(other).norm();
+      return inverse().translateBy(other).norm().getValue();
     }
     std::string Translation2d::toCSV() {
       std::ostringstream stringStream;
-      stringStream << "Translation2d," << std::to_string(x_) << "," << std::to_string(y_);
+      stringStream << "Translation2d," << std::to_string(x_.getValue()) << "," << std::to_string(y_.getValue());
       return stringStream.str();
     }
     std::string Translation2d::toString() {
       return toCSV();
     }
-    double Translation2d::dot(Translation2d a, Translation2d b) {
+    units::QArea Translation2d::dot(Translation2d a, Translation2d b) {
       return a.x_ * b.x_ + a.y_ * b.y_;
     }
-    double Translation2d::cross(Translation2d a, Translation2d b) {
+    units::QArea Translation2d::cross(Translation2d a, Translation2d b) {
       return a.x_ * b.y_ - a.y_ * b.x_;
     }
     Rotation2d Translation2d::getAngle(Translation2d a, Translation2d b) {
-      double cos_angle = dot(a, b) / (a.norm() * b.norm());
+      double cos_angle = (dot(a, b) / (a.norm() * b.norm())).getValue();
       if(std::isnan(cos_angle))
         return Rotation2d();
       return Rotation2d::fromRadians(std::acos(std::min(1.0, std::max(cos_angle, -1.0))));

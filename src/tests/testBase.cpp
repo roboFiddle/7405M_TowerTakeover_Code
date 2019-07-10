@@ -4,12 +4,14 @@
 
 #include "testBase.hpp"
 #include <cmath>
+#include "../lib/utility/Units.hpp"
 #include <stdio.h>
 
 namespace test {
     void assertEquals(double val, double compare) {
       assertEquals(val, compare, EPSILON);
     }
+
     void assertEquals(double val, double compare, double eps) {
         if(std::fabs(val - compare) > eps) { // BAD
             printf("FAILURE\n");

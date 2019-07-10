@@ -5,6 +5,7 @@
 #include "Translation2d.hpp"
 #include "Rotation2d.hpp"
 #include "Twist2d.hpp"
+#include "../utility/Units.hpp"
 #include <string>
 
 namespace geometry {
@@ -14,7 +15,7 @@ namespace geometry {
       Rotation2d rotation_;
     public:
       Pose2d();
-      Pose2d(double x, double y, Rotation2d rotation);
+      Pose2d(units::QLength x, units::QLength y, Rotation2d rotation);
       Pose2d(const Pose2d *other);
       Pose2d(Translation2d translation, Rotation2d rotation);
       Translation2d translation() const;

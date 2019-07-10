@@ -81,7 +81,7 @@ namespace test {
 
         std::vector<geometry::Pose2dWithCurvature> samples = spline::SplineGenerator::parameterizeSpline(s);
 
-        double arclength = 0;
+        units::QLength arclength = 0;
         geometry::Pose2dWithCurvature cur_pose = samples.at(0);
         for (geometry::Pose2dWithCurvature sample : samples) {
             geometry::Twist2d t = geometry::Pose2d::log(cur_pose.pose().inverse().transformBy(sample.pose()));
@@ -89,9 +89,9 @@ namespace test {
             cur_pose = sample;
         }
 
-        assertEquals(cur_pose.translation().x(), 15.0, EPSILON);
-        assertEquals(cur_pose.translation().y(), 10.0, EPSILON);
+        assertEquals(cur_pose.translation().x().getValue(), 15.0, EPSILON);
+        assertEquals(cur_pose.translation().y().getValue(), 10.0, EPSILON);
         assertEquals(cur_pose.rotation().getDegrees(), -78.69006752597981, EPSILON);
-        assertEquals(arclength, 23.224988860300, EPSILON);
+        assertEquals(arclength.getValue(), 23.225668846151, EPSILON);
     }
 }

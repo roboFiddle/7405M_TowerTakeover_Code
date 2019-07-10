@@ -11,42 +11,50 @@
 namespace physics {
     class DifferentialDrive {
     protected:
-        const double mass_; // Kg
-        const double moi_; // moment of intertia - KgM^2
-        const double angular_drag_; // Nm/rad/s
-        const double wheel_radius_; //meters
-        const double effective_wheelbase_radius_; //m
+        const units::QMass mass_; // Kg
+        const units::QMoment moi_; // moment of intertia - KgM^2
+        const units::QAngularDrag angular_drag_; // Nm/rad/s
+        const units::QLength wheel_radius_; //meters
+        const units::QLength effective_wheelbase_radius_; //m
 
         DCMotorTransmission left_;
         DCMotorTransmission right_;
 
     public:
-        class MinMax {
-        public:
-            double min_;
-            double max_;
-        };
+      class MinMaxAcceleration {
+       public:
+        units::QAcceleration min_acceleration_;
+        units::QAcceleration max_acceleration_;
+        MinMaxAcceleration();
+        MinMaxAcceleration(double min_acceleration, double max_acceleration);
+        units::QAcceleration min_acceleration();
+        units::QAcceleration max_acceleration();
+        bool valid();
+        static MinMaxAcceleration kNoLimits ;
+      };
 
+        template <typename L, typename A>
         class ChassisState {
         public:
-            double linear_;
-            double angular_;
-            ChassisState(double linear, double angular) {
+            L linear_;
+            A angular_;
+            ChassisState<L,A>(L linear, A angular) {
               linear_ = linear;
               angular_ = angular;
             }
-            ChassisState() {
+            ChassisState<L,A>() {
               linear_ = 0;
               angular_ = 0;
             }
             std::string toString();
         };
 
+        template <typename T>
         class WheelState {
         public:
-            double left_;
-            double right_;
-            WheelState(double left, double right) {
+            T left_;
+            T right_;
+            WheelState(T left, T right) {
               left_ = left;
               right_ = right;
             }
@@ -54,10 +62,10 @@ namespace physics {
               left_ = 0;
               right_ = 0;
             }
-            double get(bool get_left) {
+            T get(bool get_left) {
               return (get_left ? left_ : right_);
             }
-            void set(bool set_left, double val) {
+            void set(bool set_left, T val) {
               if(set_left)
                 left_ = val;
               else
@@ -68,48 +76,50 @@ namespace physics {
 
         class DriveDynamics {
         public:
-            double curvature = 0.0;  // m^-1
-            double dcurvature = 0.0;  // m^-1/m
-            ChassisState chassis_velocity;  // m/s
-            ChassisState chassis_acceleration;  // m/s^2
-            WheelState wheel_velocity;  // rad/s
-            WheelState wheel_acceleration;  // rad/s^2
-            WheelState voltage;  // V
-            WheelState wheel_torque; // N m
+            units::QCurvature curvature = 0.0;  // m^-1
+            units::QDCurvature dcurvature = 0.0;  // m^-1/m
+            ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity;  // m/s
+            ChassisState<units::QAcceleration, units::QAngularAcceleration> chassis_acceleration;  // m/s^2
+            WheelState<units::QAngularSpeed> wheel_velocity;  // rad/s
+            WheelState<units::QAngularAcceleration> wheel_acceleration;  // rad/s^2
+            WheelState<double> voltage;  // V
+            WheelState<units::QTorque> wheel_torque; // N m
             std::string toCSV();
             std::string toString();
         };
 
-        DifferentialDrive(double mass, double moi, double angular_drag,
-                double wheel_radius, double effective_wheelbase_radius,
-                DCMotorTransmission left_transmission, DCMotorTransmission right_transmission);
-        double mass();
-        double moi();
-        double wheel_radius();
-        double effective_wheelbase_radius();
+        DifferentialDrive(units::QMass mass, units::QMoment moi, units::QAngularDrag angular_drag,
+                          units::QLength wheel_radius, units::QLength effective_wheelbase_radius,
+                          DCMotorTransmission left_transmission, DCMotorTransmission right_transmission);
+        units::QMass mass();
+        units::QMoment moi();
+        units::QLength wheel_radius();
+        units::QLength effective_wheelbase_radius();
         DCMotorTransmission* left_transmission();
         DCMotorTransmission* right_transmission();
-        ChassisState solveForwardKinematics( WheelState wheel_motion);
-        WheelState solveInverseKinematics(ChassisState chassis_motion);
+        ChassisState<units::QSpeed, units::QAngularSpeed> solveForwardKinematics(WheelState<units::QAngularSpeed> wheel_motion);
+        ChassisState<units::QAcceleration, units::QAngularAcceleration> solveForwardKinematics(WheelState<units::QAngularAcceleration> wheel_motion);
+        WheelState<units::QAngularSpeed> solveInverseKinematics(ChassisState<units::QSpeed, units::QAngularSpeed> chassis_motion);
+        WheelState<units::QAngularAcceleration> solveInverseKinematics(ChassisState<units::QAcceleration, units::QAngularAcceleration> chassis_motion);
 
         // Solve for torques and accelerations.
-        DriveDynamics solveForwardDynamics(ChassisState chassis_velocity, WheelState voltage);
-        DriveDynamics solveForwardDynamics(WheelState wheel_velocity, WheelState voltage);
+        DriveDynamics solveForwardDynamics(ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity, WheelState<double> voltage);
+        DriveDynamics solveForwardDynamics(WheelState<units::QAngularSpeed> wheel_velocity, WheelState<double> voltage);
 
         // Assumptions about dynamics: velocities and voltages provided.
         void solveForwardDynamics(DriveDynamics* dynamics);
 
         // Solve for torque and voltage
-        DriveDynamics solveInverseDynamics(ChassisState chassis_velocity, ChassisState chassis_acceleration);
-        DriveDynamics solveInverseDynamics(WheelState wheel_velocity, WheelState wheel_acceleration);
+        DriveDynamics solveInverseDynamics(ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity, ChassisState<units::QAcceleration, units::QAngularAcceleration> chassis_acceleration);
+        DriveDynamics solveInverseDynamics(WheelState<units::QAngularSpeed> wheel_velocity, WheelState<units::QAngularAcceleration> wheel_acceleration);
 
         // Assumptions about dynamics: velocities and accelerations provided, curvature and dcurvature computed.
         void solveInverseDynamics(DriveDynamics* dynamics);
-        double getMaxAbsVelocity(double curvature, double max_abs_voltage);
+        units::QSpeed getMaxAbsVelocity(units::QCurvature curvature, double max_abs_voltage);
 
         // Curvature is redundant here in the case that chassis_velocity is not purely angular.  It is the responsibility of
         // the caller to ensure that curvature = angular vel / linear vel in these cases.
-        MinMax getMinMaxAcceleration(ChassisState chassis_velocity, double curvature, double max_abs_voltage);
+        MinMaxAcceleration getMinMaxAcceleration(ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity, units::QCurvature curvature, double max_abs_voltage);
     };
 }
 

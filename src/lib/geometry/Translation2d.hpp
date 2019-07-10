@@ -3,20 +3,21 @@
 
 #include "interfaces/ITranslation2d.hpp"
 #include "Rotation2d.hpp"
+#include "../utility/Units.hpp"
 
 namespace geometry {
     class Translation2d : ITranslation2d<Translation2d> {
     private:
-        double x_;
-        double y_;
+        units::QLength x_;
+        units::QLength y_;
     public:
         Translation2d();
-        Translation2d(double x, double y);
+        Translation2d(units::QLength x, units::QLength y);
         Translation2d(Translation2d start, Translation2d end);
         Translation2d translation();
-        double norm();
-        double x();
-        double y();
+        units::QLength norm();
+        units::QLength x();
+        units::QLength y();
         Translation2d translateBy(Translation2d other);
         Translation2d rotateBy(Rotation2d rotation);
         Rotation2d direction();
@@ -30,8 +31,8 @@ namespace geometry {
         std::string toCSV();
         std::string toString();
 
-        static double dot(Translation2d a, Translation2d b);
-        static double cross(Translation2d a, Translation2d b);
+        static units::QArea dot(Translation2d a, Translation2d b);
+        static units::QArea cross(Translation2d a, Translation2d b);
         static Rotation2d getAngle(Translation2d a, Translation2d b);
     };
 }

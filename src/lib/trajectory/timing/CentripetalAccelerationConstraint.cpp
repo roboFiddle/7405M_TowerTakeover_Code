@@ -3,6 +3,7 @@
 //
 
 #include "CentripetalAccelerationConstraint.hpp"
+#include "../../physics/DifferentialDrive.hpp"
 #include <cmath>
 
 namespace trajectory {
@@ -12,8 +13,8 @@ namespace trajectory {
   double CentripetalAccelerationConstraint::getMaxVelocity(geometry::Pose2dWithCurvature state) {
     return std::sqrt(fabs(max_centripetal_accel_ / state.curvature()));
   }
-  MinMaxAcceleration CentripetalAccelerationConstraint::getMinMaxAcceleration(
+physics::DifferentialDrive::MinMaxAcceleration CentripetalAccelerationConstraint::getMinMaxAcceleration(
       geometry::Pose2dWithCurvature state, double velocity) {
-    return MinMaxAcceleration::kNoLimits;
+    return physics::DifferentialDrive::MinMaxAcceleration::kNoLimits;
   }
 }

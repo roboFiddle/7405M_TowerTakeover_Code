@@ -13,7 +13,7 @@ namespace geometry {
         translation_ =  Translation2d();
         rotation_ = Rotation2d();
     }
-    Pose2d::Pose2d(double x, double y, Rotation2d rotation) {
+    Pose2d::Pose2d(units::QLength x, units::QLength y, Rotation2d rotation) {
         translation_ =  Translation2d(x, y);
         rotation_ = rotation;
     }
@@ -23,7 +23,7 @@ namespace geometry {
     }
     Pose2d::Pose2d(const Pose2d *other) {
         translation_ = Translation2d(other->translation().x(), other->translation().y());
-        rotation_ = Rotation2d::fromRadians(other->rotation().getRadians());
+        rotation_ = Rotation2d::fromAngle(other->rotation().getAngle());
     }
     Pose2d Pose2d::pose() {
       return Pose2d(translation_, rotation_);
@@ -61,7 +61,7 @@ namespace geometry {
         if (!rotation().isParallel(other.rotation()))
             return false;
         Twist2d twist = log(inverse().transformBy(other));
-        return FEQUALS(twist.dy_, 0.0) && FEQUALS(twist.dtheta_, 0.0);
+        return FEQUALS(twist.dy_, 0.0 * units::metre) && FEQUALS(twist.dtheta_, 0.0 * units::radian);
     }
     // Interpolation based on CONSTANT CURVATURE
     Pose2d Pose2d::interpolate(Pose2d other, double x) {
@@ -74,14 +74,14 @@ namespace geometry {
         return transformBy(exp(twist.scaled(x)));
     }
     Pose2d Pose2d::mirror() {
-        return Pose2d(Translation2d(translation().x(), -translation().y()), rotation().inverse());
+        return Pose2d(Translation2d(translation().x(), -1 * translation().y()), rotation().inverse());
     }
     double Pose2d::distance(Pose2d other) {
-        return log(inverse().transformBy(other)).norm();
+        return log(inverse().transformBy(other)).norm().getValue();
     }
     std::string Pose2d::toCSV() {
         std::ostringstream stringStream;
-        stringStream << "Pose2d," << std::to_string(translation_.x()) << "," << std::to_string(translation_.y());
+        stringStream << "Pose2d," << std::to_string(translation_.x().getValue()) << "," << std::to_string(translation_.y().getValue());
         stringStream << "," << std::to_string(rotation_.getRadians());
         return stringStream.str();
     }
@@ -102,36 +102,36 @@ namespace geometry {
     // Based on https://github.com/strasdat/Sophus/blob/master/sophus/se2.hpp
     // Sophus is a MIT Licenced C++ Implementation of Lie Groups
     Pose2d Pose2d::exp(Twist2d delta) {
-        double sin_theta = std::sin(delta.dtheta_);
-        double cos_theta = std::cos(delta.dtheta_);
+        double sin_theta = units::sin(delta.dtheta_);
+        double cos_theta = units::cos(delta.dtheta_);
         double s, c;
-        if (fabs(delta.dtheta_) < EPSILON) {
-            s = 1.0 - 1.0 / 6.0 * delta.dtheta_ * delta.dtheta_;
-            c = .5 * delta.dtheta_;
+        if (fabs(delta.dtheta_) < EPSILON*units::radian) {
+            s = 1.0 - (1.0 / 6.0 * delta.dtheta_ * delta.dtheta_).getValue();
+            c = (.5 * delta.dtheta_).getValue();
         } else {
-            s = sin_theta / delta.dtheta_;
-            c = (1.0 - cos_theta) / delta.dtheta_;
+            s = (sin_theta / delta.dtheta_).getValue();
+            c = ((1.0 - cos_theta) / delta.dtheta_).getValue();
         }
         return Pose2d(Translation2d(delta.dx_ * s - delta.dy_ * c, delta.dx_ * c + delta.dy_ * s),
                           Rotation2d(cos_theta, sin_theta));
     }
     // Given final Pose, find Twist
     Twist2d Pose2d::log(Pose2d transform) {
-        double dtheta = transform.rotation().getRadians();
-        double half_dtheta = 0.5 * dtheta;
+        units::Angle dtheta = transform.rotation().getRadians();
+        units::Angle half_dtheta = 0.5 * dtheta;
         double cos_minus_one = transform.rotation().cos() - 1.0;
         double halftheta_by_tan_of_halfdtheta;
         if (fabs(cos_minus_one) < EPSILON) {
-            halftheta_by_tan_of_halfdtheta = 1.0 - 1.0 / 12.0 * dtheta * dtheta;
+            halftheta_by_tan_of_halfdtheta = 1.0 - (1.0 / 12.0 * dtheta * dtheta).getValue();
         } else {
-            halftheta_by_tan_of_halfdtheta = -(half_dtheta * transform.rotation().sin()) / cos_minus_one;
+            halftheta_by_tan_of_halfdtheta = -(half_dtheta * transform.rotation().sin()).getValue() / cos_minus_one;
         }
 
         double cos_angle = halftheta_by_tan_of_halfdtheta;
-        double sin_angle = -half_dtheta;
+        double sin_angle = -half_dtheta.getValue();
         Translation2d translation_part = transform.translation();
-        double new_x = translation_part.x() * cos_angle - translation_part.y() * sin_angle;
-        double new_y = translation_part.x() * sin_angle + translation_part.y() * cos_angle;
+        units::QLength new_x = translation_part.x() * cos_angle - translation_part.y() * sin_angle;
+        units::QLength new_y = translation_part.x() * sin_angle + translation_part.y() * cos_angle;
 
 
         return Twist2d(new_x, new_y, dtheta);
@@ -143,8 +143,8 @@ namespace geometry {
         Translation2d b_t = b.translation();
 
         double tan_b = b_r.tan();
-        double t = ((a_t.x() - b_t.x()) * tan_b + b_t.y() - a_t.y())
-                         / (a_r.sin() - a_r.cos() * tan_b);
+        double t = (((a_t.x() - b_t.x()) * tan_b + b_t.y() - a_t.y())
+                         / (a_r.sin() - a_r.cos() * tan_b)).getValue();
         if (std::isnan(t)) {
             return Translation2d(INFINITY, INFINITY);
         }
