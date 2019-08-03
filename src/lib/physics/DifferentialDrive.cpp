@@ -77,6 +77,7 @@ namespace physics {
         wheel_radius_;
     wheel_motion.right_ = (chassis_motion.linear_ + effective_wheelbase_radius_ * chassis_motion.angular_) /
         wheel_radius_;
+
     return wheel_motion;
   }
   DifferentialDrive::WheelState<units::QAngularAcceleration> DifferentialDrive::solveInverseKinematics(DifferentialDrive::ChassisState<units::QAcceleration, units::QAngularAcceleration> chassis_motion) {
@@ -178,13 +179,16 @@ namespace physics {
   }
   void DifferentialDrive::solveInverseDynamics(DifferentialDrive::DriveDynamics* dynamics) {
 
-    dynamics->wheel_torque.left_ = wheel_radius_ / 2.0 * (dynamics->chassis_acceleration.linear_ * mass_ -
+    dynamics->wheel_torque.left_ = (wheel_radius_ / 2.0) * (dynamics->chassis_acceleration.linear_ * mass_ -
         dynamics->chassis_acceleration.angular_ * moi_ / effective_wheelbase_radius_ -
         dynamics->chassis_velocity.angular_ * angular_drag_ / effective_wheelbase_radius_);
 
-    dynamics->wheel_torque.right_ = wheel_radius_ / 2.0 * (dynamics->chassis_acceleration.linear_ * mass_ +
+    dynamics->wheel_torque.right_ = (wheel_radius_ / 2.0) * (dynamics->chassis_acceleration.linear_ * mass_ +
         dynamics->chassis_acceleration.angular_ * moi_ / effective_wheelbase_radius_ +
         dynamics->chassis_velocity.angular_ * angular_drag_ / effective_wheelbase_radius_);
+
+
+    std::printf("LOL %f %f \n", dynamics->chassis_acceleration.linear_, dynamics->chassis_acceleration.angular_ );
 
     // Solve for input voltages.
     dynamics->voltage.left_ = left_.get_voltage_for_torque(dynamics->wheel_velocity.left_, dynamics->wheel_torque.left_);
@@ -227,9 +231,16 @@ namespace physics {
     // Solve for a and (Tl|Tr)
 
     units::RQuantity<std::ratio<1,1>, std::ratio<1,1>, std::ratio<0,1>, std::ratio<0,1>> linear_term = std::isinf(curvature.getValue()) ? 0.0 : mass_ * effective_wheelbase_radius_;
-    units::QMoment angular_term = moi_;
-    if(!std::isinf(curvature.getValue()))
-      angular_term = angular_term * curvature.getValue();
+    units::QMoment angular_term_tmp = moi_;
+    if(!std::isinf(curvature.getValue())) {
+      angular_term_tmp = angular_term_tmp * curvature.getValue();
+      std::printf("uh why \n");
+    }
+    else {
+
+    }
+
+    units::RQuantity<std::ratio<1,1>, std::ratio<1,1>, std::ratio<0,1>, std::ratio<0,1>> angular_term = angular_term_tmp / units::metre;
     units::QTorque drag_torque = chassis_velocity.angular_ * angular_drag_;
 
     for(bool left : {0, 1}) {
@@ -241,11 +252,11 @@ namespace physics {
         units::QTorque variable_torque = 0.0*units::Nm;
 
         //TODO IMPORTANT: CALCULATE VARIABLE TORQUE -- CURRENTLY WRONG
-        /* if (left) {
-          variable_torque = -1 * drag_torque * mass_ * wheel_radius_ + fixed_torque * (linear_term + angular_term) / (linear_term - angular_term);
+        if (left) {
+          variable_torque = -1 * drag_torque + fixed_torque * (linear_term + angular_term) / (linear_term - angular_term);
         } else {
-          variable_torque = drag_torque * mass_ * wheel_radius_ + fixed_torque * (linear_term - angular_term) / (linear_term + angular_term);
-        } */
+          variable_torque = drag_torque + fixed_torque * (linear_term - angular_term) / (linear_term + angular_term);
+        }
 
         double variable_voltage = variable_transmission->get_voltage_for_torque(wheel_velocities.get(!left), variable_torque);
         if (fabs(variable_voltage) <= max_abs_voltage + EPSILON) {

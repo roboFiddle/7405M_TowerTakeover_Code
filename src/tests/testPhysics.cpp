@@ -14,7 +14,7 @@ namespace test {
     return rpm * (360 * units::degree).Convert(units::radian) / (1 * units::minute).Convert(units::second);
   }
   double testPhysics::inches_to_meters(double inches) {
-    return inches * 2.54 / 100;
+    return inches * 2.54 / 100.0;
   }
   double testPhysics::feet_to_meters(double feet) {
     return inches_to_meters(feet * 12.0);
@@ -221,6 +221,8 @@ namespace test {
     std::printf("%f %f %f \n", 1.0, dynamics.wheel_torque.right_.getValue(), 0.5);
     std::printf("%f %f %f \n", 11.0, dynamics.voltage.left_, 1.0);
     std::printf("%f %f %f \n", 14.0, dynamics.voltage.right_, 1.0);
+    std::printf("%f %f \n", dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_);
+    std::printf("%f %f \n", dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_);
 
     // Max Speed.
     assertEquals(feet_to_meters(13.0), drive.getMaxAbsVelocity(0.0, 12.0).getValue(), 1.0);
@@ -244,6 +246,7 @@ namespace test {
     min_max_accel = drive.getMinMaxAcceleration(physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> (0.0, 0.0), INFINITY, 6.0);
     assertEquals(1.0, min_max_accel.max_acceleration_.getValue(), 0.5);
     assertEquals(-1.0, min_max_accel.min_acceleration_.getValue(), 0.5);
+    std::printf("%f %f \n", min_max_accel.max_acceleration_.getValue(), min_max_accel.min_acceleration_.getValue());
 
   }
 }

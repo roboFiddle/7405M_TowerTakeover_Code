@@ -1,0 +1,26 @@
+//
+// Created by alexweiss on 8/3/19.
+//
+
+#ifndef INC_7405M_CODE_SRC_LIB_TRAJECTORY_TRAJECTORYPOINT_HPP_
+#define INC_7405M_CODE_SRC_LIB_TRAJECTORY_TRAJECTORYPOINT_HPP_
+
+#include <type_traits>
+#include "../geometry/interfaces/State.hpp"
+
+namespace trajectory {
+
+  template <class S>
+  class TrajectoryPoint {
+    static_assert(std::is_base_of<geometry::State<S>, S>::value, "S must derive from State");
+     protected:
+      S state_;
+      int index_;
+     public:
+      TrajectoryPoint(S state, int index);
+      S state();
+      int index();
+  };
+}
+
+#endif //INC_7405M_CODE_SRC_LIB_TRAJECTORY_TRAJECTORYPOINT_HPP_
