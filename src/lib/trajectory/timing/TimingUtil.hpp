@@ -5,12 +5,13 @@
 #ifndef INC_7405M_CODE_SRC_LIB_TRAJECTORY_TIMING_TIMINGUTIL_HPP_
 #define INC_7405M_CODE_SRC_LIB_TRAJECTORY_TIMING_TIMINGUTIL_HPP_
 
-#include <list>
+#include <vector>
 #include <string>
 #include <type_traits>
 
 #include "../../geometry/interfaces/State.hpp"
 #include "../Trajectory.hpp"
+#include "../DistanceView.hpp"
 #include "TimingConstraint.hpp"
 #include "TimedState.hpp"
 
@@ -23,7 +24,7 @@ namespace trajectory {
         bool reverse,
         DistanceView<S> distance_view,
         double step_size,
-        std::list<TimingConstraint<S>> constraints,
+        std::vector<TimingConstraint<S>> constraints,
         double start_velocity,
         double end_velocity,
         double max_velocity,
@@ -32,8 +33,8 @@ namespace trajectory {
     template<class S>
     static Trajectory<TimedState<S>> timeParameterizeTrajectory(
         bool reverse,
-        std::list<S> states,
-        std::list<TimingConstraint<S>> constraints,
+        std::vector<S> states,
+        std::vector<TimingConstraint<S>> constraints,
         double start_velocity,
         double end_velocity,
         double max_velocity,

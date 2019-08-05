@@ -11,7 +11,7 @@
 namespace trajectory {
     class IPathFollower {
      public:
-      virtual Twist2d steer(Pose2d current_pose) = 0;
+      virtual geometry::Twist2d steer(geometry::Pose2d current_pose) = 0;
       virtual bool isDone() = 0;
     };
 }

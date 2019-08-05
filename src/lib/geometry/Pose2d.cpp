@@ -51,7 +51,7 @@ namespace geometry {
         if (rotation_.isParallel(other_rotation)) {
             return Translation2d(INFINITY, INFINITY);
         }
-        if (abs(rotation_.cos()) < abs(other_rotation.cos())) {
+        if (fabs(rotation_.cos()) < fabs(other_rotation.cos())) {
             return intersectionInternal(*this, other);
         } else {
             return intersectionInternal(other, *this);

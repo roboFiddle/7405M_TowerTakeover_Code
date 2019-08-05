@@ -1942,7 +1942,6 @@ add_executable(7405M_code
         src/lib/trajectory/timing/DifferentialDriveDynamicsConstraint.hpp
         src/lib/trajectory/timing/TimedState.cpp
         src/lib/trajectory/timing/TimedState.hpp
-        src/lib/trajectory/timing/TimingConstraint.cpp
         src/lib/trajectory/timing/TimingConstraint.hpp
         src/lib/trajectory/timing/VelocityLimitRegionConstraint.cpp
         src/lib/trajectory/timing/VelocityLimitRegionConstraint.hpp
@@ -1977,4 +1976,4 @@ add_executable(7405M_code
         src/tests/testSpline.hpp
         src/autonomous.cpp
         src/initialize.cpp
-        src/opcontrol.cpp src/lib/trajectory/timing/TimingUtil.cpp src/lib/trajectory/timing/TimingUtil.hpp src/lib/trajectory/Trajectory.cpp src/lib/trajectory/Trajectory.hpp src/lib/trajectory/DistanceView.cpp src/lib/trajectory/DistanceView.hpp src/lib/trajectory/IPathFollower.hpp src/lib/trajectory/PurePursuitController.cpp src/lib/trajectory/PurePursuitController.hpp src/lib/trajectory/TimedView.cpp src/lib/trajectory/TimedView.hpp src/lib/trajectory/TrajectoryIterator.cpp src/lib/trajectory/TrajectoryIterator.hpp src/lib/trajectory/TrajectoryPoint.cpp src/lib/trajectory/TrajectoryPoint.hpp src/lib/trajectory/TrajectorySamplePoint.cpp src/lib/trajectory/TrajectorySamplePoint.hpp src/lib/trajectory/TrajectoryUtil.cpp src/lib/trajectory/TrajectoryUtil.hpp src/lib/trajectory/TrajectoryView.hpp)
+        src/opcontrol.cpp src/lib/trajectory/timing/TimingUtil.cpp src/lib/trajectory/timing/TimingUtil.hpp src/lib/trajectory/Trajectory.cpp src/lib/trajectory/Trajectory.hpp src/lib/trajectory/DistanceView.cpp src/lib/trajectory/DistanceView.hpp src/lib/trajectory/IPathFollower.hpp src/lib/trajectory/PurePursuitController.cpp src/lib/trajectory/PurePursuitController.hpp src/lib/trajectory/TimedView.cpp src/lib/trajectory/TimedView.hpp src/lib/trajectory/TrajectoryIterator.cpp src/lib/trajectory/TrajectoryIterator.hpp src/lib/trajectory/TrajectoryPoint.cpp src/lib/trajectory/TrajectoryPoint.hpp src/lib/trajectory/TrajectorySamplePoint.cpp src/lib/trajectory/TrajectorySamplePoint.hpp src/lib/trajectory/TrajectoryUtil.cpp src/lib/trajectory/TrajectoryUtil.hpp src/lib/trajectory/TrajectoryView.hpp src/lib/trajectory/IndexView.cpp src/lib/trajectory/IndexView.hpp)

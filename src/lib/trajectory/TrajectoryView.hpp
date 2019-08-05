@@ -11,6 +11,9 @@
 #include "TrajectorySamplePoint.hpp"
 
 namespace trajectory {
+
+  template<class S> class Trajectory;
+
   template <class S>
   class TrajectoryView {
     static_assert(std::is_base_of<geometry::State<S>, S>::value, "S must derive from State");

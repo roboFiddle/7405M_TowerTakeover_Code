@@ -17,7 +17,7 @@ namespace trajectory {
     static_assert(std::is_base_of<geometry::State<S>, S>::value, "S must derive from State");
     protected:
       Trajectory<S> trajectory_;
-      double[] distances_;
+      double distances_[];
     public:
       DistanceView(Trajectory<S> trajectory);
       TrajectorySamplePoint<S> sample(double distance);

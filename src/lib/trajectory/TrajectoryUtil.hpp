@@ -5,9 +5,11 @@
 #ifndef INC_7405M_CODE_SRC_LIB_TRAJECTORY_TRAJECTORYUTIL_HPP_
 #define INC_7405M_CODE_SRC_LIB_TRAJECTORY_TRAJECTORYUTIL_HPP_
 
+#include <vector>
 #include "../geometry/interfaces/IPose2d.hpp"
 #include "../geometry/Pose2dWithCurvature.hpp"
 #include "../geometry/Pose2d.hpp"
+#include "../utility/Units.hpp"
 #include "IPathFollower.hpp"
 #include "Trajectory.hpp"
 #include "TrajectoryView.hpp"
@@ -31,14 +33,14 @@ namespace trajectory {
       static Trajectory<S> resample(TrajectoryView<S> trajectory_view, double interval);
 
 
-      static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromPathFollower(IPathFollower path_follower,
-          geometry::Pose2dWithCurvature start_state, double step_size, double dcurvature_limit);
+      static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromPathFollower(IPathFollower* path_follower,
+          geometry::Pose2dWithCurvature start_state, units::QLength step_size, double dcurvature_limit);
 
       static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromSplineWaypoints(
-          std::list<geometry::Pose2d> waypoints, double maxDx, double maxDy, double maxDTheta);
+          std::vector<geometry::Pose2d> waypoints, double maxDx, double maxDy, double maxDTheta);
 
       template <class S>
-      static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromSplines(std::list<S> splines, double maxDx, double maxDy, double maxDTheta);
+      static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromSplines(std::vector<S> splines, double maxDx, double maxDy, double maxDTheta);
   };
 }
 

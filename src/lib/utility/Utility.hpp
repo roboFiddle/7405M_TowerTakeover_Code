@@ -8,4 +8,11 @@
 #define MAX(a, b) (a > b ? a : b)
 #define MIN(a, b) (a > b ? b : a)
 
+namespace util {
+  template<typename T>
+  int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+  }
+}
+
 #endif

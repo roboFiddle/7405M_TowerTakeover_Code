@@ -32,19 +32,20 @@ namespace trajectory {
       PurePursuitController(DistanceView<S> path, double sampling_dist, double lookahead, double goal_tolerance);
       geometry::Twist2d steer(geometry::Pose2d current_pose);
       bool isDone();
+  };
 
-      template <class T>
-      class Arc {
-        static_assert(std::is_base_of<geometry::ITranslation2d<T>, T>::value, "T must derive from State");
-        protected:
-          geometry::Translation2d findCenter(geometry::Pose2d pose, T point);
-          double findLength(geometry::Pose2d pose, S point, geometry::Translation2d center, double radius);
-        public:
-          geometry::Translation2d center;
-          double radius;
-          double length;
-          Arc(geometry::Pose2d pose, T point);
-      };
+
+  template <class S>
+  class Arc {
+    static_assert(std::is_base_of<geometry::ITranslation2d<S>, S>::value, "T must derive from State");
+   protected:
+    geometry::Translation2d findCenter(geometry::Pose2d pose, S point);
+    double findLength(geometry::Pose2d pose, S point, geometry::Translation2d center, double radius);
+   public:
+    geometry::Translation2d center;
+    double radius;
+    double length;
+    Arc(geometry::Pose2d pose, S point);
   };
 }
 
