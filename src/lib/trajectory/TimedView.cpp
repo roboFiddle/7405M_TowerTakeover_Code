@@ -27,19 +27,19 @@ namespace trajectory {
   template <class S>
   TrajectorySamplePoint<TimedState<S>> TimedView<S>::sample(double t) {
     if (t >= end_t_) {
-      return TrajectorySamplePoint<S>(trajectory_.getPoint(trajectory_.length() - 1));
+      return TrajectorySamplePoint<TimedState<S>>(trajectory_.getPoint(trajectory_.length() - 1));
     }
     if (t <= start_t_) {
-      return TrajectorySamplePoint<S>(trajectory_.getPoint(0));
+      return TrajectorySamplePoint<TimedState<S>>(trajectory_.getPoint(0));
     }
     for (int i = 1; i < trajectory_.length(); ++i) {
       TrajectoryPoint<TimedState<S>> s = trajectory_.getPoint(i);
       if (s.state().t() >= t) {
         TrajectoryPoint<TimedState<S>> prev_s = trajectory_.getPoint(i - 1);
         if (FEQUALS(s.state().t(), prev_s.state().t())) {
-          return TrajectorySamplePoint<S>(s);
+          return TrajectorySamplePoint<TimedState<S>>(s);
         }
-        return TrajectorySamplePoint<S>(prev_s.state().interpolate(s.state(),
+        return TrajectorySamplePoint<TimedState<S>>(prev_s.state().interpolate(s.state(),
                                                                       (t - prev_s.state().t()) / (s.state().t() - prev_s.state().t())), i - 1, i);
       }
     }
@@ -49,5 +49,12 @@ namespace trajectory {
   Trajectory<TimedState<S>> TimedView<S>::trajectory() {
     return trajectory_;
   }
+
+
+  template class TimedView<geometry::Translation2d>;
+  template class TimedView<geometry::Rotation2d>;
+  template class TimedView<geometry::Pose2d>;
+  template class TimedView<geometry::Pose2dWithCurvature>;
+
 
 }

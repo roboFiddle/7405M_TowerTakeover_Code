@@ -8,21 +8,26 @@
 #include <type_traits>
 #include <vector>
 #include <string>
+#include <memory>
 #include "../geometry/interfaces/State.hpp"
 #include "../utility/Utility.hpp"
 #include "TrajectoryPoint.hpp"
 #include "TrajectorySamplePoint.hpp"
-#include "TrajectoryView.hpp"
-#include "IndexView.hpp"
+#include "../geometry/Translation2d.hpp"
+#include "../geometry/Rotation2d.hpp"
+#include "../geometry/Pose2d.hpp"
+#include "../geometry/Pose2dWithCurvature.hpp"
 
 namespace trajectory {
+  template<class T>   class IndexView;
+
   template<class S>
   class Trajectory {
     static_assert(std::is_base_of<geometry::State<S>, S>::value, "S is not derived from State");
 
     protected:
-      std::vector<TrajectoryPoint<S>>* points_;
-      IndexView<S>* index_view_ = new IndexView<S>(this);
+      std::vector<TrajectoryPoint<S>> points_;
+      std::shared_ptr<IndexView<S>> index_view_;
     public:
       Trajectory();
       Trajectory(std::vector<S> states);
@@ -33,7 +38,7 @@ namespace trajectory {
       S getFirstState();
       S getLastState();
       TrajectorySamplePoint<S> getInterpolated(double index);
-      IndexView<S> getIndexView();
+      std::shared_ptr<IndexView<S>> getIndexView();
       std::string toString();
       std::string toCSV();
 

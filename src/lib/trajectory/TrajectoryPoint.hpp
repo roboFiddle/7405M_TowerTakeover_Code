@@ -7,6 +7,10 @@
 
 #include <type_traits>
 #include "../geometry/interfaces/State.hpp"
+#include "../geometry/Translation2d.hpp"
+#include "../geometry/Rotation2d.hpp"
+#include "../geometry/Pose2d.hpp"
+#include "../geometry/Pose2dWithCurvature.hpp"
 
 namespace trajectory {
 
@@ -21,6 +25,8 @@ namespace trajectory {
       S state();
       int index();
   };
+
+
 }
 
 #endif //INC_7405M_CODE_SRC_LIB_TRAJECTORY_TRAJECTORYPOINT_HPP_

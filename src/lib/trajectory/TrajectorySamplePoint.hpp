@@ -8,6 +8,10 @@
 #include <type_traits>
 #include "../geometry/interfaces/State.hpp"
 #include "TrajectoryPoint.hpp"
+#include "../geometry/Translation2d.hpp"
+#include "../geometry/Rotation2d.hpp"
+#include "../geometry/Pose2d.hpp"
+#include "../geometry/Pose2dWithCurvature.hpp"
 
 namespace trajectory {
   template <class S>
@@ -24,6 +28,9 @@ namespace trajectory {
       int index_floor();
       int index_ceil();
   };
+
+
+
 }
 
 #endif //INC_7405M_CODE_SRC_LIB_TRAJECTORY_TRAJECTORYSAMPLEPOINT_HPP_

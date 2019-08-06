@@ -3,7 +3,6 @@
 //
 
 #include "TrajectoryPoint.hpp"
-
 namespace trajectory {
 
   template <class S>
@@ -21,4 +20,9 @@ namespace trajectory {
   int TrajectoryPoint<S>::index() {
     return index_;
   }
+
+  template class TrajectoryPoint<geometry::Translation2d>;
+  template class TrajectoryPoint<geometry::Rotation2d>;
+  template class TrajectoryPoint<geometry::Pose2d>;
+  template class TrajectoryPoint<geometry::Pose2dWithCurvature>;
 }

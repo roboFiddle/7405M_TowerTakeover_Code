@@ -25,5 +25,7 @@ namespace trajectory {
     physics::DifferentialDrive::MinMaxAcceleration getMinMaxAcceleration(S state, double velocity);
 
   };
+
+
 }
 #endif //INC_7405M_CODE_SRC_LIB_TRAJECTORY_TIMING_VELOCITYLIMITREGIONCONSTRAINT_HPP_

@@ -3,14 +3,14 @@
 //
 
 #include "testSpline.hpp"
-#include "../lib/geometry/Rotation2d.hpp"
-#include "../lib/geometry/Translation2d.hpp"
-#include "../lib/geometry/Pose2d.hpp"
-#include "../lib/geometry/Twist2d.hpp"
-#include "../lib/spline/CubicHermiteSpline.hpp"
-#include "../lib/spline/QuinticHermiteSpline.hpp"
-#include "../lib/spline/SplineGenerator.hpp"
-#include "../../include/main.h"
+#include "../../../lib/geometry/Rotation2d.hpp"
+#include "../../../lib/geometry/Translation2d.hpp"
+#include "../../../lib/geometry/Pose2d.hpp"
+#include "../../../lib/geometry/Twist2d.hpp"
+#include "../../../lib/spline/CubicHermiteSpline.hpp"
+#include "../../../lib/spline/QuinticHermiteSpline.hpp"
+#include "../../../lib/spline/SplineGenerator.hpp"
+#include "main.h"
 #include <cmath>
 #include <vector>
 #include <stdio.h>

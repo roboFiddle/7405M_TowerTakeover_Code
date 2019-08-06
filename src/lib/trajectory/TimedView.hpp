@@ -8,7 +8,12 @@
 #include <type_traits>
 #include "../geometry/interfaces/State.hpp"
 #include "timing/TimedState.hpp"
+#include "Trajectory.hpp"
 #include "TrajectoryView.hpp"
+#include "../geometry/Translation2d.hpp"
+#include "../geometry/Rotation2d.hpp"
+#include "../geometry/Pose2d.hpp"
+#include "../geometry/Pose2dWithCurvature.hpp"
 
 namespace trajectory {
 
@@ -27,6 +32,7 @@ namespace trajectory {
       Trajectory<TimedState<S>> trajectory();
 
   };
+
 }
 
 #endif //INC_7405M_CODE_SRC_LIB_TRAJECTORY_TIMEDVIEW_HPP_

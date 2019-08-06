@@ -7,6 +7,10 @@
 
 #include "../../geometry/interfaces/State.hpp"
 #include <type_traits>
+#include "../../geometry/Translation2d.hpp"
+#include "../../geometry/Rotation2d.hpp"
+#include "../../geometry/Pose2d.hpp"
+#include "../../geometry/Pose2dWithCurvature.hpp"
 
 namespace trajectory {
   template<class S>

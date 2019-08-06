@@ -5,10 +5,10 @@
 #ifndef INC_7405M_CODE_SRC_TESTS_TESTPHYSICS_HPP_
 #define INC_7405M_CODE_SRC_TESTS_TESTPHYSICS_HPP_
 
-#include "testBase.hpp"
-#include "../lib/physics/DCMotorTransmission.hpp"
-#include "../lib/physics/DifferentialDrive.hpp"
-#include "../lib/physics/DriveCharacterization.hpp"
+#include "../../testBase.hpp"
+#include "../../../lib/physics/DCMotorTransmission.hpp"
+#include "../../../lib/physics/DifferentialDrive.hpp"
+#include "../../../lib/physics/DriveCharacterization.hpp"
 
 
 namespace test {

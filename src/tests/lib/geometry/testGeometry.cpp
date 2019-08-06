@@ -3,11 +3,11 @@
 //
 
 #include "testGeometry.hpp"
-#include "testBase.hpp"
-#include "../lib/geometry/Rotation2d.hpp"
-#include "../lib/geometry/Translation2d.hpp"
-#include "../lib/geometry/Pose2d.hpp"
-#include "../lib/geometry/Twist2d.hpp"
+#include "../../testBase.hpp"
+#include "../../../lib/geometry/Rotation2d.hpp"
+#include "../../../lib/geometry/Translation2d.hpp"
+#include "../../../lib/geometry/Pose2d.hpp"
+#include "../../../lib/geometry/Twist2d.hpp"
 #include <cmath>
 #include <stdio.h>
 

@@ -3,8 +3,8 @@
 //
 
 #include "testPhysics.hpp"
-#include "../lib/utility/PolynomialRegression.hpp"
-#include "../lib/utility/Units.hpp"
+#include "../../../lib/utility/PolynomialRegression.hpp"
+#include "../../../lib/utility/Units.hpp"
 #include <stdio.h>
 #include <vector>
 #include <cmath>

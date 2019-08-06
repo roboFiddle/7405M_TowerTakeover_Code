@@ -116,7 +116,8 @@ namespace trajectory {
 
   template <class S>
   Trajectory<geometry::Pose2dWithCurvature> TrajectoryUtil::trajectoryFromSplines(std::vector<S> splines, double maxDx, double maxDy, double maxDTheta) {
-    return Trajectory<geometry::Pose2dWithCurvature>(spline::SplineGenerator::parameterizeSplines(&splines, maxDx, maxDy, maxDTheta));
+    std::vector<geometry::Pose2dWithCurvature> x = spline::SplineGenerator::parameterizeSplines(&splines, maxDx, maxDy, maxDTheta);
+    return Trajectory<geometry::Pose2dWithCurvature>(x);
   }
 
 }

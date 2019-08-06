@@ -5,7 +5,7 @@
 #ifndef INC_7405M_CODE_TESTSPLINE_HPP
 #define INC_7405M_CODE_TESTSPLINE_HPP
 
-#include "testBase.hpp"
+#include "../../testBase.hpp"
 
 namespace test {
     class testSpline {

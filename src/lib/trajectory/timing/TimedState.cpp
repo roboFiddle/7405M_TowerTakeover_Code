@@ -33,7 +33,7 @@ namespace trajectory {
     velocity_ = v;
   }
   template <class S> double TimedState<S>::velocity() {
-    return velocity;
+    return velocity_;
   }
   template <class S> void TimedState<S>::set_acceleration(double a) {
     acceleration_ = a;
@@ -54,13 +54,13 @@ namespace trajectory {
     double new_t = INTERPOLATE(t(), other.t(), x);
     double delta_t = new_t - t();
     if (delta_t < 0.0)
-      return other.interpolate(this, 1.0 - x);
+      return other.interpolate(*this, 1.0 - x);
 
     bool reversing = velocity() < 0.0 || (FEQUALS(velocity(), 0.0) && acceleration() < 0.0);
     double new_v = velocity() + acceleration() * delta_t;
     double new_s = (reversing ? -1.0 : 1.0) * (velocity() * delta_t + .5 * acceleration() * delta_t * delta_t);
 
-    return new TimedState<S>(state().interpolate(other.state(), new_s / state().distance(other.state())),
+    return TimedState<S>(state().interpolate(other.state(), new_s / state().distance(other.state())),
                              new_t,
                              new_v,
                              acceleration());
@@ -71,4 +71,11 @@ namespace trajectory {
   template <class S> bool TimedState<S>::operator==(TimedState other) {
     return state_ == other.state();
   }
+
+  template class TimedState<geometry::Translation2d>;
+  template class TimedState<geometry::Rotation2d>;
+  template class TimedState<geometry::Pose2d>;
+  template class TimedState<geometry::Pose2dWithCurvature>;
+
+
 }

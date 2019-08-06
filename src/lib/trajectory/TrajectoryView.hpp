@@ -7,8 +7,11 @@
 
 #include <type_traits>
 #include "../geometry/interfaces/State.hpp"
-#include "Trajectory.hpp"
 #include "TrajectorySamplePoint.hpp"
+#include "../geometry/Translation2d.hpp"
+#include "../geometry/Rotation2d.hpp"
+#include "../geometry/Pose2d.hpp"
+#include "../geometry/Pose2dWithCurvature.hpp"
 
 namespace trajectory {
 
@@ -17,10 +20,11 @@ namespace trajectory {
   template <class S>
   class TrajectoryView {
     static_assert(std::is_base_of<geometry::State<S>, S>::value, "S must derive from State");
-    TrajectorySamplePoint<S> sample(double interpolant);
-    double first_interpolant();
-    double last_interpolant();
-    Trajectory<S> trajectory();
+   public:
+    virtual TrajectorySamplePoint<S> sample(double interpolant) = 0;
+    virtual double first_interpolant() = 0;
+    virtual double last_interpolant() = 0;
+    virtual Trajectory<S> trajectory() = 0;
   };
 }
 

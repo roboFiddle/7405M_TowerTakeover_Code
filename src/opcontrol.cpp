@@ -1,8 +1,10 @@
 #include "main.h"
 
-#include "tests/testGeometry.hpp"
-#include "tests/testPhysics.hpp"
-#include "tests/testSpline.hpp"
+#include "tests/lib/geometry/testGeometry.hpp"
+#include "tests/lib/physics/testPhysics.hpp"
+#include "tests/lib/spline/testSpline.hpp"
+#include "tests/lib/trajectory/testTrajectoryIterator.hpp"
+#include "tests/lib/trajectory/testTrajectory.hpp"
 #include "lib/utility/Units.hpp"
 #include "lib/geometry/Rotation2d.hpp"
 
@@ -33,8 +35,10 @@ void opcontrol() {
   //test::testGeometry::testTwist();
   //test::testPhysics::testDriveCharacterization();
   //test::testPhysics::testDCMotorTransmission();
-  test::testPhysics::testDifferentialDrive();
+  //test::testPhysics::testDifferentialDrive();
   //test::testSpline::testQuinticSpline();
   //test::testSpline::testSplineGenerator();
 
+  //test::testTrajectoryIterator::test();
+  test::testTrajectory::test();
 }

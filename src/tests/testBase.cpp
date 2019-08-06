@@ -6,13 +6,23 @@
 #include <cmath>
 #include "../lib/utility/Units.hpp"
 #include <stdio.h>
+#include "../lib/geometry/Translation2d.hpp"
 
 namespace test {
-    void assertEquals(double val, double compare) {
-      assertEquals(val, compare, EPSILON);
+    void assertEquals(geometry::Translation2d val, geometry::Translation2d compare) {
+      if(val == compare) {
+        printf("PASS\n");
+      }
+      else {
+        printf("FAILURE\n");
+      }
     }
 
-    void assertEquals(double val, double compare, double eps) {
+   void assertEquals(double val, double compare) {
+     assertEquals(val, compare, EPSILON);
+   }
+
+   void assertEquals(double val, double compare, double eps) {
         if(std::fabs(val - compare) > eps) { // BAD
             printf("FAILURE\n");
         }

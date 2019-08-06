@@ -4,6 +4,7 @@
 
 #include "TrajectorySamplePoint.hpp"
 
+
 namespace trajectory {
   template <class S>
   TrajectorySamplePoint<S>::TrajectorySamplePoint(S state, int index_floor, int index_ceil) {
@@ -32,5 +33,10 @@ namespace trajectory {
   int TrajectorySamplePoint<S>::index_ceil() {
     return index_ceil_;
   }
+
+  template class TrajectorySamplePoint<geometry::Translation2d>;
+  template class TrajectorySamplePoint<geometry::Rotation2d>;
+  template class TrajectorySamplePoint<geometry::Pose2d>;
+  template class TrajectorySamplePoint<geometry::Pose2dWithCurvature>;
 
 }

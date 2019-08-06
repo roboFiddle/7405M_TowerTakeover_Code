@@ -3,12 +3,17 @@
 //
 
 #include "IndexView.hpp"
+#include "../geometry/Translation2d.hpp"
+#include "../geometry/Rotation2d.hpp"
+#include "../geometry/Pose2d.hpp"
+#include "../geometry/Pose2dWithCurvature.hpp"
+#include <stdio.h>
 
 namespace trajectory {
 
   template<class T>
-  IndexView<T>::IndexView(Trajectory<T>* x) {
-    pointer_to_ = x; // TODO: try removing reference
+  IndexView<T>::IndexView(Trajectory<T>* x) : pointer_to_(x) {
+
   }
 
   template<class T>
@@ -18,7 +23,8 @@ namespace trajectory {
 
   template<class T>
   double IndexView<T>::last_interpolant() {
-    return MAX(0.0, pointer_to_->length() - 1);
+    printf("lmao this sucks %f\n", pointer_to_->length());
+    return pointer_to_->length() == 0 ? 0 : pointer_to_->length() - 1;
   }
 
   template<class T>
@@ -30,5 +36,12 @@ namespace trajectory {
   Trajectory<T> IndexView<T>::trajectory() {
     return *pointer_to_;
   }
+
+  template class IndexView<geometry::Translation2d>;
+  template class IndexView<geometry::Rotation2d>;
+  template class IndexView<geometry::Pose2d>;
+  template class IndexView<geometry::Pose2dWithCurvature>;
+
+
 
 }
