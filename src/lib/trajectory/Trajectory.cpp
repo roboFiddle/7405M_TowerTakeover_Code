@@ -12,17 +12,20 @@
 namespace trajectory {
   template<class S>
   Trajectory<S>::Trajectory() {
-    index_view_ = std::shared_ptr<IndexView<S>>(new IndexView<S>(this));
     points_ = std::vector<TrajectoryPoint<S>>();
   }
 
   template<class S>
   Trajectory<S>::Trajectory(std::vector<S> states) {
-    index_view_ = std::shared_ptr<IndexView<S>>(new IndexView<S>(this));
     points_ = std::vector<TrajectoryPoint<S>>();
     for (int i = 0; i < states.size(); ++i) {
       points_.push_back(TrajectoryPoint<S>(states.at(i), i));
     }
+  }
+
+  template<class S>
+  void Trajectory<S>::setup() {
+    //index_view_ = new IndexView<S>(this);
   }
 
   template<class S>
@@ -32,7 +35,6 @@ namespace trajectory {
 
   template<class S>
   int Trajectory<S>::length() {
-    std::cout << "UHH WTF " << points_.size() << "\n";
     return points_.size();
   }
 
@@ -77,8 +79,9 @@ namespace trajectory {
   }
 
   template<class S>
-  std::shared_ptr<IndexView<S>>  Trajectory<S>::getIndexView() {
-    return index_view_;
+  std::shared_ptr<IndexView<S>>  Trajectory<S>::createIndexView() {
+    //std::cout << "UGH " << (long) index_view_;
+    return std::shared_ptr<IndexView<S>>(new IndexView<S>(this));
   }
 
   template<class S>

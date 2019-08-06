@@ -27,10 +27,10 @@ namespace trajectory {
 
     protected:
       std::vector<TrajectoryPoint<S>> points_;
-      std::shared_ptr<IndexView<S>> index_view_;
     public:
       Trajectory();
       Trajectory(std::vector<S> states);
+      void setup();
       bool isEmpty();
       int length();
       TrajectoryPoint<S> getPoint(int index);
@@ -38,7 +38,7 @@ namespace trajectory {
       S getFirstState();
       S getLastState();
       TrajectorySamplePoint<S> getInterpolated(double index);
-      std::shared_ptr<IndexView<S>> getIndexView();
+      std::shared_ptr<IndexView<S>> createIndexView();
       std::string toString();
       std::string toCSV();
 

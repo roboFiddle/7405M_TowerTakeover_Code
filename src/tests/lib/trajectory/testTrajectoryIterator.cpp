@@ -22,7 +22,7 @@ namespace test {
 
     trajectory::Trajectory<geometry::Translation2d> traj(kWaypoints);
 
-    std::shared_ptr<trajectory::TrajectoryView<geometry::Translation2d>> indexView = traj.getIndexView();
+    std::shared_ptr<trajectory::TrajectoryView<geometry::Translation2d>> indexView = traj.createIndexView();
     trajectory::TrajectoryIterator<geometry::Translation2d> iterator(indexView);
     iterator.setup();
 

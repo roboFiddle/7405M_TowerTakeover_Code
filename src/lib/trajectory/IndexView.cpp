@@ -23,7 +23,6 @@ namespace trajectory {
 
   template<class T>
   double IndexView<T>::last_interpolant() {
-    printf("lmao this sucks %f\n", pointer_to_->length());
     return pointer_to_->length() == 0 ? 0 : pointer_to_->length() - 1;
   }
 
