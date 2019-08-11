@@ -13,16 +13,29 @@
 
 namespace trajectory {
   template<class S>
-  class VelocityLimitRegionConstraint : TimingConstraint<S> {
+  class VelocityLimitRegionConstraint : public TimingConstraint<S> {
     static_assert(std::is_base_of<geometry::ITranslation2d < S > , S > ::value, "S must derive from ITranslation2d<S>");
    protected:
     geometry::Translation2d min_corner_;
     geometry::Translation2d max_corner_;
     double velocity_limit_;
    public:
-    VelocityLimitRegionConstraint(geometry::Translation2d min_corner, geometry::Translation2d max_corner, double velocity_limit);
-    double getMaxVelocity(S state);
-    physics::DifferentialDrive::MinMaxAcceleration getMinMaxAcceleration(S state, double velocity);
+    VelocityLimitRegionConstraint(geometry::Translation2d min_corner, geometry::Translation2d max_corner, double velocity_limit)  {
+      min_corner_ = min_corner;
+      max_corner_ = max_corner;
+      velocity_limit_ = velocity_limit;
+    }
+    units::QSpeed getMaxVelocity(S state) {
+      geometry::Translation2d translation = state.translation();
+      if (translation.x() <= max_corner_.x() && translation.x() >= min_corner_.x() &&
+          translation.y() <= max_corner_.y() && translation.y() >= min_corner_.y()) {
+        return velocity_limit_;
+      }
+      return INFINITY;
+    }
+    physics::DifferentialDrive::MinMaxAcceleration getMinMaxAcceleration(S state, units::QSpeed velocity)  {
+      return physics::DifferentialDrive::MinMaxAcceleration::kNoLimits;
+    }
 
   };
 

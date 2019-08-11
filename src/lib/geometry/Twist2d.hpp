@@ -15,9 +15,9 @@ namespace geometry {
       units::QLength dx_, dy_;
       units::Angle dtheta_;
       Twist2d(units::QLength dx, units::QLength dy, units::Angle dtheta);
-      Twist2d scaled(double scale);
+      Twist2d scaled(units::Number scale);
       units::QLength norm();
-      double curvature();
+      units::QCurvature curvature();
       std::string toString();
   };
 }

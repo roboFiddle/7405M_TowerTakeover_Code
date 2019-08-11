@@ -69,14 +69,14 @@ namespace geometry {
     Translation2d Rotation2d::toTranslation() {
       return Translation2d(cos_angle_, sin_angle_);
     }
-    double Rotation2d::distance(Rotation2d other) {
+    units::QLength Rotation2d::distance(Rotation2d other) {
       return inverse().rotateBy(other).getRadians();
     }
     bool Rotation2d::operator==(Rotation2d other) {
       return FEQUALS(cos_angle_, other.cos_angle_) && FEQUALS(sin_angle_, other.sin_angle_);
     }
-    Rotation2d Rotation2d::interpolate(Rotation2d other, double x) {
-      x = LIMIT(x, 0.0, 1.0);
+    Rotation2d Rotation2d::interpolate(Rotation2d other, units::Number x) {
+      x = LIMIT(x, 0.0*units::num, 1.0*units::num);
       double angle_diff = inverse().rotateBy(other).getRadians();
       return rotateBy(Rotation2d::fromRadians(angle_diff * x));
     }
@@ -92,10 +92,10 @@ namespace geometry {
     Rotation2d Rotation2d::fromAngle(units::Angle angle) {
       return Rotation2d(units::cos(angle), units::sin(angle));
     }
-    Rotation2d Rotation2d::fromRadians(double angle_radians) {
+    Rotation2d Rotation2d::fromRadians(units::Number angle_radians) {
       return fromAngle(angle_radians * units::radian);
     }
-    Rotation2d Rotation2d::fromDegrees(double angle_degrees) {
+    Rotation2d Rotation2d::fromDegrees(units::Number angle_degrees) {
       return fromAngle(angle_degrees * units::degree);
     }
 }

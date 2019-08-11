@@ -21,9 +21,16 @@ namespace trajectory {
       S state_;
       int index_;
      public:
-      TrajectoryPoint(S state, int index);
-      S state();
-      int index();
+      TrajectoryPoint(S state, int index)  {
+        state_ = state;
+        index_ = index;
+      }
+      S state()  {
+        return state_;
+      }
+      int index() {
+        return index_;
+      }
   };
 
 

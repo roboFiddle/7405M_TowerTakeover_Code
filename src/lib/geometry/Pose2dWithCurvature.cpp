@@ -16,22 +16,22 @@ namespace geometry {
         curvature_ = 0.0;
         dcurvature_ds_ = 0.0;
     }
-    Pose2dWithCurvature::Pose2dWithCurvature(Pose2d pose, double curvature) {
+    Pose2dWithCurvature::Pose2dWithCurvature(Pose2d pose, units::QCurvature curvature) {
         pose_ = pose;
         curvature_ = curvature;
         dcurvature_ds_ = 0.0;
     }
-    Pose2dWithCurvature::Pose2dWithCurvature(Pose2d pose, double curvature, double dcurvature_ds) {
+    Pose2dWithCurvature::Pose2dWithCurvature(Pose2d pose, units::QCurvature curvature, units::QDCurvature dcurvature_ds) {
         pose_ = pose;
         curvature_ = curvature;
         dcurvature_ds_ = dcurvature_ds;
     }
-    Pose2dWithCurvature::Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, double curvature) {
+    Pose2dWithCurvature::Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, units::QCurvature curvature) {
         pose_ = Pose2d(translation, rotation);
         curvature_ = curvature;
         dcurvature_ds_ = 0.0;
     }
-    Pose2dWithCurvature::Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, double curvature, double dcurvature_ds) {
+    Pose2dWithCurvature::Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, units::QCurvature curvature, units::QDCurvature dcurvature_ds) {
         pose_ = Pose2d(translation, rotation);
         curvature_ = curvature;
         dcurvature_ds_ = dcurvature_ds;
@@ -46,12 +46,12 @@ namespace geometry {
         return Pose2dWithCurvature(pose().transformBy(transform), curvature(), dcurvature());
     }
     Pose2dWithCurvature Pose2dWithCurvature::mirror() {
-        return Pose2dWithCurvature(pose().mirror(), -curvature(), -dcurvature());
+        return Pose2dWithCurvature(pose().mirror(), -1 * curvature(), -1 * dcurvature());
     }
-    double Pose2dWithCurvature::curvature() {
+    units::QCurvature Pose2dWithCurvature::curvature() {
         return curvature_;
     }
-    double Pose2dWithCurvature::dcurvature() {
+    units::QDCurvature Pose2dWithCurvature::dcurvature() {
         return dcurvature_ds_;
     }
     Translation2d Pose2dWithCurvature::translation() {
@@ -60,12 +60,12 @@ namespace geometry {
     Rotation2d Pose2dWithCurvature::rotation() {
         return pose_.rotation();
     }
-    Pose2dWithCurvature Pose2dWithCurvature::interpolate(Pose2dWithCurvature other, double x) {
+    Pose2dWithCurvature Pose2dWithCurvature::interpolate(Pose2dWithCurvature other, units::Number x) {
         return Pose2dWithCurvature(pose().interpolate(other.pose(), x),
                 INTERPOLATE(curvature_, other.curvature(), x),
                 INTERPOLATE(dcurvature_ds_, other.dcurvature(), x));
     }
-    double Pose2dWithCurvature::distance(Pose2dWithCurvature other) {
+    units::QLength Pose2dWithCurvature::distance(Pose2dWithCurvature other) {
         return pose().distance(other.pose());
     }
     bool Pose2dWithCurvature::operator==(Pose2dWithCurvature other) {
@@ -79,8 +79,8 @@ namespace geometry {
     }
     std::string Pose2dWithCurvature::toCSV() {
         std::ostringstream stringStream;
-        stringStream << "Pose2dWithCurvature,(" << pose_.toCSV() << ")," << std::to_string(curvature_);
-        stringStream << "," << std::to_string(dcurvature_ds_);
+        stringStream << "Pose2dWithCurvature,(" << pose_.toCSV() << ")," << curvature_.to_string();
+        stringStream << "," << dcurvature_ds_.to_string();
         return stringStream.str();
     }
     std::string Pose2dWithCurvature::toString() {

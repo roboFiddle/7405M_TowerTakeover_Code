@@ -64,10 +64,10 @@ namespace geometry {
         return FEQUALS(twist.dy_, 0.0 * units::metre) && FEQUALS(twist.dtheta_, 0.0 * units::radian);
     }
     // Interpolation based on CONSTANT CURVATURE
-    Pose2d Pose2d::interpolate(Pose2d other, double x) {
-        if (x <= 0) {
+    Pose2d Pose2d::interpolate(Pose2d other, units::Number x) {
+        if (x <= 0*units::num) {
             return Pose2d(*this);
-        } else if (x >= 1) {
+        } else if (x >= 1*units::num) {
             return Pose2d(other);
         }
         Twist2d twist = log(inverse().transformBy(other));
@@ -76,8 +76,8 @@ namespace geometry {
     Pose2d Pose2d::mirror() {
         return Pose2d(Translation2d(translation().x(), -1 * translation().y()), rotation().inverse());
     }
-    double Pose2d::distance(Pose2d other) {
-        return log(inverse().transformBy(other)).norm().getValue();
+    units::QLength Pose2d::distance(Pose2d other) {
+        return log(inverse().transformBy(other)).norm();
     }
     std::string Pose2d::toCSV() {
         std::ostringstream stringStream;

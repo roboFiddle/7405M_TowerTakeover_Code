@@ -7,14 +7,14 @@
 #include <cmath>
 
 namespace trajectory {
-  CentripetalAccelerationConstraint::CentripetalAccelerationConstraint(double max_centripetal_accel) {
+  CentripetalAccelerationConstraint::CentripetalAccelerationConstraint(units::QAngularAcceleration max_centripetal_accel) {
     max_centripetal_accel_ = max_centripetal_accel;
   }
-  double CentripetalAccelerationConstraint::getMaxVelocity(geometry::Pose2dWithCurvature state) {
-    return std::sqrt(fabs(max_centripetal_accel_ / state.curvature()));
+  units::QSpeed CentripetalAccelerationConstraint::getMaxVelocity(geometry::Pose2dWithCurvature state) {
+    return units::Qabs(units::Qsqrt(max_centripetal_accel_ / state.curvature() / state.curvature()));
   }
-physics::DifferentialDrive::MinMaxAcceleration CentripetalAccelerationConstraint::getMinMaxAcceleration(
-      geometry::Pose2dWithCurvature state, double velocity) {
+  physics::DifferentialDrive::MinMaxAcceleration CentripetalAccelerationConstraint::getMinMaxAcceleration(
+      geometry::Pose2dWithCurvature state, units::QSpeed velocity) {
     return physics::DifferentialDrive::MinMaxAcceleration::kNoLimits;
   }
 }

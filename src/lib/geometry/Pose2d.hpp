@@ -28,9 +28,9 @@ namespace geometry {
       Translation2d intersection(Pose2d other);
       bool IsLinear(Pose2d other);
       // Interpolation based on CONSTANT CURVATURE
-      Pose2d interpolate(Pose2d other, double x);
+      Pose2d interpolate(Pose2d other, units::Number x);
       Pose2d mirror();
-      double distance(Pose2d other);
+      units::QLength distance(Pose2d other);
       std::string toCSV();
       std::string toString();
       bool operator==(Pose2d other);

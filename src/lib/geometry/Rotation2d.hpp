@@ -29,15 +29,15 @@ namespace geometry {
         Rotation2d inverse();
         Translation2d toTranslation();
         bool isParallel(Rotation2d other);
-        double distance(Rotation2d other);
+        units::QLength distance(Rotation2d other);
         bool operator==(Rotation2d other);
-        Rotation2d interpolate(Rotation2d other, double x);
+        Rotation2d interpolate(Rotation2d other, units::Number x);
         std::string toCSV();
         std::string toString();
 
         static Rotation2d fromAngle(units::Angle angle);
-        static Rotation2d fromRadians(double angle_radians);
-        static Rotation2d fromDegrees(double angle_degrees);
+        static Rotation2d fromRadians(units::Number angle_radians);
+        static Rotation2d fromDegrees(units::Number angle_degrees);
     };
 }
 

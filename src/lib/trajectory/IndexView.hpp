@@ -19,11 +19,19 @@ namespace trajectory {
   class IndexView : public TrajectoryView<T> {
    public:
     Trajectory<T>* pointer_to_;
-    IndexView(Trajectory<T>* x);
-    TrajectorySamplePoint<T> sample(double index);
-    double last_interpolant();
-    double first_interpolant();
-    Trajectory<T> trajectory();
+    IndexView(Trajectory<T>* x) : pointer_to_(x) {}
+    TrajectorySamplePoint<T> sample(double index)  {
+      return pointer_to_->getInterpolated(index);
+    }
+    double last_interpolant()  {
+      return pointer_to_->length() == 0 ? 0 : pointer_to_->length() - 1;
+    }
+    double first_interpolant()  {
+      return 0.0;
+    }
+    Trajectory<T>* trajectory()  {
+      return pointer_to_;
+    }
   };
 
 

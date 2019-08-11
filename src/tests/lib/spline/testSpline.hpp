@@ -13,6 +13,7 @@ namespace test {
         static void testCubicSpline();
         static void testQuinticSpline();
         static void testSplineGenerator();
+        static void testDCurve();
     };
 }
 

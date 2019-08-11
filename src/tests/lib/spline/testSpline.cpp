@@ -37,7 +37,9 @@ namespace test {
         splines.push_back(spline::QuinticHermiteSpline(b, c));
 
         long startTime = pros::millis();
-        assertTrue(spline::QuinticHermiteSpline::optimizeSpline(&splines) < 0.014);
+        double x = spline::QuinticHermiteSpline::optimizeSpline(&splines).getValue();
+        std::printf("%f \n", x);
+        assertTrue(x < 0.014);
         std::printf("Optimization time (ms): %d \n" , (pros::millis() - startTime));
 
         geometry::Pose2d d(geometry::Translation2d(0, 0), geometry::Rotation2d::fromDegrees(90));
@@ -51,7 +53,7 @@ namespace test {
         splines1.push_back(spline::QuinticHermiteSpline(f, g));
 
         startTime = pros::millis();
-        assertTrue(spline::QuinticHermiteSpline::optimizeSpline(&splines1) < 0.16);
+        assertTrue(spline::QuinticHermiteSpline::optimizeSpline(&splines1).getValue() < 0.16);
         std::printf("Optimization time (ms): %d \n", (pros::millis() - startTime));
 
 
@@ -68,7 +70,7 @@ namespace test {
         splines2.push_back(spline::QuinticHermiteSpline(k, l));
 
         startTime = pros::millis();
-        assertTrue(spline::QuinticHermiteSpline::optimizeSpline(&splines2) < 0.05);
+        assertTrue(spline::QuinticHermiteSpline::optimizeSpline(&splines2).getValue() < 0.05);
         assertEquals(splines2.at(0).getCurvature(1.0), 0.0, EPSILON);
         assertEquals(splines2.at(2).getCurvature(1.0), 0.0, EPSILON);
         std::printf("Optimization time (ms): %d \n", (pros::millis() - startTime));
@@ -93,5 +95,21 @@ namespace test {
         assertEquals(cur_pose.translation().y().getValue(), 10.0, EPSILON);
         assertEquals(cur_pose.rotation().getDegrees(), -78.69006752597981, EPSILON);
         assertEquals(arclength.getValue(), 23.225668846151, EPSILON);
+    }
+
+    void testSpline::testDCurve() {
+      geometry::Pose2d a(geometry::Translation2d(0, 100), geometry::Rotation2d::fromDegrees(270));
+      geometry::Pose2d b(geometry::Translation2d(50, 0), geometry::Rotation2d::fromDegrees(0));
+
+      spline::QuinticHermiteSpline basic(a, b);
+      units::QTime dt = 0.01;
+      units::QTime t = 0;
+      while(t < 1.0*units::second) {
+        printf("(%f, %f, %f)\n", t.getValue(), basic.getCurvature(t).getValue(), basic.getDCurvature(t).getValue());
+        t += dt;
+      }
+
+      printf("%f", basic.getDCurvature(0.5 * units::second).getValue());
+
     }
 }

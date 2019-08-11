@@ -13,13 +13,13 @@
 namespace spline {
     class Spline {
     public:
-        virtual geometry::Translation2d getPoint(double t) = 0;
-        virtual geometry::Rotation2d getHeading(double t) = 0;
-        virtual double getCurvature(double t) = 0;
-        virtual double getDCurvature(double t) = 0;
-        virtual double getVelocity(double t) = 0;
-        geometry::Pose2d getPose2d(double t);
-        geometry::Pose2dWithCurvature getPose2dWithCurvature(double t);
+        virtual geometry::Translation2d getPoint(units::QTime t) = 0;
+        virtual geometry::Rotation2d getHeading(units::QTime t) = 0;
+        virtual units::QCurvature getCurvature(units::QTime t) = 0;
+        virtual units::QDCurvature getDCurvature(units::QTime t) = 0;
+        virtual units::QSpeed getVelocity(units::QTime t) = 0;
+        geometry::Pose2d getPose2d(units::QTime t);
+        geometry::Pose2dWithCurvature getPose2dWithCurvature(units::QTime t);
     };
 }
 

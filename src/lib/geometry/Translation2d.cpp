@@ -43,20 +43,20 @@ namespace geometry {
     Translation2d Translation2d::inverse() {
       return Translation2d(x_ * -1, y_ * -1);
     }
-    Translation2d Translation2d::interpolate(Translation2d other, double x) {
-      x = LIMIT(x, 0.0, 1.0);
+    Translation2d Translation2d::interpolate(Translation2d other, units::Number x) {
+      x = LIMIT(x, 0.0*units::num, 1.0*units::num);
       return extrapolate(other, x);
     }
-    Translation2d Translation2d::extrapolate(Translation2d other, double x) {
+    Translation2d Translation2d::extrapolate(Translation2d other, units::Number x) {
       return Translation2d(x * (other.x_ - x_) + x_, x * (other.y_ - y_) + y_);
     }
-    Translation2d Translation2d::scale(double s) {
+    Translation2d Translation2d::scale(units::Number s) {
       return Translation2d(x_ * s, y_ * s);
     }
     bool Translation2d::operator==(Translation2d other) {
       return FEQUALS(x_, other.x_) && FEQUALS(y_, other.y_);
     }
-    double Translation2d::distance(Translation2d other) {
+    units::QLength Translation2d::distance(Translation2d other) {
       return inverse().translateBy(other).norm().getValue();
     }
     std::string Translation2d::toCSV() {

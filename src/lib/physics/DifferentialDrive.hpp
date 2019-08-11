@@ -7,6 +7,7 @@
 
 #include "DCMotorTransmission.hpp"
 #include <string>
+#include <sstream>
 
 namespace physics {
     class DifferentialDrive {
@@ -26,7 +27,7 @@ namespace physics {
         units::QAcceleration min_acceleration_;
         units::QAcceleration max_acceleration_;
         MinMaxAcceleration();
-        MinMaxAcceleration(double min_acceleration, double max_acceleration);
+        MinMaxAcceleration(units::QAcceleration min_acceleration, units::QAcceleration max_acceleration);
         units::QAcceleration min_acceleration();
         units::QAcceleration max_acceleration();
         bool valid();
@@ -46,7 +47,11 @@ namespace physics {
               linear_ = 0;
               angular_ = 0;
             }
-            std::string toString();
+            std::string toString() {
+              std::ostringstream stringStream;
+              stringStream << "ChassisState," << linear_ << "," << angular_;
+              return stringStream.str();
+            }
         };
 
         template <typename T>
@@ -71,7 +76,11 @@ namespace physics {
               else
                 right_ = val;
             }
-            std::string toString();
+            std::string toString() {
+              std::ostringstream stringStream;
+              stringStream << "WheelState," << left_ << "," << right_;
+              return stringStream.str();
+            }
         };
 
         class DriveDynamics {
@@ -82,9 +91,19 @@ namespace physics {
             ChassisState<units::QAcceleration, units::QAngularAcceleration> chassis_acceleration;  // m/s^2
             WheelState<units::QAngularSpeed> wheel_velocity;  // rad/s
             WheelState<units::QAngularAcceleration> wheel_acceleration;  // rad/s^2
-            WheelState<double> voltage;  // V
+            WheelState<units::Number> voltage;  // V
             WheelState<units::QTorque> wheel_torque; // N m
-            std::string toCSV();
+            std::string toCSV() {
+              std::ostringstream stringStream;
+              stringStream << "DriveDynamics," << "(CURVE, " << curvature.getValue() << "," << dcurvature.getValue() << "), ";
+              stringStream << "(CV, " << chassis_velocity.toString() << ")";
+              stringStream << "(CA, " << chassis_acceleration.toString() << ")";
+              stringStream << "(WV, " << wheel_velocity.toString() << ")";
+              stringStream << "(WA, " << wheel_acceleration.toString() << ")";
+              stringStream << "(voltage, " << voltage.toString() << ")";
+              stringStream << "(wheel_torque, " << wheel_torque.toString() << ")";
+              return stringStream.str();
+            }
             std::string toString();
         };
 
@@ -103,8 +122,8 @@ namespace physics {
         WheelState<units::QAngularAcceleration> solveInverseKinematics(ChassisState<units::QAcceleration, units::QAngularAcceleration> chassis_motion);
 
         // Solve for torques and accelerations.
-        DriveDynamics solveForwardDynamics(ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity, WheelState<double> voltage);
-        DriveDynamics solveForwardDynamics(WheelState<units::QAngularSpeed> wheel_velocity, WheelState<double> voltage);
+        DriveDynamics solveForwardDynamics(ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity, WheelState<units::Number> voltage);
+        DriveDynamics solveForwardDynamics(WheelState<units::QAngularSpeed> wheel_velocity, WheelState<units::Number> voltage);
 
         // Assumptions about dynamics: velocities and voltages provided.
         void solveForwardDynamics(DriveDynamics* dynamics);
@@ -115,11 +134,11 @@ namespace physics {
 
         // Assumptions about dynamics: velocities and accelerations provided, curvature and dcurvature computed.
         void solveInverseDynamics(DriveDynamics* dynamics);
-        units::QSpeed getMaxAbsVelocity(units::QCurvature curvature, double max_abs_voltage);
+        units::QSpeed getMaxAbsVelocity(units::QCurvature curvature, units::Number max_abs_voltage);
 
         // Curvature is redundant here in the case that chassis_velocity is not purely angular.  It is the responsibility of
         // the caller to ensure that curvature = angular vel / linear vel in these cases.
-        MinMaxAcceleration getMinMaxAcceleration(ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity, units::QCurvature curvature, double max_abs_voltage);
+        MinMaxAcceleration getMinMaxAcceleration(ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity, units::QCurvature curvature, units::Number max_abs_voltage);
     };
 }
 

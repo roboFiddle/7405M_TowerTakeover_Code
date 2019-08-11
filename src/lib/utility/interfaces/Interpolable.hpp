@@ -2,11 +2,12 @@
 #define WLIB_UTIL_INTERPOLABLE_H
 
 #include <string>
+#include "../Units.hpp"
 
 namespace util {
   template<typename T> class Interpolable {
     public:
-      virtual T interpolate(T other, double scale);
+      virtual T interpolate(T other, units::Number scale);
   };
 }
 

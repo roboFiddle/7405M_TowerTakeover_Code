@@ -8,7 +8,7 @@
 
 namespace spline {
     QuinticHermiteSpline::QuinticHermiteSpline(geometry::Pose2d p0, geometry::Pose2d p1) {
-        double scale = 1.2 * p0.translation().distance(p1.translation());
+        double scale = 1.2 * p0.translation().distance(p1.translation()).getValue();
         x0_ = p0.translation().x().getValue();
         x1_ = p1.translation().x().getValue();
         dx0_ = p0.rotation().cos() * scale;
@@ -58,28 +58,28 @@ namespace spline {
         ey_ = dy0_;
         fy_ = y0_;
     }
-    double QuinticHermiteSpline::x(double t) {
+    units::QLength QuinticHermiteSpline::x(units::QTime t) {
         return t * t * t * t * t * ax_ + t * t * t * t * bx_ + t * t * t * cx_ + t * t * dx_ + t * ex_ + fx_;
     }
-    double QuinticHermiteSpline::dx(double t) {
+    units::QSpeed QuinticHermiteSpline::dx(units::QTime t) {
         return 5 * t * t * t * t * ax_ + 4 * t * t * t * bx_ + 3 * t * t * cx_ + 2 * t * dx_ + ex_;
     }
-    double QuinticHermiteSpline::ddx(double t) {
+    units::QAcceleration QuinticHermiteSpline::ddx(units::QTime t) {
         return 20 * t * t * t * ax_ + 12 * t * t * bx_ + 6 * t * cx_ + 2 * dx_;
     }
-    double QuinticHermiteSpline::dddx(double t) {
+    units::QJerk QuinticHermiteSpline::dddx(units::QTime t) {
         return 60 * t * t * ax_ + 24 * t * bx_ + 6 * cx_;
     }
-    double QuinticHermiteSpline::y(double t) {
+    units::QLength QuinticHermiteSpline::y(units::QTime t) {
         return t * t * t * t * t * ay_ + t * t * t * t * by_ + t * t * t * cy_ + t * t * dy_ + t* ey_ + fy_;
     }
-    double QuinticHermiteSpline::dy(double t) {
+    units::QSpeed QuinticHermiteSpline::dy(units::QTime t) {
         return 5 * t * t * t * t * ay_ + 4 * t * t * t * by_ + 3 * t * t * cy_ + 2 * t * dy_ + ey_;
     }
-    double QuinticHermiteSpline::ddy(double t) {
+    units::QAcceleration QuinticHermiteSpline::ddy(units::QTime t) {
         return 20 * t * t * t * ay_ + 12 * t * t * by_ + 6 * t * cy_ + 2 * dy_;
     }
-    double QuinticHermiteSpline::dddy(double t) {
+    units::QJerk QuinticHermiteSpline::dddy(units::QTime t) {
         return 60 * t * t * ay_ + 24 * t * by_ + 6 * cy_;
     }
     geometry::Pose2d QuinticHermiteSpline::getStartPose() {
@@ -88,51 +88,61 @@ namespace spline {
     geometry::Pose2d QuinticHermiteSpline::getEndPose() {
         return geometry::Pose2d(geometry::Translation2d(x1_, y1_),  geometry::Rotation2d(dx1_, dy1_));
     }
-    geometry::Translation2d QuinticHermiteSpline::getPoint(double t) {
+    geometry::Translation2d QuinticHermiteSpline::getPoint(units::QTime t) {
         return geometry::Translation2d(x(t), y(t));
     }
-    double QuinticHermiteSpline::getVelocity(double t) {
-        return std::hypot(dx(t), dy(t));
+    units::QSpeed QuinticHermiteSpline::getVelocity(units::QTime t) {
+        return units::Qsqrt(dx(t) * dx(t) + dy(t) * dy(t));
     }
-    double QuinticHermiteSpline::getCurvature(double t) {
-        double a = dx(t) * ddy(t) - ddx(t) * dy(t) ;
-        double b = (dx(t) * dx(t) + dy(t) * dy(t)) * std::sqrt(dx(t) * dx(t) + dy(t) * dy(t));
-        return a / b;
+    units::QCurvature QuinticHermiteSpline::getCurvature(units::QTime t) {
+      units::RQuantity<std::ratio<0>, std::ratio<2>, std::ratio<-3>, std::ratio<0>> a = (dx(t) * ddy(t) - dy(t) * ddx(t));
+      units::RQuantity<std::ratio<0>, std::ratio<3>, std::ratio<-3>, std::ratio<0>> b = (dx(t) * dx(t) + dy(t) * dy(t)) * units::Qsqrt(dx(t) * dx(t) + dy(t) * dy(t));
+      return a / b;
     }
-    double QuinticHermiteSpline::getDCurvature(double t) {
-        double dx2dy2 = (dx(t) * dx(t) + dy(t) * dy(t));
-        double num = (dx(t) * dddy(t) - dddx(t) * dy(t)) * dx2dy2 - 3 * (dx(t) * ddy(t) - ddx(t) * dy(t)) * (dx(t) * ddx(t) + dy(t) * ddy(t));
-        return num / (dx2dy2 * dx2dy2 * std::sqrt(dx2dy2));
+    units::QDCurvature QuinticHermiteSpline::getDCurvature(units::QTime t) {
+      /* units::RQuantity<std::ratio<0>, std::ratio<2>, std::ratio<-2>, std::ratio<0>>  dx2dy2 = (dx(t) * dx(t) + dy(t) * dy(t));
+      units::RQuantity<std::ratio<0>, std::ratio<-5>, std::ratio<5>, std::ratio<0>> a = 1 / ( 2 * units::Qpow(dx2dy2, std::ratio<5,2>()));
+      units::RQuantity<std::ratio<0>, std::ratio<4>, std::ratio<-6>, std::ratio<0>> b = 2 * dx2dy2 * (dddy(t) * dx(t) + dddx(t) * dy(t));
+      units::RQuantity<std::ratio<0>, std::ratio<4>, std::ratio<-6>, std::ratio<0>> c = 6 * (ddx(t) * dy(t) - dx(t) * ddy(t)) * (dx(t) * ddx(t) + dy(t) * ddy(t));
+
+      return a * (b + c); */
+
+      double dx2dy2 = (dx(t) * dx(t) + dy(t) * dy(t)).getValue();
+      double numA = ((dx(t) * dddy(t) - dddx(t) * dy(t)) * dx2dy2).getValue();
+      double numB = (3 * (dx(t) * ddy(t) - ddx(t) * dy(t)) * (dx(t) * ddx(t) + dy(t) * ddy(t))).getValue();
+      double num = numA + numB;
+
+      double result = num * num / (dx2dy2 * dx2dy2 * dx2dy2 * dx2dy2 * dx2dy2);
+      return result;
+
     }
-    double QuinticHermiteSpline::dCurvature2(double t) {
-        double dx2dy2 = (dx(t) * dx(t) + dy(t) * dy(t));
-        double num = (dx(t) * dddy(t) - dddx(t) * dy(t)) * dx2dy2 - 3 * (dx(t) * ddy(t) - ddx(t) * dy(t)) * (dx(t) * ddx(t) + dy(t) * ddy(t));
-        return num * num / (dx2dy2 * dx2dy2 * dx2dy2 * dx2dy2 * dx2dy2);
+    units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-2>, std::ratio<0>> QuinticHermiteSpline::dCurvature2(units::QTime t) {
+        return getDCurvature(t) * getDCurvature(t);
     }
-    geometry::Rotation2d QuinticHermiteSpline::getHeading(double t) {
-        return geometry::Rotation2d(dx(t), dy(t));
+    geometry::Rotation2d QuinticHermiteSpline::getHeading(units::QTime t) {
+        return geometry::Rotation2d(dx(t).getValue(), dy(t).getValue());
     }
-    double QuinticHermiteSpline::sumDCurvature2() { // Returns integral of dCurve^2 over the spline
-        double dt = 1.0 / kSamples;
-        double sum = 0;
-        for (double t = 0; t < 1.0; t += dt) {
+    units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> QuinticHermiteSpline::sumDCurvature2() { // Returns integral of dCurve^2 over the spline
+        units::QTime dt = 1.0 / kSamples;
+        units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> sum = 0;
+        for (units::QTime t = 0; t < units::second; t += dt) {
             sum += (dt * dCurvature2(t));
         }
         return sum;
     }
-    double QuinticHermiteSpline::sumDCurvature2(std::vector<QuinticHermiteSpline> splines) {
-        double sum;
+    units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> QuinticHermiteSpline::sumDCurvature2(std::vector<QuinticHermiteSpline> splines) {
+      units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> sum;
         for(QuinticHermiteSpline x : splines) {
             sum += x.sumDCurvature2();
         }
         return sum;
     }
-    double QuinticHermiteSpline::optimizeSpline(std::vector<QuinticHermiteSpline> *splines) {
+    units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> QuinticHermiteSpline::optimizeSpline(std::vector<QuinticHermiteSpline> *splines) {
         int count = 0;
-        double prev = sumDCurvature2(*splines);
+        units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> prev = sumDCurvature2(*splines);
         while (count < kMaxIterations) {
             runOptimizationIteration(splines);
-            double current = sumDCurvature2(*splines);
+            units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> current = sumDCurvature2(*splines);
             //std::printf("%f \n", current);
             if (prev - current < kMinDelta)
                 return current;
@@ -147,7 +157,7 @@ namespace spline {
         }
 
         ControlPoint controlPoints[splines->size() - 1];
-        double magnitude = 0;
+        units::Number magnitude = 0;
 
         for (int i = 0; i < splines->size() - 1; ++i) {
             //don't try to optimize colinear points
@@ -155,16 +165,16 @@ namespace spline {
                 continue;
             }
 
-            double original = QuinticHermiteSpline::sumDCurvature2(*splines);
+            units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> original = QuinticHermiteSpline::sumDCurvature2(*splines);
             QuinticHermiteSpline temp = splines->at(i);
             QuinticHermiteSpline temp1 = splines->at(i+1);
 
             //calculate partial derivatives of sumDCurvature2
-            splines->at(i) = QuinticHermiteSpline(temp.x0_, temp.x1_, temp.dx0_, temp.dx1_, temp.ddx0_, temp.ddx1_ + kEpsilon, temp.y0_, temp.y1_, temp.dy0_, temp.dy1_, temp.ddy0_, temp.ddy1_);
-            splines->at(i+1) = QuinticHermiteSpline(temp1.x0_, temp1.x1_, temp1.dx0_, temp1.dx1_, temp1.ddx0_ + kEpsilon, temp1.ddx1_, temp1.y0_, temp1.y1_, temp1.dy0_, temp1.dy1_, temp1.ddy0_, temp1.ddy1_);
+            splines->at(i) = QuinticHermiteSpline(temp.x0_, temp.x1_, temp.dx0_, temp.dx1_, temp.ddx0_, temp.ddx1_ + kEpsilon.getValue(), temp.y0_, temp.y1_, temp.dy0_, temp.dy1_, temp.ddy0_, temp.ddy1_);
+            splines->at(i+1) = QuinticHermiteSpline(temp1.x0_, temp1.x1_, temp1.dx0_, temp1.dx1_, temp1.ddx0_ + kEpsilon.getValue(), temp1.ddx1_, temp1.y0_, temp1.y1_, temp1.dy0_, temp1.dy1_, temp1.ddy0_, temp1.ddy1_);
             controlPoints[i].ddx = (sumDCurvature2(*splines) - original) / kEpsilon;
-            splines->at(i) =  QuinticHermiteSpline(temp.x0_, temp.x1_, temp.dx0_, temp.dx1_, temp.ddx0_, temp.ddx1_, temp.y0_, temp.y1_, temp.dy0_, temp.dy1_, temp.ddy0_, temp.ddy1_ + kEpsilon);
-            splines->at(i+1)= QuinticHermiteSpline(temp1.x0_, temp1.x1_, temp1.dx0_, temp1.dx1_, temp1.ddx0_, temp1.ddx1_, temp1.y0_, temp1.y1_, temp1.dy0_, temp1.dy1_, temp1.ddy0_ + kEpsilon, temp1.ddy1_);
+            splines->at(i) =  QuinticHermiteSpline(temp.x0_, temp.x1_, temp.dx0_, temp.dx1_, temp.ddx0_, temp.ddx1_, temp.y0_, temp.y1_, temp.dy0_, temp.dy1_, temp.ddy0_, temp.ddy1_ + kEpsilon.getValue());
+            splines->at(i+1)= QuinticHermiteSpline(temp1.x0_, temp1.x1_, temp1.dx0_, temp1.dx1_, temp1.ddx0_, temp1.ddx1_, temp1.y0_, temp1.y1_, temp1.dy0_, temp1.dy1_, temp1.ddy0_ + kEpsilon.getValue(), temp1.ddy1_);
             controlPoints[i].ddy = (sumDCurvature2(*splines) - original) / kEpsilon;
 
             splines->at(i) =  temp;
@@ -175,7 +185,7 @@ namespace spline {
         //minimize along the direction of the gradient
         //first calculate 3 points along the direction of the gradient
         geometry::Translation2d p1, p2, p3;
-        p2 = geometry::Translation2d(0, sumDCurvature2(*splines)); //middle point is at the current location
+        p2 = geometry::Translation2d(0, sumDCurvature2(*splines).getValue()); //middle point is at the current location
 
         for (int i = 0; i < splines->size() - 1; ++i) { //first point is offset from the middle location by -stepSize
             //don't try to optimize colinear points
@@ -184,21 +194,21 @@ namespace spline {
             }
 
             //normalize to step size
-            controlPoints[i].ddx *= kStepSize / std::sqrt(magnitude);
-            controlPoints[i].ddy *= kStepSize / std::sqrt(magnitude);
+            controlPoints[i].ddx *= (kStepSize / units::Qsqrt(magnitude)).getValue();
+            controlPoints[i].ddy *= (kStepSize / units::Qsqrt(magnitude)).getValue();
 
             //move opposite the gradient by step size amount
-            splines->at(i).ddx1_ -= controlPoints[i].ddx;
-            splines->at(i).ddy1_ -= controlPoints[i].ddy;
-            splines->at(i + 1).ddx0_ -= controlPoints[i].ddx;
-            splines->at(i + 1).ddy0_ -= controlPoints[i].ddy;
+            splines->at(i).ddx1_ -= controlPoints[i].ddx.getValue();
+            splines->at(i).ddy1_ -= controlPoints[i].ddy.getValue();
+            splines->at(i + 1).ddx0_ -= controlPoints[i].ddx.getValue();
+            splines->at(i + 1).ddy0_ -= controlPoints[i].ddy.getValue();
 
             //recompute the spline's coefficients to account for new second derivatives
             splines->at(i).computeCoefficients();
             splines->at(i + 1).computeCoefficients();
         }
 
-        p1 = geometry::Translation2d(-kStepSize, sumDCurvature2(*splines));
+        p1 = geometry::Translation2d(-1 * kStepSize, sumDCurvature2(*splines).getValue());
         for (int i = 0; i < splines->size() - 1; ++i) { //last point is offset from the middle location by +stepSize
             //don't try to optimize colinear points
             if (splines->at(i).getStartPose().IsLinear(splines->at(i+1).getStartPose()) || splines->at(i).getEndPose().IsLinear(splines->at(i+1).getEndPose())) {
@@ -206,18 +216,18 @@ namespace spline {
             }
             //move along the gradient by 2 times the step size amount (to return to original location and move by 1
             // step)
-            splines->at(i).ddx1_ += 2 * controlPoints[i].ddx;
-            splines->at(i).ddy1_ += 2 * controlPoints[i].ddy;
-            splines->at(i + 1).ddx0_ += 2 * controlPoints[i].ddx;
-            splines->at(i + 1).ddy0_ += 2 * controlPoints[i].ddy;
+            splines->at(i).ddx1_ += 2 * controlPoints[i].ddx.getValue();
+            splines->at(i).ddy1_ += 2 * controlPoints[i].ddy.getValue();
+            splines->at(i + 1).ddx0_ += 2 * controlPoints[i].ddx.getValue();
+            splines->at(i + 1).ddy0_ += 2 * controlPoints[i].ddy.getValue();
 
             //recompute the spline's coefficients to account for new second derivatives
             splines->at(i).computeCoefficients();
             splines->at(i + 1).computeCoefficients();
         }
 
-        p3 = geometry::Translation2d(kStepSize, sumDCurvature2(*splines));
-        double stepSize = fitParabola(p1, p2, p3); //approximate step size to minimize sumDCurvature2 along the gradient
+        p3 = geometry::Translation2d(kStepSize, sumDCurvature2(*splines).getValue());
+        units::QLength stepSize = fitParabola(p1, p2, p3); //approximate step size to minimize sumDCurvature2 along the gradient
 
         for (int i = 0; i < splines->size() - 1; ++i) {
             //don't try to optimize colinear points
@@ -226,13 +236,13 @@ namespace spline {
             }
             //move by the step size calculated by the parabola fit (+1 to offset for the final transformation to find
             // p3)
-            controlPoints[i].ddx *= 1 + stepSize / kStepSize;
-            controlPoints[i].ddy *= 1 + stepSize / kStepSize;
+            controlPoints[i].ddx *= 1.0 * units::num + stepSize / kStepSize;
+            controlPoints[i].ddy *= 1.0 * units::num + stepSize / kStepSize;
 
-            splines->at(i).ddx1_ += controlPoints[i].ddx;
-            splines->at(i).ddy1_ += controlPoints[i].ddy;
-            splines->at(i + 1).ddx0_ += controlPoints[i].ddx;
-            splines->at(i + 1).ddy0_ += controlPoints[i].ddy;
+            splines->at(i).ddx1_ += controlPoints[i].ddx.getValue();
+            splines->at(i).ddy1_ += controlPoints[i].ddy.getValue();
+            splines->at(i + 1).ddx0_ += controlPoints[i].ddx.getValue();
+            splines->at(i + 1).ddy0_ += controlPoints[i].ddy.getValue();
 
             //recompute the spline's coefficients to account for new second derivatives
             splines->at(i).computeCoefficients();
@@ -240,7 +250,7 @@ namespace spline {
         }
 
     }
-    double QuinticHermiteSpline::fitParabola(geometry::Translation2d p1, geometry::Translation2d p2, geometry::Translation2d p3) {
+    units::QLength QuinticHermiteSpline::fitParabola(geometry::Translation2d p1, geometry::Translation2d p2, geometry::Translation2d p3) {
         double A = (p3.x() * (p2.y() - p1.y()) + p2.x() * (p1.y() - p3.y()) + p1.x() * (p3.y() - p2.y())).getValue();
         double B = (p3.x() * p3.x() * (p1.y() - p2.y()) + p2.x() * p2.x() * (p3.y() - p1.y()) + p1.x() * p1.x() *
                                                                                                 (p2.y() - p3.y())).getValue();

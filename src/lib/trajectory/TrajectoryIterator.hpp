@@ -15,6 +15,8 @@
 #include "../geometry/Rotation2d.hpp"
 #include "../geometry/Pose2d.hpp"
 #include "../geometry/Pose2dWithCurvature.hpp"
+#include "timing/TimedState.hpp"
+#include "../utility/Utility.hpp"
 
 
 namespace trajectory {
@@ -28,16 +30,45 @@ namespace trajectory {
       TrajectorySamplePoint<S> current_sample_;
 
     public:
-      TrajectoryIterator(std::shared_ptr<TrajectoryView<S>> view);
-      void setup();
-      bool isDone();
-      double getProgress();
-      double getRemainingProgress();
-      TrajectorySamplePoint<S> getSample();
-      S getState();
-      TrajectorySamplePoint<S> advance(double additional_progress);
-      TrajectorySamplePoint<S> preview(double additional_progress);
-      Trajectory<S> trajectory();
+      TrajectoryIterator(std::shared_ptr<TrajectoryView<S>> view)  :
+          current_sample_(S(), 0, 0)
+      {
+        view_ = view;
+      }
+
+      void setup() {
+        current_sample_ = view_->sample(view_->first_interpolant());
+        progress_ = view_->first_interpolant();
+      }
+
+      bool isDone() {
+        return getRemainingProgress() == 0.0;
+      }
+      double getProgress() {
+        return progress_;
+      }
+      double getRemainingProgress() {
+        return MAX(0.0, view_->last_interpolant() - progress_);
+      }
+      TrajectorySamplePoint<S> getSample() {
+        return current_sample_;
+      }
+      S getState()  {
+        return getSample().state();
+      }
+      TrajectorySamplePoint<S> advance(double additional_progress)  {
+        progress_ = MAX(view_->first_interpolant(),
+                        MIN(view_->last_interpolant(), progress_ + additional_progress));  current_sample_ = view_->sample(progress_);
+        return current_sample_;
+      }
+      TrajectorySamplePoint<S> preview(double additional_progress)  {
+        double progress = MAX(view_->first_interpolant(),
+                              MIN(view_->last_interpolant(), progress_ + additional_progress));
+        return view_->sample(progress);
+      }
+      Trajectory<S>* trajectory() {
+        return view_->trajectory();
+      }
   };
 
 

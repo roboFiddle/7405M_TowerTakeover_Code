@@ -3,10 +3,7 @@
 //
 
 #include "TrajectoryView.hpp"
+#include "timing/TimedState.hpp"
 
 namespace trajectory {
-  template class TrajectoryView<geometry::Translation2d>;
-  template class TrajectoryView<geometry::Rotation2d>;
-  template class TrajectoryView<geometry::Pose2d>;
-  template class TrajectoryView<geometry::Pose2dWithCurvature>;
 }

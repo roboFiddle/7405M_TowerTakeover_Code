@@ -146,7 +146,7 @@ namespace test {
     // Forward dynamics.
     physics::DifferentialDrive::DriveDynamics dynamics = drive.solveForwardDynamics(
         physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed>(0.0, 0.0),
-        physics::DifferentialDrive::WheelState<double>(0.0, 0.0));
+        physics::DifferentialDrive::WheelState<units::Number>(0.0, 0.0));
     assertEquals(0.0, dynamics.wheel_torque.left_.getValue());
     assertEquals(0.0, dynamics.wheel_torque.right_.getValue());
     assertEquals(0.0, dynamics.wheel_acceleration.left_.getValue());
@@ -156,7 +156,7 @@ namespace test {
 
     dynamics = drive.solveForwardDynamics(
         physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed>(0.0, 0.0),
-        physics::DifferentialDrive::WheelState<double>(12.0, 12.0));
+        physics::DifferentialDrive::WheelState<units::Number>(12.0, 12.0));
     assertEquals(11.0 * .35, dynamics.wheel_torque.left_.getValue());
     assertEquals(11.0 * .35, dynamics.wheel_torque.right_.getValue());
     assertTrue(0.0 < dynamics.wheel_acceleration.left_.getValue());
@@ -166,16 +166,17 @@ namespace test {
 
     dynamics = drive.solveForwardDynamics(
         physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed>(0.0, 0.0),
-        physics::DifferentialDrive::WheelState<double>(-12.0, -12.0));
+        physics::DifferentialDrive::WheelState<units::Number>(-12.0, -12.0));
     assertEquals(-11.0 * .35, dynamics.wheel_torque.left_.getValue());
     assertEquals(-11.0 * .35, dynamics.wheel_torque.right_.getValue());
     assertTrue(0.0 > dynamics.wheel_acceleration.left_.getValue());
     assertTrue(0.0 > dynamics.wheel_acceleration.right_.getValue());
     assertTrue(0.0 > dynamics.chassis_acceleration.linear_.getValue());
     assertEquals(0.0, dynamics.chassis_acceleration.angular_.getValue());
+
     dynamics = drive.solveForwardDynamics(
         physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed>(0.0, 0.0),
-        physics::DifferentialDrive::WheelState<double>(-12.0, 12.0));
+        physics::DifferentialDrive::WheelState<units::Number>(-12.0, 12.0));
     assertEquals(-11.0 * .35, dynamics.wheel_torque.left_.getValue());
     assertEquals(11.0 * .35, dynamics.wheel_torque.right_.getValue());
     assertTrue(0.0 > dynamics.wheel_acceleration.left_.getValue());

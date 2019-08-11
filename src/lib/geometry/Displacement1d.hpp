@@ -10,9 +10,9 @@ namespace geometry {
      units::QLength displacement_;
     public:
       Displacement1d(units::QLength displacement);
-      double distance(Displacement1d other);
+      units::QLength distance(Displacement1d other);
       bool operator==(Displacement1d other);
-      Displacement1d interpolate(Displacement1d other, double x);
+      Displacement1d interpolate(Displacement1d other, units::Number x);
       std::string toCSV();
       std::string toString();
   };

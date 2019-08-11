@@ -15,8 +15,8 @@ namespace trajectory {
   class TimingConstraint {
   static_assert(std::is_base_of<geometry::State<T>, T>::value, "T is not derived from State");
    public:
-    virtual double getMaxVelocity(T state) = 0;
-    virtual physics::DifferentialDrive::MinMaxAcceleration getMinMaxAcceleration(T state, double velocity) = 0;
+    virtual units::QSpeed getMaxVelocity(T state) = 0;
+    virtual physics::DifferentialDrive::MinMaxAcceleration getMinMaxAcceleration(T state, units::QSpeed velocity) = 0;
   };
 }
 #endif //INC_7405M_CODE_SRC_LIB_TRAJECTORY_TIMING_TIMINGCONSTRAINT_HPP_

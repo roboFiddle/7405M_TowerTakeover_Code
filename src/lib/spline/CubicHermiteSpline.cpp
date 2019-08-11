@@ -11,7 +11,7 @@
 namespace spline{
     CubicHermiteSpline::CubicHermiteSpline(geometry::Pose2d p0, geometry::Pose2d p1) {
         double x0, x1, dx0, dx1, y0, y1, dy0, dy1;
-        double scale = 2 * p0.translation().distance(p1.translation());
+        double scale = 2 * p0.translation().distance(p1.translation()).getValue();
         x0 = p0.translation().x().getValue();
         x1 = p1.translation().x().getValue();
         dx0 = p0.rotation().cos() * scale;
@@ -29,48 +29,51 @@ namespace spline{
         cy_ = dy0;
         dy_ = y0;
     }
-    geometry::Translation2d CubicHermiteSpline::getPoint(double t) {
+    geometry::Translation2d CubicHermiteSpline::getPoint(units::QTime t) {
         return geometry::Translation2d(x(t), y(t));
     }
-    geometry::Rotation2d CubicHermiteSpline::getHeading(double t) {
+    geometry::Rotation2d CubicHermiteSpline::getHeading(units::QTime t) {
         return geometry::Rotation2d(x(t), y(t));
     }
-    double CubicHermiteSpline::getVelocity(double t) {
-        return std::hypot(dx(t), dy(t));
+    units::QSpeed CubicHermiteSpline::getVelocity(units::QTime t) {
+        return units::Qsqrt(dx(t) * dx(t) + dy(t) * dy(t));
     }
-    double CubicHermiteSpline::getCurvature(double t) {
-        double a = (dx(t) * ddy(t) - dy(t) * ddx(t));
-        double b = (dx(t) * dx(t) + dy(t) * dy(t)) * std::sqrt(dx(t) * dx(t) + dy(t) * dy(t));
+    units::QCurvature CubicHermiteSpline::getCurvature(units::QTime t) {
+        units::RQuantity<std::ratio<0>, std::ratio<2>, std::ratio<-3>, std::ratio<0>> a = (dx(t) * ddy(t) - dy(t) * ddx(t));
+        units::RQuantity<std::ratio<0>, std::ratio<3>, std::ratio<-3>, std::ratio<0>> b = (dx(t) * dx(t) + dy(t) * dy(t)) * units::Qsqrt(dx(t) * dx(t) + dy(t) * dy(t));
         return a / b;
     }
-    double CubicHermiteSpline::getDCurvature(double t) {
-        double dx2dy2 = (dx(t) * dx(t) + dy(t) * dy(t));
-        double num = (dx(t) * dddy(t) - dddx(t) * dy(t)) * dx2dy2 - 3 * (dx(t) * ddy(t) - ddx(t) * dy(t)) * (dx(t) * ddx(t) + dy(t) * ddy(t));
-        return num / (dx2dy2 * dx2dy2 * std::sqrt(dx2dy2));
+    units::QDCurvature CubicHermiteSpline::getDCurvature(units::QTime t) {
+        units::RQuantity<std::ratio<0>, std::ratio<2>, std::ratio<-2>, std::ratio<0>>  dx2dy2 = (dx(t) * dx(t) + dy(t) * dy(t));
+        units::RQuantity<std::ratio<0>, std::ratio<-5>, std::ratio<5>, std::ratio<0>> a = 1 / ( 2 * units::Qpow(dx2dy2, std::ratio<5,2>()));
+        units::RQuantity<std::ratio<0>, std::ratio<4>, std::ratio<-6>, std::ratio<0>> b = 2 * dx2dy2 * (dddy(t) * dx(t) + dddx(t) * dy(t));
+        units::RQuantity<std::ratio<0>, std::ratio<4>, std::ratio<-6>, std::ratio<0>> c = 6 * (ddx(t) * dy(t) - dx(t) * ddy(t)) * (dx(t) * ddx(t) + dy(t) * ddy(t));
+
+        return a * (b + c);
     }
 
-    double CubicHermiteSpline::x(double t) {
+    units::QLength CubicHermiteSpline::x(units::QTime t) {
         return t * t * t * ax_ + t * t * bx_ + t * cx_ + dx_;
     }
-    double CubicHermiteSpline::y(double t) {
+    units::QLength CubicHermiteSpline::y(units::QTime t) {
         return t * t * t * ay_ + t * t * by_ + t * cy_ + dy_;
     }
-    double CubicHermiteSpline::dx(double t) {
+    units::QSpeed CubicHermiteSpline::dx(units::QTime t) {
         return 3 * t * t * ax_  + 2 * t * bx_ + cx_;
     }
-    double CubicHermiteSpline::dy(double t) {
+    units::QSpeed CubicHermiteSpline::dy(units::QTime t) {
         return 3 * t * t * ay_  + 2 * t * by_ + cy_;
     }
-    double CubicHermiteSpline::ddx(double t) {
+    units::QAcceleration CubicHermiteSpline::ddx(units::QTime t) {
         return 6 * t * ax_ + 2 * bx_;
     }
-    double CubicHermiteSpline::ddy(double t) {
+    units::QAcceleration CubicHermiteSpline::ddy(units::QTime t) {
         return 6 * t * ay_ + 2 * by_;
     }
-    double CubicHermiteSpline::dddx(double t) {
+    units::QJerk CubicHermiteSpline::dddx(units::QTime t) {
         return 6 * ax_;
     }
-    double CubicHermiteSpline::dddy(double t) {
+    units::QJerk CubicHermiteSpline::dddy(units::QTime t) {
         return 6 * ay_;
     }
 }

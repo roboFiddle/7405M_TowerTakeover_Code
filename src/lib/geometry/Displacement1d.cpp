@@ -8,13 +8,13 @@ namespace geometry {
   Displacement1d::Displacement1d(units::QLength displacement) {
     displacement_ = displacement;
   }
-  double Displacement1d::distance(Displacement1d other) {
-    return std::fabs((displacement_ - other.displacement_).getValue());
+  units::QLength Displacement1d::distance(Displacement1d other) {
+    return units::Qabs((displacement_ - other.displacement_));
   }
   bool Displacement1d::operator==(Displacement1d other) {
     return displacement_ == other.displacement_;
   };
-  Displacement1d Displacement1d::interpolate(Displacement1d other, double x) {
+  Displacement1d Displacement1d::interpolate(Displacement1d other, units::Number x) {
     return Displacement1d(INTERPOLATE(displacement_, other.displacement_, x));
   }
   std::string Displacement1d::toCSV() {

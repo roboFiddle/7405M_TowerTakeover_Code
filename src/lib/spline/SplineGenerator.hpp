@@ -14,32 +14,33 @@
 namespace spline {
     class SplineGenerator {
     private:
-        static constexpr double kMaxDX = 2.0;
-        static constexpr double kMaxDY = .05;
-        static constexpr double kMaxDTheta = 0.1; // RADIANS!!
+        static constexpr units::QLength kMaxDX = 2.0;
+        static constexpr units::QLength kMaxDY = .05;
+        static constexpr units::Angle kMaxDTheta = 0.1; // RADIANS!!
         static constexpr int kMinSampleSize = 1;
 
         template <class T>
-        static std::vector<geometry::Pose2dWithCurvature> parameterizeSplinesTemplated(std::vector<T> *splines, double maxDx, double maxDy, double maxDTheta);
+        static std::vector<geometry::Pose2dWithCurvature> parameterizeSplinesTemplated(std::vector<T> *splines, units::QLength maxDx,
+            units::QLength maxDy, units::Angle maxDTheta);
 
     public:
-        static std::vector<geometry::Pose2dWithCurvature> parameterizeSpline(Spline *s, double maxDx, double maxDy,
-                double maxDTheta, double t0, double t1);
+        static std::vector<geometry::Pose2dWithCurvature> parameterizeSpline(Spline *s, units::QLength maxDx, units::QLength maxDy,
+                                                                             units::Angle maxDTheta, units::QTime t0, units::QTime t1);
 
         static std::vector<geometry::Pose2dWithCurvature> parameterizeSpline(Spline *s);
 
-        static std::vector<geometry::Pose2dWithCurvature>  parameterizeSpline(Spline *s, double maxDx, double maxDy,
-                double maxDTheta);
+        static std::vector<geometry::Pose2dWithCurvature>  parameterizeSpline(Spline *s, units::QLength maxDx, units::QLength maxDy,
+                                                                              units::Angle maxDTheta);
 
         static std::vector<geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<CubicHermiteSpline> *splines);
-        static std::vector<geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<CubicHermiteSpline> *splines, double maxDx,
-                                                                              double maxDy, double maxDTheta);
+        static std::vector<geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<CubicHermiteSpline> *splines, units::QLength maxDx,
+                                                                              units::QLength maxDy, units::Angle maxDTheta);
         static std::vector<geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<QuinticHermiteSpline> *splines);
-        static std::vector<geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<QuinticHermiteSpline> *splines, double maxDx,
-                                                                              double maxDy, double maxDTheta);
+        static std::vector<geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<QuinticHermiteSpline> *splines, units::QLength maxDx,
+                                                                              units::QLength maxDy, units::Angle maxDTheta);
 
-        static void getSegmentArc(Spline *s, std::vector<geometry::Pose2dWithCurvature> *rv, double t0, double t1, double maxDx,
-                double maxDy, double maxDTheta);
+        static void getSegmentArc(Spline *s, std::vector<geometry::Pose2dWithCurvature> *rv, units::QTime t0, units::QTime t1, units::QLength maxDx,
+                                  units::QLength maxDy, units::Angle maxDTheta);
 
     };
 

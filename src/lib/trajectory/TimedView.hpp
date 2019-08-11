@@ -18,18 +18,46 @@
 namespace trajectory {
 
   template <class S>
-  class TimedView : TrajectoryView<TimedState<S>> {
+  class TimedView : public TrajectoryView<TimedState<S>> {
     static_assert(std::is_base_of<geometry::State<S>, S>::value, "S must derive from State");
     protected:
-      Trajectory<TimedState<S>> trajectory_;
-      double start_t_;
-      double end_t_;
+      Trajectory<TimedState<S>>* trajectory_;
+      units::QTime start_t_;
+      units::QTime end_t_;
     public:
-      TimedView(Trajectory<TimedState<S>> trajectory);
-      double first_interpolant();
-      double last_interpolant();
-      TrajectorySamplePoint<TimedState<S>> sample(double t);
-      Trajectory<TimedState<S>> trajectory();
+      TimedView(Trajectory<TimedState<S>>* trajectory)  {
+        trajectory_ = trajectory;
+        start_t_ = trajectory_->getState(0).t();
+        end_t_ = trajectory_->getState(trajectory_->length() - 1).t();
+      }
+      double first_interpolant()  {
+        return start_t_.getValue();
+      }
+      double last_interpolant() {
+        return end_t_.getValue();
+      }
+      TrajectorySamplePoint<TimedState<S>> sample(double t)  {
+        if (t >= end_t_.getValue()) {
+          return TrajectorySamplePoint<TimedState<S>>(trajectory_->getPoint(trajectory_->length() - 1));
+        }
+        if (t <= start_t_.getValue()) {
+          return TrajectorySamplePoint<TimedState<S>>(trajectory_->getPoint(0));
+        }
+        for (int i = 1; i < trajectory_->length(); ++i) {
+          TrajectoryPoint<TimedState<S>> s = trajectory_->getPoint(i);
+          if (s.state().t() >= t*units::second) {
+            TrajectoryPoint<TimedState<S>> prev_s = trajectory_->getPoint(i - 1);
+            if (FEQUALS(s.state().t(), prev_s.state().t())) {
+              return TrajectorySamplePoint<TimedState<S>>(s);
+            }
+            return TrajectorySamplePoint<TimedState<S>>(prev_s.state().interpolate(s.state(),
+                                                                                   (t*units::second - prev_s.state().t()) / (s.state().t() - prev_s.state().t())), i - 1, i);
+          }
+        }
+      }
+      Trajectory<TimedState<S>>* trajectory()  {
+        return trajectory_;
+      }
 
   };
 

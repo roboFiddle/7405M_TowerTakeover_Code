@@ -22,9 +22,12 @@ namespace trajectory {
     static_assert(std::is_base_of<geometry::State<S>, S>::value, "S must derive from State");
    public:
     virtual TrajectorySamplePoint<S> sample(double interpolant) = 0;
+
     virtual double first_interpolant() = 0;
+
     virtual double last_interpolant() = 0;
-    virtual Trajectory<S> trajectory() = 0;
+
+    virtual Trajectory<S>* trajectory() = 0;
   };
 }
 

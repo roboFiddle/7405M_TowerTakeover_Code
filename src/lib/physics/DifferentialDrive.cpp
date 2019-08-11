@@ -10,10 +10,10 @@
 namespace physics {
   DifferentialDrive::MinMaxAcceleration::MinMaxAcceleration() {
     // No limits.
-    min_acceleration_ = -INFINITY;
-    max_acceleration_ = INFINITY;
+    min_acceleration_ = -INFINITY * units::mps2;
+    max_acceleration_ = INFINITY * units::mps2;
   }
-  DifferentialDrive::MinMaxAcceleration::MinMaxAcceleration(double min_acceleration, double max_acceleration) {
+  DifferentialDrive::MinMaxAcceleration::MinMaxAcceleration(units::QAcceleration min_acceleration, units::QAcceleration max_acceleration) {
       min_acceleration_ = min_acceleration;
       max_acceleration_ = max_acceleration;
     }
@@ -90,7 +90,7 @@ namespace physics {
   }
 
   DifferentialDrive::DriveDynamics DifferentialDrive::solveForwardDynamics(ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity,
-                                                                           DifferentialDrive::WheelState<double> voltage) {
+                                                                           DifferentialDrive::WheelState<units::Number> voltage) {
     DriveDynamics dynamics;
     dynamics.wheel_velocity = solveInverseKinematics(chassis_velocity);
     dynamics.chassis_velocity = chassis_velocity;
@@ -101,7 +101,7 @@ namespace physics {
     solveForwardDynamics(&dynamics);
     return dynamics;
   }
-  DifferentialDrive::DriveDynamics DifferentialDrive::solveForwardDynamics(DifferentialDrive::WheelState<units::QAngularSpeed> wheel_velocity, DifferentialDrive::WheelState<double> voltage) {
+  DifferentialDrive::DriveDynamics DifferentialDrive::solveForwardDynamics(DifferentialDrive::WheelState<units::QAngularSpeed> wheel_velocity, DifferentialDrive::WheelState<units::Number> voltage) {
     DriveDynamics dynamics;
     dynamics.wheel_velocity = wheel_velocity;
     dynamics.chassis_velocity = solveForwardKinematics(wheel_velocity);
@@ -114,8 +114,8 @@ namespace physics {
   }
 
   void DifferentialDrive::solveForwardDynamics(DifferentialDrive::DriveDynamics* dynamics) {
-    bool left_stationary = FEQUALS(dynamics->wheel_velocity.left_, 0.0*units::rps) && fabs(dynamics->voltage.left_) < left_.friction_voltage();
-    bool right_stationary = FEQUALS(dynamics->wheel_velocity.right_, 0.0*units::rps) && fabs(dynamics->voltage.right_) < right_.friction_voltage();
+    bool left_stationary = FEQUALS(dynamics->wheel_velocity.left_, 0.0*units::rps) && units::Qabs(dynamics->voltage.left_) < left_.friction_voltage();
+    bool right_stationary = FEQUALS(dynamics->wheel_velocity.right_, 0.0*units::rps) && units::Qabs(dynamics->voltage.right_) < right_.friction_voltage();
     if (left_stationary && right_stationary) {
       // Neither side breaks static friction, so we remain stationary.
       dynamics->wheel_torque.left_ = dynamics->wheel_torque.right_ = 0.0;
@@ -138,7 +138,9 @@ namespace physics {
 
     // Solve for change in curvature from angular_ acceleration.
     // total angular_ accel = linear_accel * curvature + v^2 * dcurvature
-    dynamics->dcurvature = (dynamics->chassis_acceleration.angular_ - dynamics->chassis_acceleration.linear_ * dynamics->curvature) / (dynamics->chassis_velocity.linear_ * dynamics->chassis_velocity.linear_);
+
+    // TODO: SOLVE DCURVATURE - UNITS ARE WEIRD
+    dynamics->dcurvature = (dynamics->chassis_acceleration.angular_ - dynamics->chassis_acceleration.linear_ * dynamics->curvature).getValue() / (dynamics->chassis_velocity.linear_ * dynamics->chassis_velocity.linear_).getValue();
     if (std::isnan(dynamics->dcurvature.getValue()))
       dynamics->dcurvature = 0.0;
 
@@ -154,7 +156,9 @@ namespace physics {
     if (std::isnan(dynamics.curvature.getValue()))
       dynamics.curvature = 0.0;
     dynamics.chassis_acceleration = chassis_acceleration;
-    dynamics.dcurvature = (dynamics.chassis_acceleration.angular_ - dynamics.chassis_acceleration.linear_ * dynamics.curvature) / (dynamics.chassis_velocity.linear_ * dynamics.chassis_velocity.linear_);
+
+    // TODO: SOLVE DCURVATURE - UNITS ARE WEIRD
+    dynamics.dcurvature = (dynamics.chassis_acceleration.angular_ - dynamics.chassis_acceleration.linear_ * dynamics.curvature).getValue() / (dynamics.chassis_velocity.linear_ * dynamics.chassis_velocity.linear_).getValue();
     if (std::isnan(dynamics.dcurvature.getValue()))
       dynamics.dcurvature = 0.0;
     dynamics.wheel_velocity = solveInverseKinematics(chassis_velocity);
@@ -169,7 +173,9 @@ namespace physics {
     if (std::isnan(dynamics.curvature.getValue()))
       dynamics.curvature = 0.0;
     dynamics.chassis_acceleration = solveForwardKinematics(wheel_acceleration);
-    dynamics.dcurvature = (dynamics.chassis_acceleration.angular_ - dynamics.chassis_acceleration.linear_ * dynamics.curvature) / (dynamics.chassis_velocity.linear_ * dynamics.chassis_velocity.linear_);
+
+    // TODO: SOLVE DCURVATURE - UNITS ARE WEIRD
+    dynamics.dcurvature = (dynamics.chassis_acceleration.angular_ - dynamics.chassis_acceleration.linear_ * dynamics.curvature).getValue() / (dynamics.chassis_velocity.linear_ * dynamics.chassis_velocity.linear_).getValue();
     if (std::isnan(dynamics.dcurvature.getValue()))
       dynamics.dcurvature = 0.0;
     dynamics.wheel_velocity = wheel_velocity;
@@ -187,14 +193,11 @@ namespace physics {
         dynamics->chassis_acceleration.angular_ * moi_ / effective_wheelbase_radius_ +
         dynamics->chassis_velocity.angular_ * angular_drag_ / effective_wheelbase_radius_);
 
-
-    std::printf("LOL %f %f \n", dynamics->chassis_acceleration.linear_, dynamics->chassis_acceleration.angular_ );
-
     // Solve for input voltages.
     dynamics->voltage.left_ = left_.get_voltage_for_torque(dynamics->wheel_velocity.left_, dynamics->wheel_torque.left_);
     dynamics->voltage.right_ = right_.get_voltage_for_torque(dynamics->wheel_velocity.right_, dynamics->wheel_torque.right_);
   }
-  units::QSpeed DifferentialDrive::getMaxAbsVelocity(units::QCurvature curvature, double max_abs_voltage) {
+  units::QSpeed DifferentialDrive::getMaxAbsVelocity(units::QCurvature curvature, units::Number max_abs_voltage) {
     units::QAngularSpeed left_speed_at_max_voltage = left_.free_speed_at_voltage(max_abs_voltage);
     units::QAngularSpeed right_speed_at_max_voltage = right_.free_speed_at_voltage(max_abs_voltage);
 
@@ -217,7 +220,7 @@ namespace physics {
     return wheel_radius_ * (right_speed_at_max_voltage + left_speed_if_right_max) / 2.0; // Right at max is active constraint.
   }
 
-  DifferentialDrive::MinMaxAcceleration DifferentialDrive::getMinMaxAcceleration(DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity, units::QCurvature curvature, double max_abs_voltage) {
+  DifferentialDrive::MinMaxAcceleration DifferentialDrive::getMinMaxAcceleration(DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity, units::QCurvature curvature, units::Number max_abs_voltage) {
     MinMaxAcceleration result;
     WheelState<units::QAngularSpeed> wheel_velocities = solveInverseKinematics(chassis_velocity);
     result.min_acceleration_ = units::mps2 * INFINITY;
@@ -234,7 +237,6 @@ namespace physics {
     units::QMoment angular_term_tmp = moi_;
     if(!std::isinf(curvature.getValue())) {
       angular_term_tmp = angular_term_tmp * curvature.getValue();
-      std::printf("uh why \n");
     }
     else {
 
@@ -258,8 +260,8 @@ namespace physics {
           variable_torque = drag_torque + fixed_torque * (linear_term - angular_term) / (linear_term + angular_term);
         }
 
-        double variable_voltage = variable_transmission->get_voltage_for_torque(wheel_velocities.get(!left), variable_torque);
-        if (fabs(variable_voltage) <= max_abs_voltage + EPSILON) {
+        units::Number variable_voltage = variable_transmission->get_voltage_for_torque(wheel_velocities.get(!left), variable_torque);
+        if (units::Qabs(variable_voltage) <= max_abs_voltage + EPSILON*units::num) {
           units::QAcceleration accel = 0.0;
           if (std::isinf(curvature.getValue())) {
             accel = ((left ? -1.0 : 1.0) * (fixed_torque - variable_torque) * effective_wheelbase_radius_

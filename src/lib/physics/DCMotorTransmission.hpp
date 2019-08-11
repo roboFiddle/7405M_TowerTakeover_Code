@@ -12,15 +12,15 @@ namespace physics {
     protected:
         const units::QAngularSpeed speed_per_volt_; // RADIANS / SECOND
         const units::QTorque torque_per_volt_; // Nm / VOLT
-        const double friction_voltage_; // voltage to overcome friction (V)
+        const units::Number friction_voltage_; // voltage to overcome friction (V)
     public:
-        DCMotorTransmission(units::QAngularSpeed speed_per_volt, units::QTorque torque_per_volt, double friction_voltage);
+        DCMotorTransmission(units::QAngularSpeed speed_per_volt, units::QTorque torque_per_volt, units::Number friction_voltage);
         units::QAngularSpeed speed_per_volt();
         units::QTorque torque_per_volt();
-        double friction_voltage();
-        units::QAngularSpeed free_speed_at_voltage(double voltage);
-        units::QTorque get_torque_at_voltage(units::QAngularSpeed speed, double voltage);
-        double get_voltage_for_torque(units::QAngularSpeed speed, units::QTorque torque);
+        units::Number friction_voltage();
+        units::QAngularSpeed free_speed_at_voltage(units::Number voltage);
+        units::QTorque get_torque_at_voltage(units::QAngularSpeed speed, units::Number voltage);
+        units::Number get_voltage_for_torque(units::QAngularSpeed speed, units::QTorque torque);
 
     };
 }

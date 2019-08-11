@@ -13,24 +13,24 @@ namespace geometry {
   class Pose2dWithCurvature : IPose2d<Pose2dWithCurvature>, ICurvature<Pose2dWithCurvature> {
     private:
       Pose2d pose_;
-      double curvature_;
-      double dcurvature_ds_;
+      units::QCurvature curvature_;
+      units::QDCurvature dcurvature_ds_;
     public:
       Pose2dWithCurvature();
-      Pose2dWithCurvature(Pose2d pose, double curvature);
-      Pose2dWithCurvature(Pose2d pose, double curvature, double dcurvature_ds);
-      Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, double curvature);
-      Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, double curvature, double dcurvature_ds);
+      Pose2dWithCurvature(Pose2d pose, units::QCurvature curvature);
+      Pose2dWithCurvature(Pose2d pose, units::QCurvature curvature, units::QDCurvature dcurvature_ds);
+      Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, units::QCurvature curvature);
+      Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, units::QCurvature curvature, units::QDCurvature dcurvature_ds);
       Pose2d pose();
       Pose2dWithCurvature getPose();
       Pose2dWithCurvature transformBy(Pose2d transform);
       Pose2dWithCurvature mirror();
-      double curvature();
-      double dcurvature();
+      units::QCurvature curvature();
+      units::QDCurvature dcurvature();
       Translation2d translation();
       Rotation2d rotation();
-      Pose2dWithCurvature interpolate(Pose2dWithCurvature other, double x);
-      double distance(Pose2dWithCurvature other);
+      Pose2dWithCurvature interpolate(Pose2dWithCurvature other, units::Number x);
+      units::QLength distance(Pose2dWithCurvature other);
       bool operator==(Pose2dWithCurvature other);
       Pose2dWithCurvature& operator=(Pose2dWithCurvature other);
       std::string toCSV();

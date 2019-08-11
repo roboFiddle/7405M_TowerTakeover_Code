@@ -12,22 +12,28 @@
 
 namespace spline {
     typedef struct ControlPoint {
-        double ddx;
-        double ddy;
+        units::Number ddx;
+        units::Number ddy;
     } ControlPoint;
 
     class QuinticHermiteSpline : public Spline {
     protected:
-        double x0_, y0_, dx0_, dy0_, ddx0_, ddy0_; // starting point
-        double x1_, y1_, dx1_, dy1_, ddx1_, ddy1_; // ending point
+        double x0_, y0_, x1_, y1_;
+        double dx0_, dy0_, dx1_, dy1_;
+        double ddx0_, ddy0_, ddx1_, ddy1_;
 
-        double ax_, bx_, cx_, dx_, ex_, fx_; // x polynomial coefficients
-        double ay_, by_, cy_, dy_, ey_, fy_; // y polynomial coefficients
+        units::RQuantity<std::ratio<0>, std::ratio<1>, std::ratio<-5>, std::ratio<0>> ax_, ay_;
+        units::RQuantity<std::ratio<0>, std::ratio<1>, std::ratio<-4>, std::ratio<0>> bx_, by_;
+        units::QJerk cx_, cy_;
+        units::QAcceleration dx_, dy_;
+        units::QSpeed ex_, ey_;
+        units::QLength fx_, fy_;
+
     private:
         // Tuning Parameters for Numerical Methods and Optimizing
-        static constexpr double kEpsilon = 1.0/10000;
-        static constexpr double kStepSize = 1.0;
-        static constexpr double kMinDelta = 0.001;
+        static constexpr units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> kEpsilon = 1.0/10000;
+        static constexpr units::QLength kStepSize = 1.0;
+        static constexpr units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> kMinDelta = 0.001;
         static constexpr int kSamples = 100; // FOR INTEGRATION
         static constexpr int kMaxIterations = 100;
 
@@ -35,36 +41,36 @@ namespace spline {
                              double y0, double y1, double dy0, double dy1, double ddy0, double ddy1);
 
         void computeCoefficients();
-        double x(double t);
-        double dx(double t);
-        double ddx(double t);
-        double dddx(double t);
+        units::QLength x(units::QTime t);
+        units::QSpeed dx(units::QTime t);
+        units::QAcceleration ddx(units::QTime t);
+        units::QJerk dddx(units::QTime t);
 
-        double y(double t);
-        double dy(double t);
-        double ddy(double t);
-        double dddy(double t);
-        double sumDCurvature2(); // Returns integral of dCurve^2 over the spline
+        units::QLength y(units::QTime t);
+        units::QSpeed dy(units::QTime t);
+        units::QAcceleration ddy(units::QTime t);
+        units::QJerk dddy(units::QTime t);
+        units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> sumDCurvature2(); // Returns integral of dCurve^2 over the spline
 
         static void runOptimizationIteration(std::vector<QuinticHermiteSpline> *splines);
 
         // Returns X-Cord of Vertex
-        static double fitParabola(geometry::Translation2d p1, geometry::Translation2d p2, geometry::Translation2d p3);
+        static units::QLength fitParabola(geometry::Translation2d p1, geometry::Translation2d p2, geometry::Translation2d p3);
 
 
     public:
         QuinticHermiteSpline(geometry::Pose2d p0, geometry::Pose2d p1);
         geometry::Pose2d getStartPose();
         geometry::Pose2d getEndPose();
-        geometry::Translation2d getPoint(double t);
-        double getVelocity(double t);
-        double getCurvature(double t);
-        double getDCurvature(double t);
-        double dCurvature2(double t);
-        geometry::Rotation2d getHeading(double t);
+        geometry::Translation2d getPoint(units::QTime t);
+        units::QSpeed getVelocity(units::QTime t);
+        units::QCurvature getCurvature(units::QTime t);
+        units::QDCurvature getDCurvature(units::QTime t);
+        units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-2>, std::ratio<0>> dCurvature2(units::QTime t);
+        geometry::Rotation2d getHeading(units::QTime t);
 
-        static double sumDCurvature2(std::vector<QuinticHermiteSpline> splines);
-        static double optimizeSpline(std::vector<QuinticHermiteSpline> *splines);
+        static units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> sumDCurvature2(std::vector<QuinticHermiteSpline> splines);
+        static units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-1>, std::ratio<0>> optimizeSpline(std::vector<QuinticHermiteSpline> *splines);
 
 
 

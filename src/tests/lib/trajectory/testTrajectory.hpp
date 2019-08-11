@@ -10,7 +10,12 @@
 namespace test {
   class testTrajectory {
    public:
-    static void test();
+    static void testTrajectoryIterator();
+    static void testTrajectoryClass();
+    static void testDistanceView();
+    static void testIntegration();
+    static void somethingElse();
+    static void realisticConstants();
   };
 }
 

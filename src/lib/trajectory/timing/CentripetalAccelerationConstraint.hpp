@@ -10,13 +10,13 @@
 #include "../../geometry/Pose2dWithCurvature.hpp"
 
 namespace trajectory {
-  class CentripetalAccelerationConstraint : TimingConstraint<geometry::Pose2dWithCurvature> {
+  class CentripetalAccelerationConstraint : public TimingConstraint<geometry::Pose2dWithCurvature> {
    private:
-    double max_centripetal_accel_;
+    units::QAngularAcceleration max_centripetal_accel_;
    public:
-    CentripetalAccelerationConstraint(double max_centripetal_accel);
-    double getMaxVelocity(geometry::Pose2dWithCurvature state);
-    physics::DifferentialDrive::MinMaxAcceleration getMinMaxAcceleration(geometry::Pose2dWithCurvature state, double velocity);
+    CentripetalAccelerationConstraint(units::QAngularAcceleration max_centripetal_accel);
+    units::QSpeed getMaxVelocity(geometry::Pose2dWithCurvature state);
+    physics::DifferentialDrive::MinMaxAcceleration getMinMaxAcceleration(geometry::Pose2dWithCurvature state, units::QSpeed velocity);
   };
 }
 #endif //INC_7405M_CODE_SRC_LIB_TRAJECTORY_TIMING_CENTRIPETALACCELERATIONCONSTRAINT_HPP_

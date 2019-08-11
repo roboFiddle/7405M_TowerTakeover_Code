@@ -7,6 +7,7 @@
 
 #include <ratio>
 #include <cmath>
+#include <ostream>
 
 namespace units {
   template<typename MassDim, typename LengthDim, typename TimeDim, typename AngleDim>
@@ -32,6 +33,16 @@ namespace units {
       value -= rhs.value;
       return *this;
     }
+    constexpr RQuantity const& operator*=(const RQuantity& rhs)
+    {
+      value *= rhs.value;
+      return *this;
+    }
+    constexpr RQuantity const& operator/=(const RQuantity& rhs)
+    {
+      value /= rhs.value;
+      return *this;
+    }
 
     // Returns the value of the quantity in multiples of the specified unit
     constexpr double Convert(const RQuantity& rhs) const
@@ -53,7 +64,18 @@ namespace units {
         return 1.0;
       return -1.0;
     }
+
+    std::string to_string() const {
+      return std::to_string(value);
+    }
   };
+
+  template<typename M, typename L, typename T, typename A>
+  std::ostream& operator<<(std::ostream &os, const RQuantity<M, L, T, A> &dt)
+  {
+    os << dt.to_string();
+    return os;
+  }
 
 
   // Predefined (physical unit) quantity types:
@@ -69,7 +91,7 @@ namespace units {
   QUANTITY_TYPE(1, 2, 0, 0, QMoment);
   QUANTITY_TYPE(0, 1, 0, 0, QLength);
   QUANTITY_TYPE(0, -1, 0, 0, QCurvature);
-  QUANTITY_TYPE(0, -2, 0, 0, QDCurvature);
+  QUANTITY_TYPE(0, -1, -1, 0, QDCurvature);
   QUANTITY_TYPE(0, 2, 0, 0, QArea);
   QUANTITY_TYPE(0, 3, 0, 0, QVolume);
   QUANTITY_TYPE(0, 0, 1, 0, QTime);
@@ -223,6 +245,8 @@ namespace units {
   // -----------------
 
   // Predefined mass units:
+  constexpr Number num(1.0);
+
   constexpr QMass kg(1.0);                            // SI base unit
   constexpr QMass gramme = 0.001 * kg;
   constexpr QMass tonne = 1000 * kg;
@@ -270,6 +294,7 @@ namespace units {
 
   constexpr QSpeed mps = metre / second;
   constexpr QAcceleration mps2 = metre / second / second;
+  constexpr QJerk mps3 = metre / second / second / second;
   constexpr QAngularSpeed rps = 1.0 / second;
   constexpr QAngularAcceleration rps2 = 1.0 / second / second;
 
@@ -410,7 +435,26 @@ namespace units {
         (sqrt(num.getValue()));
   }
 
-  // Typesafe trigonometric operations
+  template <typename M, typename L, typename T, typename A>
+  constexpr RQuantity<M, L, T, A>
+  Qabs(const RQuantity<M, L, T, A>& num)
+  {
+    return RQuantity<M, L, T, A>
+        (std::fabs(num.getValue()));
+  }
+
+
+  template <typename M, typename L, typename T, typename A, typename P>
+  constexpr RQuantity<std::ratio_multiply<M, P>, std::ratio_multiply<L, P>,
+                      std::ratio_multiply<T, P>, std::ratio_multiply<A, P>>
+  Qpow(const RQuantity<M, L, T, A>& num, P pow)
+  {
+    return RQuantity<std::ratio_multiply<M, P>, std::ratio_multiply<L, P>,
+                     std::ratio_multiply<T, P>, std::ratio_multiply<A, P>>
+        (std::pow(num.getValue(), pow.num / pow.den));
+  }
+
+// Typesafe trigonometric operations
   inline double sin(const Angle &num)
   {
     return std::sin(num.getValue());

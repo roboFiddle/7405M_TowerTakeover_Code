@@ -22,11 +22,11 @@ namespace geometry {
         Translation2d rotateBy(Rotation2d rotation);
         Rotation2d direction();
         Translation2d inverse();
-        Translation2d interpolate(Translation2d other, double x);
-        Translation2d extrapolate(Translation2d other, double x);
-        Translation2d scale(double s);
+        Translation2d interpolate(Translation2d other, units::Number x);
+        Translation2d extrapolate(Translation2d other, units::Number x);
+        Translation2d scale(units::Number s);
         bool operator==(Translation2d other);
-        double distance(Translation2d other);
+        units::QLength distance(Translation2d other);
 
         std::string toCSV();
         std::string toString();
