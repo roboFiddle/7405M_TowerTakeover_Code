@@ -7,12 +7,16 @@
 
 #include "../lib/meecan_lib.hpp"
 #include "../tests/testsInclude.hpp"
+#include "loops/Loop.hpp"
+#include "loops/Looper.hpp"
 #include "main.h"
 
 
 namespace meecan {
 
   class Robot {
+   private:
+    loops::Looper* testLooper = 0;
    public:
     Robot();
     void robotInit();
@@ -22,9 +26,12 @@ namespace meecan {
     void autonomousLoop();
     void driverInit();
     void driverLoop();
-    struct RobotManager : public util::Singleton<Robot, RobotManager> {};
-    static RobotManager instance;
+
+    /*struct RobotManager : public util::Singleton<Robot, RobotManager> {};
+    static RobotManager instance;*/
+    static Robot* instance;
   };
+  Robot* Robot::instance = new Robot();
 }
 
 void initialize() {

@@ -19,23 +19,11 @@ namespace util {
     T& operator*() {return *mpInstance;}
     const T& operator*() const {return *mpInstance;}
 
-    // TODO: delete this method - it was
-    //       just used for benchmarking in
-    //       the post.
-    static T *getInstance()
-    {
-      static bool static_init = []()->bool {
-        mpInstance = new T;
-        return true;
-      }();
-      return mpInstance;
-    }
-
    protected:
     Singleton()
     {
       static bool static_init = []()->bool {
-        mpInstance = new T;
+        mpInstance = new T();
         return true;
       }();
     }

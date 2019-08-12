@@ -5,10 +5,17 @@
 #ifndef INC_7405M_CODE_SRC_ROBOT_CONSTANTS_HPP_
 #define INC_7405M_CODE_SRC_ROBOT_CONSTANTS_HPP_
 
-namespace meecan {
+namespace constants {
+  class LooperConstants {
+   public:
+    const static double loopDt;
+    const static double mutexDelay;
+  };
+
+
   class RobotConstants {
    public:
-    const static double zero = 0.0;
+    const static double zero;
   };
 }
 

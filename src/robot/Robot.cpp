@@ -6,11 +6,29 @@
 #include "../tests/testsInclude.hpp"
 #include "main.h"
 #include "Robot.hpp"
+#include "Constants.hpp"
+#include "loops/Loop.hpp"
+#include "loops/Looper.hpp"
 
 namespace meecan {
 
   Robot::Robot() {
+    printf("robot construct\n");
+    testLooper = new loops::Looper(0, "test");
+    loops::Loop *test = new loops::Loop();
 
+    test->onStart = [](){
+      printf("test start\n");
+    };
+    test->onLoop = [](){
+      printf("test loop\n");
+    };
+    test->onDisable = [](){
+      printf("test disable\n");
+    };
+
+    std::shared_ptr<loops::Loop> ptr(test);
+    testLooper->add(ptr);
   }
 
   void Robot::robotInit() {
@@ -19,7 +37,8 @@ namespace meecan {
     pros::lcd::set_text(1, "Hello World!");
   }
   void Robot::disabledInit() {
-    printf("disabled init\n");
+    printf("disabled init \n");
+    //testLooper->disable();
   }
   void Robot::disabledLoop() {
     printf("disabled loop\n");
@@ -32,7 +51,7 @@ namespace meecan {
   }
   void Robot::driverInit() {
     printf("driver init\n");
-    //test::testMeecanLib();
+    testLooper->enable();
   }
   void Robot::driverLoop() {
     printf("driver loop\n");

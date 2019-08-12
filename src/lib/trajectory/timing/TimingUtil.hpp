@@ -47,7 +47,6 @@ namespace trajectory {
       for (int i = 0; i < num_states; ++i) {
         states.push_back(distance_view.sample(MIN(i * step_size, distance_view.last_interpolant()*units::metre).getValue()).state());
       }
-      printf("distance view call \n");
       return timeParameterizeTrajectory(reverse, states, constraints, start_velocity, end_velocity,
                                         max_velocity, max_abs_acceleration);
     }
@@ -61,8 +60,6 @@ namespace trajectory {
         units::QSpeed end_velocity,
         units::QSpeed max_velocity_global,
         units::QAcceleration max_abs_acceleration)  {
-
-      printf("states view call \n");
 
       std::vector<ConstrainedState<S>*> constraint_states;
 
@@ -78,9 +75,6 @@ namespace trajectory {
       predecessor->max_velocity = start_velocity;
       predecessor->min_acceleration = -1 * max_abs_acceleration;
       predecessor->max_acceleration = max_abs_acceleration;
-
-      printf("0 \n");
-      printf("size %d\n", states.size());
 
       for (int i = 0; i < states.size(); ++i) {
         //printf("i %d\n", i);
