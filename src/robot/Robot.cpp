@@ -11,49 +11,34 @@
 #include "loops/Looper.hpp"
 
 namespace meecan {
+  Robot::RobotManager instance;
 
   Robot::Robot() {
     printf("robot construct\n");
-    testLooper = new loops::Looper(0, "test");
-    loops::Loop *test = new loops::Loop();
-
-    test->onStart = [](){
-      printf("test start\n");
-    };
-    test->onLoop = [](){
-      printf("test loop\n");
-    };
-    test->onDisable = [](){
-      printf("test disable\n");
-    };
-
-    std::shared_ptr<loops::Loop> ptr(test);
-    testLooper->add(ptr);
+    setupMainLoop();
   }
 
   void Robot::robotInit() {
-    printf("robot init\n");
     pros::lcd::initialize();
-    pros::lcd::set_text(1, "Hello World!");
+    pros::lcd::print(2, "robot init");
+    mainLooper->enable();
   }
   void Robot::disabledInit() {
-    printf("disabled init \n");
-    //testLooper->disable();
+    pros::lcd::print(1, "disabled init %d", pros::millis());
   }
   void Robot::disabledLoop() {
-    printf("disabled loop\n");
+    pros::lcd::print(0, "disabled loop %d", pros::millis());
   }
   void Robot::autonomousInit() {
-    printf("auton init\n");
+    pros::lcd::print(1, "auton init %d", pros::millis());
   }
   void Robot::autonomousLoop() {
-    printf("auton loop\n");
+    pros::lcd::print(0, "auton loop %d", pros::millis());
   }
   void Robot::driverInit() {
-    printf("driver init\n");
-    testLooper->enable();
+    pros::lcd::print(1, "driver init %d", pros::millis());
   }
   void Robot::driverLoop() {
-    printf("driver loop\n");
+    pros::lcd::print(0, "driver loop %d", pros::millis());
   }
 }

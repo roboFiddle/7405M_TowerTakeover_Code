@@ -23,6 +23,9 @@ namespace util {
   bool InterpolatingDouble::operator<(const InterpolatingDouble& other) {
     return (val_ < other.val_);
   }
+  bool InterpolatingDouble::operator<(const InterpolatingDouble other) {
+    return (val_ < other.val_);
+  }
   bool InterpolatingDouble::operator<=(const InterpolatingDouble& other) {
     return (val_ <= other.val_);
   }
@@ -31,5 +34,9 @@ namespace util {
   }
   bool InterpolatingDouble::operator>=(const InterpolatingDouble& other) {
     return (val_ >= other.val_);
+  }
+
+  static bool operator<(InterpolatingDouble const& a, InterpolatingDouble const& b) {
+    return a.getVal() < b.getVal();
   }
 }

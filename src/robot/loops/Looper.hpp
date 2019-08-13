@@ -16,6 +16,7 @@ namespace loops {
   class Looper {
    private:
     bool running_;
+    bool is_main_loop_;
     std::vector<std::shared_ptr<Loop>> loops_;
     pros::Mutex control_;
     std::shared_ptr<pros::Task> runner_;
@@ -28,7 +29,8 @@ namespace loops {
     void add(std::shared_ptr<Loop> loop);
     void enable();
     void disable();
-
+    void flag_as_main();
+    void unflag_as_main();
     static void loop(void* param);
   };
 }

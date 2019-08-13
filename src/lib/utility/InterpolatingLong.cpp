@@ -32,4 +32,9 @@ namespace util {
   bool InterpolatingLong::operator>=(const InterpolatingLong& other) {
     return (val_ >= other.val_);
   }
+
+
+  static bool operator<(InterpolatingLong const& a, InterpolatingLong const& b) {
+    return a.getVal() < b.getVal();
+  }
 }

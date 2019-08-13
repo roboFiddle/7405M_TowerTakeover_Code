@@ -11,12 +11,15 @@ namespace util {
     public:
       InterpolatingLong(long v);
       InterpolatingLong interpolate(InterpolatingLong other, long x);
+      inline long getVal() const { return val_; }
       double inverseInterpolate(InterpolatingLong upper, InterpolatingLong query);
       bool operator<(const InterpolatingLong& other);
       bool operator<=(const InterpolatingLong& other);
       bool operator>(const InterpolatingLong& other);
       bool operator>=(const InterpolatingLong& other);
   };
+
+  static bool operator<(InterpolatingLong const& a, InterpolatingLong const& b);
 }
 
 #endif

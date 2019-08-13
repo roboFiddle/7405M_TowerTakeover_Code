@@ -16,9 +16,12 @@ namespace meecan {
 
   class Robot {
    private:
-    loops::Looper* testLooper = 0;
+    loops::Looper* mainLooper;
+    int lastState = -1;
+
    public:
     Robot();
+    void setupMainLoop();
     void robotInit();
     void disabledInit();
     void disabledLoop();
@@ -27,36 +30,9 @@ namespace meecan {
     void driverInit();
     void driverLoop();
 
-    /*struct RobotManager : public util::Singleton<Robot, RobotManager> {};
-    static RobotManager instance;*/
-    static Robot* instance;
+    struct RobotManager : public util::Singleton<Robot, RobotManager> {};
+    static RobotManager instance;
   };
-  Robot* Robot::instance = new Robot();
-}
-
-void initialize() {
-  meecan::Robot::instance->robotInit();
-}
-void disabled() {
-  meecan::Robot::instance->disabledInit();
-  while(1) {
-    meecan::Robot::instance->disabledLoop();
-    pros::Task::delay(20);
-  }
-}
-void autonomous() {
-  meecan::Robot::instance->autonomousInit();
-  while(1) {
-    meecan::Robot::instance->autonomousLoop();
-    pros::Task::delay(20);
-  }
-}
-void opcontrol() {
-  meecan::Robot::instance->driverInit();
-  while(1) {
-    meecan::Robot::instance->driverLoop();
-    pros::Task::delay(20);
-  }
 }
 
 #endif //INC_7405M_CODE_SRC_ROBOT_ROBOT_HPP_
