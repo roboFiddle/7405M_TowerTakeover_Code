@@ -4,9 +4,9 @@ namespace util {
   InterpolatingDouble::InterpolatingDouble(double v) {
     val_ = v;
   }
-  InterpolatingDouble InterpolatingDouble::interpolate(InterpolatingDouble other, double x) {
+  InterpolatingDouble InterpolatingDouble::interpolate(InterpolatingDouble other, units::Number x) {
     double dydx = other.val_ - val_;
-    double searchY = dydx * x + val_;
+    double searchY = dydx * x.getValue() + val_;
     return InterpolatingDouble(searchY);
   }
   double InterpolatingDouble::inverseInterpolate(InterpolatingDouble upper, InterpolatingDouble query) {
@@ -20,10 +20,10 @@ namespace util {
     }
     return query_to_lower / upper_to_lower;
   }
-  bool InterpolatingDouble::operator<(const InterpolatingDouble& other) {
-    return (val_ < other.val_);
+  bool InterpolatingDouble::operator==(const InterpolatingDouble& other) {
+    return (val_ == other.val_);
   }
-  bool InterpolatingDouble::operator<(const InterpolatingDouble other) {
+  bool InterpolatingDouble::operator<(const InterpolatingDouble& other) {
     return (val_ < other.val_);
   }
   bool InterpolatingDouble::operator<=(const InterpolatingDouble& other) {
@@ -34,9 +34,5 @@ namespace util {
   }
   bool InterpolatingDouble::operator>=(const InterpolatingDouble& other) {
     return (val_ >= other.val_);
-  }
-
-  static bool operator<(InterpolatingDouble const& a, InterpolatingDouble const& b) {
-    return a.getVal() < b.getVal();
   }
 }

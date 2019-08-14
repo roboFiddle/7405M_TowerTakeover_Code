@@ -48,6 +48,7 @@
 #include "utility/DriveSignal.hpp"
 #include "utility/InterpolatingDouble.hpp"
 #include "utility/InterpolatingLong.hpp"
+#include "utility/InterpolatingMap.hpp"
 #include "utility/LatchedBoolean.hpp"
 #include "utility/MovingAverage.hpp"
 #include "utility/PolynomialRegression.hpp"

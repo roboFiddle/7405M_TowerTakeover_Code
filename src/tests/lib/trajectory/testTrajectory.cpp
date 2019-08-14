@@ -270,10 +270,14 @@ namespace test {
 
     void testTrajectory::realisticConstants() {
       std::vector<geometry::Pose2d> waypoints;
-      waypoints.push_back(geometry::Pose2d(0.0, 0.0, geometry::Rotation2d::fromDegrees(0.0)));
+      /*waypoints.push_back(geometry::Pose2d(0.0, 0.0, geometry::Rotation2d::fromDegrees(0.0)));
       waypoints.push_back(geometry::Pose2d(1.0, 0.0, geometry::Rotation2d::fromDegrees(0.0)));
       waypoints.push_back(geometry::Pose2d(3.0, 2.0, geometry::Rotation2d::fromDegrees(0.0)));
-      waypoints.push_back(geometry::Pose2d(4.0, 2.0, geometry::Rotation2d::fromDegrees(45.0)));
+      waypoints.push_back(geometry::Pose2d(4.0, 2.0, geometry::Rotation2d::fromDegrees(45.0)));*/
+
+      waypoints.push_back(geometry::Pose2d(0.0, 0.0, geometry::Rotation2d::fromDegrees(90.0)));
+      waypoints.push_back(geometry::Pose2d(0.5, 0.25, geometry::Rotation2d::fromDegrees(0)));
+      waypoints.push_back(geometry::Pose2d(1.0, 0.0, geometry::Rotation2d::fromDegrees(270.0)));
 
       trajectory::Trajectory<geometry::Pose2dWithCurvature>
           traj = trajectory::TrajectoryUtil::trajectoryFromSplineWaypoints(waypoints,
@@ -308,7 +312,7 @@ namespace test {
 
       trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>>
           timed_trajectory = trajectory::TimingUtil::timeParameterizeTrajectory(
-          false, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .05, constraints_list,
+          true, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .05, constraints_list,
           0.0, 0.0, 12.0 * 14.0, 12.0 * 10.0);
 
 
@@ -330,7 +334,7 @@ namespace test {
             physics::DifferentialDrive::ChassisState<units::QAcceleration, units::QAngularAcceleration>((state.acceleration()), state.acceleration() * state.state().curvature()));
 
         //printf("(%f, %f)\n", state.t(), dynamics.wheel_velocity.left_);
-        printf("(%f, %f)\n", state.state().translation().x(), state.state().translation().y());
+        printf("(%f, %f)\n", state.state().translation().x());
 
       }
     }

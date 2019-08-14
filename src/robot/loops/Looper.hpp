@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 #include "Loop.hpp"
-#include "../Constants.hpp"
+#include "LoopConstants.hpp"
 #include "../../lib/meecan_lib.hpp"
 #include "main.h"
 

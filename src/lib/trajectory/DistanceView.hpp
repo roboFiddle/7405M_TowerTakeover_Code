@@ -33,6 +33,9 @@ namespace trajectory {
           distances_[i] = distances_[i - 1] + trajectory_->getState(i - 1).distance(trajectory_->getState(i));
         }
       }
+      ~DistanceView() {
+        delete trajectory_;
+      }
       TrajectorySamplePoint<S> sample(double dist) {
         units::QLength distance(dist);
         if (distance >= last_interpolant()*units::metre)
@@ -51,6 +54,7 @@ namespace trajectory {
             }
           }
         }
+        return TrajectorySamplePoint<S>(S(), 0, 0); // THIS SHOULDNT HAPPEN
       }
       double last_interpolant() {
         return distances_.at(trajectory_->length() - 1).getValue();

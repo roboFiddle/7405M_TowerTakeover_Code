@@ -28,6 +28,7 @@ namespace spline {
         units::QAcceleration dx_, dy_;
         units::QSpeed ex_, ey_;
         units::QLength fx_, fy_;
+        bool path_reversed_;
 
     private:
         // Tuning Parameters for Numerical Methods and Optimizing

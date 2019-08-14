@@ -30,6 +30,9 @@ namespace trajectory {
         start_t_ = trajectory_->getState(0).t();
         end_t_ = trajectory_->getState(trajectory_->length() - 1).t();
       }
+      ~TimedView() {
+        delete trajectory_;
+      }
       double first_interpolant()  {
         return start_t_.getValue();
       }
@@ -54,6 +57,7 @@ namespace trajectory {
                                                                                    (t*units::second - prev_s.state().t()) / (s.state().t() - prev_s.state().t())), i - 1, i);
           }
         }
+        return TrajectorySamplePoint<TimedState<S>>(S(), 0, 0); // THIS SHOULDNT HAPPEN
       }
       Trajectory<TimedState<S>>* trajectory()  {
         return trajectory_;

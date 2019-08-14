@@ -5,12 +5,12 @@
 #include "interfaces/InverseInterpolable.hpp"
 
 namespace util {
-  class InterpolatingLong : public Interpolable<long>, public InverseInterpolable<long> {
+  class InterpolatingLong : public Interpolable<InterpolatingLong>, public InverseInterpolable<InterpolatingLong> {
     private:
       long val_;
     public:
       InterpolatingLong(long v);
-      InterpolatingLong interpolate(InterpolatingLong other, long x);
+      InterpolatingLong interpolate(InterpolatingLong other, units::Number x);
       inline long getVal() const { return val_; }
       double inverseInterpolate(InterpolatingLong upper, InterpolatingLong query);
       bool operator<(const InterpolatingLong& other);
@@ -18,8 +18,9 @@ namespace util {
       bool operator>(const InterpolatingLong& other);
       bool operator>=(const InterpolatingLong& other);
   };
-
-  static bool operator<(InterpolatingLong const& a, InterpolatingLong const& b);
+  static bool operator<(InterpolatingLong const& a, InterpolatingLong const& b) {
+    return a.getVal() < b.getVal();
+  }
 }
 
 #endif

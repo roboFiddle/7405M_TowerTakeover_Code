@@ -21,7 +21,6 @@ namespace spline {
         dy1_ = p1.rotation().sin() * scale;
         ddy0_ = 0;
         ddy1_ = 0;
-
         computeCoefficients();
     }
     QuinticHermiteSpline::QuinticHermiteSpline(double x0, double x1, double dx0, double dx1, double ddx0, double ddx1,

@@ -1,12 +1,13 @@
 #include "InterpolatingLong.hpp"
+#include "Units.hpp"
 
 namespace util {
   InterpolatingLong::InterpolatingLong(long v) {
     val_ = v;
   }
-  InterpolatingLong InterpolatingLong::interpolate(InterpolatingLong other, long x) {
+  InterpolatingLong InterpolatingLong::interpolate(InterpolatingLong other, units::Number x) {
     long dydx = other.val_ - val_;
-    double searchY = dydx * x + val_;
+    double searchY = dydx * x.getValue() + val_;
     return InterpolatingLong((long) searchY);
   }
   double InterpolatingLong::inverseInterpolate(InterpolatingLong upper, InterpolatingLong query) {
@@ -31,10 +32,5 @@ namespace util {
   }
   bool InterpolatingLong::operator>=(const InterpolatingLong& other) {
     return (val_ >= other.val_);
-  }
-
-
-  static bool operator<(InterpolatingLong const& a, InterpolatingLong const& b) {
-    return a.getVal() < b.getVal();
   }
 }

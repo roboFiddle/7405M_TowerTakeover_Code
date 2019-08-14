@@ -20,6 +20,9 @@ namespace trajectory {
    public:
     Trajectory<T>* pointer_to_;
     IndexView(Trajectory<T>* x) : pointer_to_(x) {}
+    ~IndexView() {
+      delete pointer_to_;
+    }
     TrajectorySamplePoint<T> sample(double index)  {
       return pointer_to_->getInterpolated(index);
     }

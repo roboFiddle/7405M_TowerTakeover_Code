@@ -6,16 +6,9 @@
 #define INC_7405M_CODE_SRC_ROBOT_CONSTANTS_HPP_
 
 namespace constants {
-  class LooperConstants {
-   public:
-    const static double loopDt;
-    const static double mutexDelay;
-  };
-
-
   class RobotConstants {
    public:
-    const static double zero;
+    static constexpr double zero = 0;
   };
 }
 
