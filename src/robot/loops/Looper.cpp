@@ -11,7 +11,10 @@ namespace loops {
     Looper::Looper() : Looper(0, "") {}
     Looper::Looper(int priority_offset) : Looper(priority_offset, "Generic Looper") {}
     Looper::Looper(const char *name) : Looper(0, name) {}
-    Looper::Looper(int priority_offset, const char *name) : running_(false), is_main_loop_(false), control_(), runner_(new pros::Task(Looper::loop, (void*)this, TASK_PRIORITY_DEFAULT+priority_offset, TASK_STACK_DEPTH_DEFAULT, name)) {}
+    Looper::Looper(int priority_offset, const char *name) : running_(false),
+    is_main_loop_(false),
+    control_(),
+    runner_(new pros::Task(Looper::loop, (void*)this, TASK_PRIORITY_DEFAULT+priority_offset, TASK_STACK_DEPTH_DEFAULT, name)) {}
 
     void Looper::add(std::shared_ptr<Loop> loop) {
       control_.take(constants::LooperConstants::mutexDelay);
