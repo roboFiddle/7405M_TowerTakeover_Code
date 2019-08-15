@@ -5,18 +5,18 @@
 #ifndef INC_7405M_CODE_SRC_ROBOT_AUTO_ACTIONS_SERIESACTION_HPP_
 #define INC_7405M_CODE_SRC_ROBOT_AUTO_ACTIONS_SERIESACTION_HPP_
 
-#include <vector>
+#include <list>
 #include <memory>
 #include "Action.hpp"
 
 namespace auton {
   namespace actions {
-    class SeriesAction : Action{
+    class SeriesAction : public Action {
      private:
-      std::shared_ptr<Action> current_;
-      std::vector<std::shared_ptr<Action>> actions_;
+      Action* current_;
+      std::list<Action*> actions_;
      public:
-      SeriesAction(std::vector<std::shared_ptr<Action>> actions);
+      SeriesAction(std::list<Action*> actions);
       bool isFinished();
       void start();
       void update();

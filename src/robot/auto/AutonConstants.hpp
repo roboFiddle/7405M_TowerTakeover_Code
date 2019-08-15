@@ -8,7 +8,7 @@
 namespace constants {
   class AutonConstants {
    public:
-    static constexpr double auto_update_rate = 0.02;
+    static constexpr double kAutoUpdateRate = 100;
 
 
   };

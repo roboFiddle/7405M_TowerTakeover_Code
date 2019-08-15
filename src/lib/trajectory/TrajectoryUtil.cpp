@@ -14,7 +14,7 @@ namespace trajectory {
 
 
     Trajectory<geometry::Pose2dWithCurvature> TrajectoryUtil::trajectoryFromPathFollower(IPathFollower* path_follower,
-      geometry::Pose2dWithCurvature start_state, units::QLength step_size, units::QDCurvature dcurvature_limit) {
+      geometry::Pose2dWithCurvature start_state, units::QLength step_size, units::QDCurvatureDs dcurvature_limit) {
 
     std::vector<geometry::Pose2dWithCurvature> samples;
     samples.push_back(start_state);
@@ -33,7 +33,7 @@ namespace trajectory {
 
 
       // Apply limits on spatial derivative of curvature, if desired.
-      units::QDCurvature dcurvature = ((steering_command.curvature() - current_state.curvature()) / steering_command.norm()).getValue();
+      units::QDCurvatureDs dcurvature = ((steering_command.curvature() - current_state.curvature()) / steering_command.norm());
       bool curvature_valid = !std::isnan(dcurvature.getValue()) && !std::isinf(dcurvature.getValue())
           && !std::isnan(current_state.curvature().getValue()) && !std::isinf((current_state.curvature().getValue()));
       if (dcurvature > dcurvature_limit && curvature_valid) {

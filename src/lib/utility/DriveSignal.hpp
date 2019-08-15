@@ -2,6 +2,7 @@
 #define WLIB_UTIL_DRIVESIGNAL_H
 
 #include "interfaces/CSVLoggable.hpp"
+#include "Units.hpp"
 
 namespace util {
   class DriveSignal : public CSVLoggable {
@@ -9,10 +10,12 @@ namespace util {
       double left_voltage_;
       double right_voltage_;
     public:
-      DriveSignal(double l, double r);
+      DriveSignal(units::Number l, units::Number r);
       double left_voltage();
       double right_voltage();
       std::string toCSV();
+
+      static DriveSignal NEUTRAL;
   };
 }
 

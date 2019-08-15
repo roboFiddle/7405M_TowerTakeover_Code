@@ -5,7 +5,7 @@ namespace geometry {
    template<typename T> class ICurvature : State<T> {
      public:
        virtual units::QCurvature curvature() = 0;
-       virtual units::QDCurvature dcurvature() = 0;
+       virtual units::QDCurvatureDs dcurvature() = 0;
     };
 }
 

@@ -26,9 +26,9 @@ namespace trajectory {
       drive_ = drive;
       abs_voltage_limit_ = abs_voltage_limit;
     }
-    ~DifferentialDriveDynamicsConstraint() {
+    /* ~DifferentialDriveDynamicsConstraint() {
       delete drive_;
-    }
+    } */
     units::QSpeed getMaxVelocity(S state) {
       units::QCurvature curvature_in_inverse_meters = state.curvature();
       units::QSpeed max_velo_in_meters = drive_->getMaxAbsVelocity(curvature_in_inverse_meters, abs_voltage_limit_);

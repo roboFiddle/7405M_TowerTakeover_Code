@@ -66,7 +66,7 @@ namespace spline {
         geometry::Translation2d getPoint(units::QTime t);
         units::QSpeed getVelocity(units::QTime t);
         units::QCurvature getCurvature(units::QTime t);
-        units::QDCurvature getDCurvature(units::QTime t);
+        units::QDCurvatureDt getDCurvature(units::QTime t);
         units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<-2>, std::ratio<0>> dCurvature2(units::QTime t);
         geometry::Rotation2d getHeading(units::QTime t);
 

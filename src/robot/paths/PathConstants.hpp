@@ -9,9 +9,10 @@
 
 namespace constants {
   class PathConstants {
-    static constexpr units::QLength maxDx = 0.05;
-    static constexpr units::QLength maxDy = 0.0l;
-    static constexpr units::Angle maxDtheta = 0.05;
+   public:
+    static constexpr units::QLength kMaxDx = 0.05;
+    static constexpr units::QLength kMaxDy = 0.0l;
+    static constexpr units::Angle kMaxDtheta = 0.05;
 
     static constexpr units::QSpeed kMaxVelocity = 1.0;
     static constexpr units::QAcceleration kMaxAccel = 2.0;

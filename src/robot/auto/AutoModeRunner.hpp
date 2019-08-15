@@ -13,13 +13,18 @@
 namespace auton {
   class AutoModeRunner {
    private:
-    std::shared_ptr<AutoModeBase> mode;
-    loops::Looper* loop;
+    std::shared_ptr<AutoModeBase> mode_;
+    pros::Task* thread_;
    public:
+    AutoModeRunner();
     void setAutoMode(std::shared_ptr<AutoModeBase> new_auto_mode);
     void start();
     void stop();
-    AutoModeBase* getAutoMode();
+    std::shared_ptr<AutoModeBase> getAutoMode();
+
+    struct AutoModeRunnerManager : util::Singleton<AutoModeRunner, AutoModeRunnerManager> {};
+    static AutoModeRunnerManager instance;
+    static void runAuton(void* param);
 
   };
 }

@@ -1,0 +1,130 @@
+//
+// Created by alexweiss on 8/14/19.
+//
+
+#include "Drive.hpp"
+#include <stdio.h>
+#include "../RobotState.hpp"
+
+namespace subsystems {
+  Drive::DriveManager Drive::instance;
+
+  Drive::Drive() {
+    frontLeft = new pros::Motor(1, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+    frontRight = new pros::Motor(2, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+    backLeft = new pros::Motor(3, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+    backRight = new pros::Motor(4, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+    setBrakeMode(false);
+  }
+
+  void Drive::stop()  {
+    setOpenLoop(util::DriveSignal::NEUTRAL);
+  }
+  void Drive::zeroSensors() {
+    frontLeft->tare_position();
+    frontRight->tare_position();
+    backLeft->tare_position();
+    backRight->tare_position();
+
+  }
+  void Drive::setOpenLoop(util::DriveSignal signal) {
+    if (currentState != DriveControlState::OPEN_LOOP) {
+      currentState = DriveControlState::OPEN_LOOP;
+      setBrakeMode(false);
+    }
+
+    left_demand = signal.left_voltage() * 1000;
+    right_demand = signal.right_voltage() * 1000;
+  }
+  void Drive::setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward) {
+    if (currentState != DriveControlState::PATH_FOLLOWING) {
+      currentState = DriveControlState::PATH_FOLLOWING;
+      setBrakeMode(true);
+    }
+
+    left_demand = velocity.left_voltage();
+    right_demand = velocity.right_voltage();
+    left_feed_forward = feedforward.left_voltage();
+    right_feed_forward = feedforward.right_voltage();
+  }
+  void Drive::registerEnabledLoops(loops::Looper* enabledLooper){
+    loops::Loop* thisLoop = new loops::Loop();
+    thisLoop->onStart = []() {};
+    thisLoop->onLoop = []() {
+      switch (Drive::instance->getState()) {
+        case DriveControlState::OPEN_LOOP:
+          break;
+        case DriveControlState::PATH_FOLLOWING:
+          Drive::instance->updatePathFollower();
+          break;
+        default:printf("Unexpected drive control state\n");
+          break;
+      }
+      Drive::instance->updateOutputs();
+    };
+    thisLoop->onDisable = []() {};
+    enabledLooper->add(std::shared_ptr<loops::Loop>(thisLoop));
+  }
+  void Drive::updatePathFollower() {
+    if (currentState != DriveControlState::PATH_FOLLOWING)
+      return;
+
+    units::QTime now = pros::millis() * units::millisecond;
+    path_planning::Output output = currentFollower->update(now, meecan::RobotState::instance->getRobotPose());
+
+    util::DriveSignal velo(output.left_velocity_.getValue(), output.right_velocity_.getValue());
+    util::DriveSignal feed(output.left_feedforward_voltage_.getValue() / 12.0, output.right_feedforward_voltage_.getValue() / 12.0);
+    left_accel = output.left_accel_.getValue();
+    right_accel = output.right_accel_.getValue();
+    setVelocity(velo, feed);
+
+  }
+  void Drive::updateOutputs() {
+    if(currentState == DriveControlState::OPEN_LOOP) {
+      frontLeft->move_voltage(left_demand);
+      backLeft->move_voltage(left_demand);
+      frontRight->move_voltage(right_demand);
+      backRight->move_voltage(right_demand);
+    }
+    else {
+      double leftScaled = (left_demand*units::rps*units::radian).Convert(units::revolution / units::minute);
+      leftScaled += left_feed_forward;
+
+      double rightScaled = (right_demand*units::rps*units::radian).Convert(units::revolution / units::minute);
+      rightScaled += right_feed_forward;
+
+      frontLeft->move_velocity(leftScaled);
+      backLeft->move_velocity(leftScaled);
+      frontRight->move_velocity(rightScaled);
+      backRight->move_velocity(rightScaled);
+    }
+  }
+  void Drive::setBrakeMode(bool set) {
+    frontLeft->set_brake_mode(set ? pros::E_MOTOR_BRAKE_HOLD : pros::E_MOTOR_BRAKE_COAST);
+    frontRight->set_brake_mode(set ? pros::E_MOTOR_BRAKE_HOLD : pros::E_MOTOR_BRAKE_COAST);
+    backRight->set_brake_mode(set ? pros::E_MOTOR_BRAKE_HOLD : pros::E_MOTOR_BRAKE_COAST);
+    backLeft->set_brake_mode(set ? pros::E_MOTOR_BRAKE_HOLD : pros::E_MOTOR_BRAKE_COAST);
+  }
+
+  DriveControlState Drive::getState() {
+    return currentState;
+  }
+
+  void Drive::setTrajectory(trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory) {
+    currentFollower = new path_planning::PathFollower(trajectory, path_planning::FollowerType::FEEDFORWARD_ONLY);
+    currentState = DriveControlState::PATH_FOLLOWING;
+  }
+
+  bool Drive::isDoneWithTrajectory() {
+    if(forceStopTrajectory_) {
+      forceStopTrajectory_ = false;
+      return true;
+    }
+    return currentFollower->isDone();
+  }
+  void Drive::overrideTrajectory() {
+    forceStopTrajectory_= true;
+  }
+
+
+}

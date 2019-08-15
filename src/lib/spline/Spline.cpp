@@ -8,6 +8,6 @@ namespace spline {
         return geometry::Pose2d(getPoint(t), getHeading(t));
     }
     geometry::Pose2dWithCurvature Spline::getPose2dWithCurvature(units::QTime t) {
-        return geometry::Pose2dWithCurvature(getPose2d(t), getCurvature(t), getDCurvature(t) / getVelocity(t).getValue());
+        return geometry::Pose2dWithCurvature(getPose2d(t), getCurvature(t), getDCurvature(t) / getVelocity(t));
     }
 }

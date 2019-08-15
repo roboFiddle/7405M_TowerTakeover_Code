@@ -11,15 +11,13 @@ namespace subsystems {
   class Subsystem {
 
    public:
-    virtual void writeToLog() = 0;
-    virtual bool validateConfig() = 0;
-    virtual void initializeSystem() = 0;
-    virtual bool checkSystem() = 0;
-    virtual Subsystem* getInstance() = 0;
+    virtual void writeToLog() {};
+    virtual void initializeSystem() {};
+    virtual bool checkSystem() {return true;};
     virtual void outputTelemetry() {};
     virtual void stop() = 0;
     virtual void zeroSensors() {}
-    virtual void registerEnabledLoops(loops::Looper* enabledLooper) {};
+    virtual void registerEnabledLoops(loops::Looper* enabledLooper) = 0;
 
   };
 }

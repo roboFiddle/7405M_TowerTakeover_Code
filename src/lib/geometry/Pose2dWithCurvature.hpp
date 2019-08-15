@@ -14,19 +14,19 @@ namespace geometry {
     private:
       Pose2d pose_;
       units::QCurvature curvature_;
-      units::QDCurvature dcurvature_ds_;
+      units::QDCurvatureDs dcurvature_ds_;
     public:
       Pose2dWithCurvature();
       Pose2dWithCurvature(Pose2d pose, units::QCurvature curvature);
-      Pose2dWithCurvature(Pose2d pose, units::QCurvature curvature, units::QDCurvature dcurvature_ds);
+      Pose2dWithCurvature(Pose2d pose, units::QCurvature curvature, units::QDCurvatureDs dcurvature_ds);
       Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, units::QCurvature curvature);
-      Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, units::QCurvature curvature, units::QDCurvature dcurvature_ds);
+      Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, units::QCurvature curvature, units::QDCurvatureDs dcurvature_ds);
       Pose2d pose();
       Pose2dWithCurvature getPose();
       Pose2dWithCurvature transformBy(Pose2d transform);
       Pose2dWithCurvature mirror();
       units::QCurvature curvature();
-      units::QDCurvature dcurvature();
+      units::QDCurvatureDs dcurvature();
       Translation2d translation();
       Rotation2d rotation();
       Pose2dWithCurvature interpolate(Pose2dWithCurvature other, units::Number x);

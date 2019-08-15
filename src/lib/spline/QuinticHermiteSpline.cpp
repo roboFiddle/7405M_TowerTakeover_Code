@@ -98,7 +98,7 @@ namespace spline {
       units::RQuantity<std::ratio<0>, std::ratio<3>, std::ratio<-3>, std::ratio<0>> b = (dx(t) * dx(t) + dy(t) * dy(t)) * units::Qsqrt(dx(t) * dx(t) + dy(t) * dy(t));
       return a / b;
     }
-    units::QDCurvature QuinticHermiteSpline::getDCurvature(units::QTime t) {
+    units::QDCurvatureDt QuinticHermiteSpline::getDCurvature(units::QTime t) {
       /* units::RQuantity<std::ratio<0>, std::ratio<2>, std::ratio<-2>, std::ratio<0>>  dx2dy2 = (dx(t) * dx(t) + dy(t) * dy(t));
       units::RQuantity<std::ratio<0>, std::ratio<-5>, std::ratio<5>, std::ratio<0>> a = 1 / ( 2 * units::Qpow(dx2dy2, std::ratio<5,2>()));
       units::RQuantity<std::ratio<0>, std::ratio<4>, std::ratio<-6>, std::ratio<0>> b = 2 * dx2dy2 * (dddy(t) * dx(t) + dddx(t) * dy(t));

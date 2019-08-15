@@ -30,9 +30,9 @@ namespace trajectory {
         start_t_ = trajectory_->getState(0).t();
         end_t_ = trajectory_->getState(trajectory_->length() - 1).t();
       }
-      ~TimedView() {
+      /* ~TimedView() {
         delete trajectory_;
-      }
+      } */
       double first_interpolant()  {
         return start_t_.getValue();
       }

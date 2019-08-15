@@ -31,7 +31,7 @@ namespace trajectory {
       static Trajectory<S> mirror(Trajectory<S> trajectory) {
         static_assert(std::is_base_of<geometry::IPose2d<S>, S>::value, "S must derive from State");
         std::vector<S> waypoints;
-        for (int i = 0; i < trajectory.size()(); ++i) {
+        for (int i = 0; i < trajectory.length()(); ++i) {
           waypoints.push_back(trajectory.getState(i).mirror());
         }
         return Trajectory<S>(waypoints);
@@ -40,20 +40,20 @@ namespace trajectory {
       template <class S>
       static Trajectory<TimedState<S>> mirrorTimed(Trajectory<TimedState<S>> trajectory)  {
         std::vector<TimedState<S>> waypoints;
-        for (int i = 0; i < trajectory.size()(); ++i) {
+        for (int i = 0; i < trajectory.length(); ++i) {
           TimedState<S> timed_state = trajectory.getState(i);
           waypoints.push_back(TimedState<S>(timed_state.state().mirror(), timed_state.t(), timed_state.velocity(), timed_state.acceleration()));
         }
-        return Trajectory<S>(waypoints);
+        return Trajectory<TimedState<S>>(waypoints);
       }
 
       template <class S>
       static Trajectory<S> transform(Trajectory<S> trajectory, geometry::Pose2d transform)  {
         std::vector<TimedState<S>> waypoints;
-        for (int i = 0; i < trajectory.size(); ++i) {
+        for (int i = 0; i < trajectory.length(); ++i) {
           waypoints.push_back(trajectory.getState(i).transformBy(transform));
         }
-        return Trajectory<S>(waypoints);
+        return Trajectory<TimedState<S>>(waypoints);
       }
 
       template <class S>
@@ -79,7 +79,7 @@ namespace trajectory {
 
 
       static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromPathFollower(IPathFollower* path_follower,
-          geometry::Pose2dWithCurvature start_state, units::QLength step_size, units::QDCurvature dcurvature_limit);
+          geometry::Pose2dWithCurvature start_state, units::QLength step_size, units::QDCurvatureDs dcurvature_limit);
 
       static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromSplineWaypoints(
           std::vector<geometry::Pose2d> waypoints, units::QLength maxDx, units::QLength maxDy, units::Angle maxDTheta);

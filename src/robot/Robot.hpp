@@ -17,6 +17,8 @@ namespace meecan {
   class Robot {
    private:
     loops::Looper* mainLooper;
+    loops::Looper* enabledLooper;
+    pros::Controller* controller_;
     int lastState = -1;
 
    public:

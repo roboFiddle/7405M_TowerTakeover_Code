@@ -91,7 +91,8 @@ namespace units {
   QUANTITY_TYPE(1, 2, 0, 0, QMoment);
   QUANTITY_TYPE(0, 1, 0, 0, QLength);
   QUANTITY_TYPE(0, -1, 0, 0, QCurvature);
-  QUANTITY_TYPE(0, -1, -1, 0, QDCurvature);
+  QUANTITY_TYPE(0, -2, 0, 0, QDCurvatureDs);
+  QUANTITY_TYPE(0, -1, -1, 0, QDCurvatureDt);
   QUANTITY_TYPE(0, 2, 0, 0, QArea);
   QUANTITY_TYPE(0, 3, 0, 0, QVolume);
   QUANTITY_TYPE(0, 0, 1, 0, QTime);
@@ -287,6 +288,7 @@ namespace units {
   constexpr QVolume mile3 = mile2*mile;
 
   // Predefined time-derived units:
+  constexpr QTime millisecond(0.001);
   constexpr QTime second(1.0);                        // SI base unit
   constexpr QTime minute = 60 * second;
   constexpr QTime hour = 60 * minute;
@@ -297,6 +299,7 @@ namespace units {
   constexpr QJerk mps3 = metre / second / second / second;
   constexpr QAngularSpeed rps = 1.0 / second;
   constexpr QAngularAcceleration rps2 = 1.0 / second / second;
+  constexpr QMoment kgm2 = kg * metre * metre;
 
 
   constexpr QFrequency Hz(1.0);
@@ -411,6 +414,7 @@ namespace units {
   // Predefined angle units:
   constexpr Angle radian(1.0);
   constexpr Angle degree = static_cast<double>(2_pi / 360.0) * radian;
+  constexpr Angle revolution(2.0 * 3.1415926535897932384626433832795);
 
   // literals for angle units
   constexpr Angle operator"" _rad(long double x) { return Angle(x); };

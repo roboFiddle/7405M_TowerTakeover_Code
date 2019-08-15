@@ -34,7 +34,7 @@ namespace spline {
         geometry::Rotation2d getHeading(units::QTime t);
         units::QSpeed getVelocity(units::QTime t);
         units::QCurvature getCurvature(units::QTime t);
-        units::QDCurvature getDCurvature(units::QTime t);
+        units::QDCurvatureDt getDCurvature(units::QTime t);
     };
 }
 

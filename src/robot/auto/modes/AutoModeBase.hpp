@@ -10,10 +10,11 @@
 namespace auton {
   class AutoModeBase {
    protected:
+    bool active_ = true;
     virtual void routine() = 0;
    public:
-    virtual void run() = 0;
-    virtual void done() = 0;
+    virtual void done() {};
+    void run();
     void stop();
     bool isActive();
     void runAction(actions::Action* action);

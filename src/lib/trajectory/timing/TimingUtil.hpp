@@ -159,7 +159,7 @@ namespace trajectory {
           }
           constraint_states.at(i)->max_velocity = new_max_velocity;
           if (std::isnan(constraint_states.at(i)->max_velocity.getValue())) {
-            printf("you might have an really big issue - TimingUtil::162");
+            printf("you might have an really big issue - TimingUtil::162\n");
           }
 
           // Now check all acceleration constraints with the lower max velocity.
@@ -168,7 +168,7 @@ namespace trajectory {
                 constraint_states.at(i)->state,
                 (reverse ? -1.0 : 1.0) * constraint_states.at(i)->max_velocity);
             if (!min_max_accel.valid()) {
-              printf("you might have an really big issue - TimingUtil::102");
+              printf("you might have an really big issue - TimingUtil::171\n");
             }
             constraint_states.at(i)->min_acceleration = MAX(constraint_states.at(i)->min_acceleration,
                                                     (reverse ? -1 * min_max_accel.max_acceleration() : min_max_accel.min_acceleration()));
@@ -176,7 +176,7 @@ namespace trajectory {
                                                     (reverse ? -1 * min_max_accel.min_acceleration() : min_max_accel.max_acceleration()));
           }
           if (constraint_states.at(i)->min_acceleration > constraint_states.at(i)->max_acceleration) {
-            printf("you might have an really big issue - TimingUtil::179");
+            printf("you might have an really big issue - TimingUtil::179\n");
           }
 
           if (ds.getValue() > EPSILON) {
@@ -214,12 +214,12 @@ namespace trajectory {
           } else if (std::fabs(v.getValue()) > EPSILON) {
             dt = ds / v;
           } else {
-            printf("you might have an really big issue - TimingUtil::218");
+            printf("you might have an really big issue - TimingUtil::217\n");
           }
         }
         t += dt;
         if (std::isnan(t.getValue()) || std::isinf(t.getValue())) {
-          printf("you might have an really big issue - TimingUtil::223");
+          printf("you might have an really big issue - TimingUtil::223\n");
         }
 
         v = constraint_states.at(i)->max_velocity;

@@ -5,17 +5,17 @@
 #ifndef INC_7405M_CODE_SRC_ROBOT_AUTO_ACTIONS_PARALLELACTION_HPP_
 #define INC_7405M_CODE_SRC_ROBOT_AUTO_ACTIONS_PARALLELACTION_HPP_
 
-#include <vector>
+#include <list>
 #include <memory>
 #include "Action.hpp"
 
 namespace auton {
   namespace actions {
-    class ParallelAction {
+    class ParallelAction : public Action {
      private:
-      std::vector<std::shared_ptr<Action>> actions_;
+      std::list<Action*> actions_;
      public:
-      ParallelAction(std::vector<std::shared_ptr<Action>> actions);
+      ParallelAction(std::list<Action*> actions);
       bool isFinished();
       void start();
       void update();

@@ -43,13 +43,14 @@ namespace spline{
         units::RQuantity<std::ratio<0>, std::ratio<3>, std::ratio<-3>, std::ratio<0>> b = (dx(t) * dx(t) + dy(t) * dy(t)) * units::Qsqrt(dx(t) * dx(t) + dy(t) * dy(t));
         return a / b;
     }
-    units::QDCurvature CubicHermiteSpline::getDCurvature(units::QTime t) {
-        units::RQuantity<std::ratio<0>, std::ratio<2>, std::ratio<-2>, std::ratio<0>>  dx2dy2 = (dx(t) * dx(t) + dy(t) * dy(t));
-        units::RQuantity<std::ratio<0>, std::ratio<-5>, std::ratio<5>, std::ratio<0>> a = 1 / ( 2 * units::Qpow(dx2dy2, std::ratio<5,2>()));
-        units::RQuantity<std::ratio<0>, std::ratio<4>, std::ratio<-6>, std::ratio<0>> b = 2 * dx2dy2 * (dddy(t) * dx(t) + dddx(t) * dy(t));
-        units::RQuantity<std::ratio<0>, std::ratio<4>, std::ratio<-6>, std::ratio<0>> c = 6 * (ddx(t) * dy(t) - dx(t) * ddy(t)) * (dx(t) * ddx(t) + dy(t) * ddy(t));
+    units::QDCurvatureDt CubicHermiteSpline::getDCurvature(units::QTime t) {
+      double dx2dy2 = (dx(t) * dx(t) + dy(t) * dy(t)).getValue();
+      double numA = ((dx(t) * dddy(t) - dddx(t) * dy(t)) * dx2dy2).getValue();
+      double numB = (3 * (dx(t) * ddy(t) - ddx(t) * dy(t)) * (dx(t) * ddx(t) + dy(t) * ddy(t))).getValue();
+      double num = numA + numB;
 
-        return a * (b + c);
+      double result = num * num / (dx2dy2 * dx2dy2 * dx2dy2 * dx2dy2 * dx2dy2);
+      return result;
     }
 
     units::QLength CubicHermiteSpline::x(units::QTime t) {

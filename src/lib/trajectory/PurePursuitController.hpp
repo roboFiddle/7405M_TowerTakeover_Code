@@ -86,9 +86,9 @@ namespace trajectory {
         std::shared_ptr<TrajectoryView<S>> path_ptr(path);
         iterator_ = new TrajectoryIterator<S>(path_ptr);
       }
-      ~PurePursuitController() {
+      /* ~PurePursuitController() {
         delete iterator_;
-      }
+      } */
       geometry::Twist2d steer(geometry::Pose2d current_pose)  {
         done_ = done_ || (iterator_->isDone()
             && current_pose.translation().distance(iterator_->getState().translation()) <= goal_tolerance_);

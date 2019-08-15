@@ -21,7 +21,7 @@ namespace geometry {
         curvature_ = curvature;
         dcurvature_ds_ = 0.0;
     }
-    Pose2dWithCurvature::Pose2dWithCurvature(Pose2d pose, units::QCurvature curvature, units::QDCurvature dcurvature_ds) {
+    Pose2dWithCurvature::Pose2dWithCurvature(Pose2d pose, units::QCurvature curvature, units::QDCurvatureDs dcurvature_ds) {
         pose_ = pose;
         curvature_ = curvature;
         dcurvature_ds_ = dcurvature_ds;
@@ -31,7 +31,7 @@ namespace geometry {
         curvature_ = curvature;
         dcurvature_ds_ = 0.0;
     }
-    Pose2dWithCurvature::Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, units::QCurvature curvature, units::QDCurvature dcurvature_ds) {
+    Pose2dWithCurvature::Pose2dWithCurvature(Translation2d translation, Rotation2d rotation, units::QCurvature curvature, units::QDCurvatureDs dcurvature_ds) {
         pose_ = Pose2d(translation, rotation);
         curvature_ = curvature;
         dcurvature_ds_ = dcurvature_ds;
@@ -51,7 +51,7 @@ namespace geometry {
     units::QCurvature Pose2dWithCurvature::curvature() {
         return curvature_;
     }
-    units::QDCurvature Pose2dWithCurvature::dcurvature() {
+    units::QDCurvatureDs Pose2dWithCurvature::dcurvature() {
         return dcurvature_ds_;
     }
     Translation2d Pose2dWithCurvature::translation() {

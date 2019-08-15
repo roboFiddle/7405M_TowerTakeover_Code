@@ -86,7 +86,7 @@ namespace physics {
         class DriveDynamics {
         public:
             units::QCurvature curvature = 0.0;  // m^-1
-            units::QDCurvature dcurvature = 0.0;  // m^-1/m
+            units::QDCurvatureDs dcurvature = 0.0;  // m^-1/m
             ChassisState<units::QSpeed, units::QAngularSpeed> chassis_velocity;  // m/s
             ChassisState<units::QAcceleration, units::QAngularAcceleration> chassis_acceleration;  // m/s^2
             WheelState<units::QAngularSpeed> wheel_velocity;  // rad/s
