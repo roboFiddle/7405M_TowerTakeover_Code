@@ -16,7 +16,7 @@ namespace auton {
     std::vector<geometry::Pose2d> waypoints;
 
     waypoints.push_back(geometry::Pose2d(0.0, 0.0, geometry::Rotation2d::fromDegrees(0.0)));
-    waypoints.push_back(geometry::Pose2d(.5, .5, geometry::Rotation2d::fromDegrees(60.0)));
+    waypoints.push_back(geometry::Pose2d(0.75, .35, geometry::Rotation2d::fromDegrees(0.0)));
 
     trajectory::Trajectory<geometry::Pose2dWithCurvature>
         traj = trajectory::TrajectoryUtil::trajectoryFromSplineWaypoints(waypoints,
@@ -37,15 +37,15 @@ namespace auton {
         transmission, transmission
     );
 
-    trajectory::DifferentialDriveDynamicsConstraint<geometry::Pose2dWithCurvature> drive_constraints(&drive_model, 12);
+    trajectory::DifferentialDriveDynamicsConstraint<geometry::Pose2dWithCurvature> drive_constraints(&drive_model, 24);
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature> *> constraints_list;
     constraints_list.push_back(&drive_constraints);
     // Generate the timed trajectory.
 
     trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>>
         timed_trajectory = trajectory::TimingUtil::timeParameterizeTrajectory(
-        false, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .05, constraints_list,
-        0.0, 0.0, 2.5, 2.5);
+        false, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .1, constraints_list,
+        0.0, 0.0, 5, 2.5);
 
     for(int i = 0; i < timed_trajectory.length(); i++) {
       std::cout << timed_trajectory.getState(i).toString() << std::endl;

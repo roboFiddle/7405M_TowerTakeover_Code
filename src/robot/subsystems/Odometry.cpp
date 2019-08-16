@@ -22,11 +22,14 @@ namespace subsystems {
     right->reset();
     back->reset();
 
-    units::Angle dTheta = (rightTravel - leftTravel) / (constants::RobotConstants::kDeadwheelBaseWidth) * units::radian;
-    units::QLength dY = (leftTravel + rightTravel) / 2.0;
+    units::Number dTheta = (rightTravel - leftTravel) / (constants::RobotConstants::kDeadwheelBaseWidth);
+    units::QLength dX =  (0.5 * (leftTravel + rightTravel));
+    units::QLength dY = backTravel - constants::RobotConstants::kDeadwheelTurnRadius *  dTheta;
 
-    geometry::Twist2d delta(backTravel, dY, dTheta);
+    geometry::Twist2d delta(dX, dY, dTheta * units::radian);
     geometry::Pose2d change = geometry::Pose2d::exp(delta);
+
+    printf("%f %f %f\n", change.translation().x(), change.translation().y(), change.rotation().getDegrees());
 
     currentPosition = currentPosition.transformBy(change);
   }
