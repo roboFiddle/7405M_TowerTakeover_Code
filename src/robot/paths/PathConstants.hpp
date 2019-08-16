@@ -10,7 +10,7 @@
 namespace constants {
   class PathConstants {
    public:
-    static constexpr units::QLength kMaxDx = 0.05;
+    static constexpr units::QLength kMaxDx = 0.1;
     static constexpr units::QLength kMaxDy = 0.0l;
     static constexpr units::Angle kMaxDtheta = 0.05;
 
@@ -18,10 +18,6 @@ namespace constants {
     static constexpr units::QAcceleration kMaxAccel = 2.0;
     static constexpr units::QAngularAcceleration kMaxCentripetalAccel = 0.75;
     static constexpr units::Number kMaxVoltage = 12.0;
-  };
-
-  class CriticalPoses {
-
   };
 
 }

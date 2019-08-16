@@ -11,8 +11,8 @@ namespace path_planning {
 
   class MirroredTrajectory {
    public:
-    trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> left_;
-    trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> right_;
+    trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backward_;
+    trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> forward_;
 
     MirroredTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> right);
     trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> get(bool left);
@@ -22,8 +22,10 @@ namespace path_planning {
    private:
     std::map<std::string, MirroredTrajectory> trajectories_;
     bool complete_;
-    void addToMap(std::string name, trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> traj);
-    static void generatorCalls(void* param);
+    void addToMap(std::string name, MirroredTrajectory traj);
+    void generatorCalls();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getTestForwardTrajectory();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getTestSCurveTrajecory();
    public:
     TrajectorySet();
     bool isDoneGenerating();

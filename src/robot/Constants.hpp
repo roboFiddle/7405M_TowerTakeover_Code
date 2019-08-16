@@ -14,11 +14,14 @@ namespace constants {
     static constexpr units::QMass kRobotMass = 4*units::kg;
     static constexpr units::QMoment kRobotMoment = 6*units::kgm2;
     static constexpr units::QAngularDrag kRobotAngularDrag = 0.0;
-    static constexpr units::QLength kDriveWheelTrackWidth = 17.5 * units::inch;
+    static constexpr units::QLength kDriveWheelTrackWidth = 14.875 * units::inch;
     static constexpr units::Number kTrackScrubFactor = 1.0;
 
-    static constexpr units::QAngularSpeed kDriveSpeedPerVolt = 1.903; // RADIANS / SECOND / VOTL
-    static constexpr units::QTorque kDriveTorquePerVolt = 0.175; // Nm / VOLT
+    static constexpr units::QLength kDeadwheelRadius = 1.375*units::inch;
+    static constexpr units::QLength kDeadwheelBaseWidth = 8.625*units::inch;
+
+    static constexpr units::QAngularSpeed kDriveSpeedPerVolt = 1.09; // RADIANS / SECOND / VOTL
+    static constexpr units::QTorque kDriveTorquePerVolt = 0.56; // Nm / VOLT
     static constexpr units::Number kDriveFrictionVoltage = 1.0; // voltage to overcome friction (V)
 
   };

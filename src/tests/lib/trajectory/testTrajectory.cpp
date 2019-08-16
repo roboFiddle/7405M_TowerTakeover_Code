@@ -334,7 +334,7 @@ namespace test {
             physics::DifferentialDrive::ChassisState<units::QAcceleration, units::QAngularAcceleration>((state.acceleration()), state.acceleration() * state.state().curvature()));
 
         //printf("(%f, %f)\n", state.t(), dynamics.wheel_velocity.left_);
-        printf("(%f, %f)\n", state.state().translation().x());
+        printf("(%f, %f)\n", state.t(), dynamics.chassis_velocity.linear_);
 
       }
     }

@@ -11,7 +11,9 @@
 #include "auto/modes/TestMode.hpp"
 #include "loops/Loop.hpp"
 #include "loops/Looper.hpp"
+#include "paths/TrajectorySet.hpp"
 #include "subsystems/Drive.hpp"
+#include "subsystems/Odometry.hpp"
 
 namespace meecan {
   Robot::RobotManager instance;
@@ -26,8 +28,10 @@ namespace meecan {
   void Robot::robotInit() {
     mainLooper->enable();
     subsystems::Drive::instance->registerEnabledLoops(enabledLooper);
+    subsystems::Odometry::instance->registerEnabledLoops(enabledLooper);
     std::shared_ptr<auton::AutoModeBase> activeMode(new auton::TestMode());
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
+    pros::lcd::initialize();
   }
   void Robot::disabledInit() {
     enabledLooper->disable();
@@ -42,6 +46,8 @@ namespace meecan {
   }
   void Robot::autonomousLoop() {
     //printf("%f, %f\n", subsystems::Drive::instance->getLeftVoltage(), subsystems::Drive::instance->getRightVoltage());
+    geometry::Pose2d curPos = subsystems::Odometry::instance->getPosition();
+    pros::lcd::print(1, "%f %f %f", curPos.translation().x().Convert(units::inch), curPos.translation().y().Convert(units::inch), curPos.rotation().getDegrees());
   }
   void Robot::driverInit() {
     auton::AutoModeRunner::instance->stop();
@@ -49,11 +55,14 @@ namespace meecan {
   }
   void Robot::driverLoop() {
     pros::lcd::print(0, "driver loop %d", pros::millis());
+    geometry::Pose2d curPos = subsystems::Odometry::instance->getPosition();
+    pros::lcd::print(1, "%f %f %f", curPos.translation().x().Convert(units::inch), curPos.translation().y().Convert(units::inch), curPos.rotation().getDegrees());
     units::Number throttle = controller_->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y) / 127.0;
     units::Number turn = controller_->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0;
 
-    units::Number left = LIMIT(12*(throttle+turn), -12.0*units::num, 12.0*units::num);
-    units::Number right = LIMIT(12*(throttle-turn), -12.0*units::num, 12.0*units::num);
+    units::Number left = units::Qdeadband(LIMIT(200*(throttle+turn), -200.0*units::num, 200.0*units::num), 15*units::num);
+    units::Number right = units::Qdeadband(LIMIT(200*(throttle-turn), -200.0*units::num, 200.0*units::num), 15*units::num);
+
     subsystems::Drive::instance->setOpenLoop(util::DriveSignal(left, right));
     //printf("%f, %f\n", subsystems::Drive::instance->getLeftVoltage(), subsystems::Drive::instance->getRightVoltage());
   }

@@ -6,6 +6,7 @@
 #define INC_7405M_CODE_SRC_ROBOT_AUTO_MODES_TESTMODE_HPP_
 
 #include "AutoModeBase.hpp"
+#include "../actions/DriveTrajectory.hpp"
 #include "../actions/OpenLoopDriveAction.hpp"
 #include "../actions/ParallelAction.hpp"
 #include "../actions/SeriesAction.hpp"

@@ -3,8 +3,8 @@
 //
 
 #include "Drive.hpp"
+#include "Odometry.hpp"
 #include <stdio.h>
-#include "../RobotState.hpp"
 
 namespace subsystems {
   Drive::DriveManager Drive::instance;
@@ -33,8 +33,8 @@ namespace subsystems {
       setBrakeMode(false);
     }
 
-    left_demand = signal.left_voltage() * 1000;
-    right_demand = signal.right_voltage() * 1000;
+    left_demand = signal.left_voltage();
+    right_demand = signal.right_voltage();
   }
   void Drive::setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward) {
     if (currentState != DriveControlState::PATH_FOLLOWING) {
@@ -70,7 +70,7 @@ namespace subsystems {
       return;
 
     units::QTime now = pros::millis() * units::millisecond;
-    path_planning::Output output = currentFollower->update(now, meecan::RobotState::instance->getRobotPose());
+    path_planning::Output output = currentFollower->update(now - startTime, Odometry::instance->getPosition());
 
     util::DriveSignal velo(output.left_velocity_.getValue(), output.right_velocity_.getValue());
     util::DriveSignal feed(output.left_feedforward_voltage_.getValue() / 12.0, output.right_feedforward_voltage_.getValue() / 12.0);
@@ -81,18 +81,20 @@ namespace subsystems {
   }
   void Drive::updateOutputs() {
     if(currentState == DriveControlState::OPEN_LOOP) {
-      frontLeft->move_voltage(left_demand);
-      backLeft->move_voltage(left_demand);
-      frontRight->move_voltage(right_demand);
-      backRight->move_voltage(right_demand);
+      frontLeft->move_velocity(left_demand);
+      backLeft->move_velocity(left_demand);
+      frontRight->move_velocity(right_demand);
+      backRight->move_velocity(right_demand);
     }
     else {
-      double leftScaled = (left_demand*units::rps*units::radian).Convert(units::revolution / units::minute);
+      double leftScaled = left_demand * 9.5493;
       leftScaled += left_feed_forward;
 
-      double rightScaled = (right_demand*units::rps*units::radian).Convert(units::revolution / units::minute);
+      double rightScaled = right_demand * 9.5493;
       rightScaled += right_feed_forward;
 
+
+      printf("setting velo %f %f \n", leftScaled, rightScaled);
       frontLeft->move_velocity(leftScaled);
       backLeft->move_velocity(leftScaled);
       frontRight->move_velocity(rightScaled);
@@ -100,10 +102,10 @@ namespace subsystems {
     }
   }
   void Drive::setBrakeMode(bool set) {
-    frontLeft->set_brake_mode(set ? pros::E_MOTOR_BRAKE_HOLD : pros::E_MOTOR_BRAKE_COAST);
-    frontRight->set_brake_mode(set ? pros::E_MOTOR_BRAKE_HOLD : pros::E_MOTOR_BRAKE_COAST);
-    backRight->set_brake_mode(set ? pros::E_MOTOR_BRAKE_HOLD : pros::E_MOTOR_BRAKE_COAST);
-    backLeft->set_brake_mode(set ? pros::E_MOTOR_BRAKE_HOLD : pros::E_MOTOR_BRAKE_COAST);
+    frontLeft->set_brake_mode(set ? pros::E_MOTOR_BRAKE_BRAKE : pros::E_MOTOR_BRAKE_COAST);
+    frontRight->set_brake_mode(set ? pros::E_MOTOR_BRAKE_BRAKE : pros::E_MOTOR_BRAKE_COAST);
+    backRight->set_brake_mode(set ? pros::E_MOTOR_BRAKE_BRAKE : pros::E_MOTOR_BRAKE_COAST);
+    backLeft->set_brake_mode(set ? pros::E_MOTOR_BRAKE_BRAKE : pros::E_MOTOR_BRAKE_COAST);
   }
 
   DriveControlState Drive::getState() {
@@ -113,6 +115,7 @@ namespace subsystems {
   void Drive::setTrajectory(trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory) {
     currentFollower = new path_planning::PathFollower(trajectory, path_planning::FollowerType::FEEDFORWARD_ONLY);
     currentState = DriveControlState::PATH_FOLLOWING;
+    startTime = pros::millis() * units::millisecond;
   }
 
   bool Drive::isDoneWithTrajectory() {

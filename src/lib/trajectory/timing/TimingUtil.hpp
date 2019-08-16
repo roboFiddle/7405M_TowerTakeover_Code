@@ -45,7 +45,7 @@ namespace trajectory {
       int num_states = (int) std::ceil((distance_view.last_interpolant() / step_size + 1).getValue());
       std::vector<S> states;
       for (int i = 0; i < num_states; ++i) {
-        states.push_back(distance_view.sample(MIN(i * step_size, distance_view.last_interpolant()*units::metre).getValue()).state());
+        states.push_back(S(distance_view.sample(MIN(i * step_size, distance_view.last_interpolant()*units::metre).getValue()).state()));
       }
       return timeParameterizeTrajectory(reverse, states, constraints, start_velocity, end_velocity,
                                         max_velocity, max_abs_acceleration);
@@ -60,6 +60,8 @@ namespace trajectory {
         units::QSpeed end_velocity,
         units::QSpeed max_velocity_global,
         units::QAcceleration max_abs_acceleration)  {
+
+
 
       std::vector<ConstrainedState<S>*> constraint_states;
 
@@ -103,7 +105,7 @@ namespace trajectory {
 
           for (TimingConstraint<S>* constraint : constraints) {
             constraint_states.at(i)->max_velocity = MIN(constraint_states.at(i)->max_velocity,
-                                                     constraint->getMaxVelocity(constraint_states.at(i)->state));
+                                                        constraint->getMaxVelocity(constraint_states.at(i)->state));
           }
 
 
@@ -113,9 +115,9 @@ namespace trajectory {
                 (reverse ? -1.0 : 1.0) * constraint_states.at(i)->max_velocity);
 
             constraint_states.at(i)->min_acceleration = MAX(constraint_states.at(i)->min_acceleration,
-                                                         reverse ? -1*min_max_accel.max_acceleration() : min_max_accel.min_acceleration());
+                                                            reverse ? -1*min_max_accel.max_acceleration() : min_max_accel.min_acceleration());
             constraint_states.at(i)->max_acceleration = MIN(constraint_states.at(i)->max_acceleration,
-                                                         reverse ? -1*min_max_accel.min_acceleration() : min_max_accel.max_acceleration());
+                                                            reverse ? -1*min_max_accel.min_acceleration() : min_max_accel.max_acceleration());
           }
 
 
@@ -152,7 +154,7 @@ namespace trajectory {
           // Enforce reverse max reachable velocity limit.
           // vf = sqrt(vi^2 + 2*a*d), where vi = successor.
           units::QSpeed new_max_velocity = units::Qsqrt(units::Qabs(successor->max_velocity * successor->max_velocity
-                                                  + 2.0 * successor->min_acceleration * ds));
+                                                                        + 2.0 * successor->min_acceleration * ds));
           if (new_max_velocity >= constraint_states.at(i)->max_velocity) {
             // No new limits to impose.
             break;
@@ -171,9 +173,9 @@ namespace trajectory {
               printf("you might have an really big issue - TimingUtil::171\n");
             }
             constraint_states.at(i)->min_acceleration = MAX(constraint_states.at(i)->min_acceleration,
-                                                    (reverse ? -1 * min_max_accel.max_acceleration() : min_max_accel.min_acceleration()));
+                                                            (reverse ? -1 * min_max_accel.max_acceleration() : min_max_accel.min_acceleration()));
             constraint_states.at(i)->max_acceleration = MIN(constraint_states.at(i)->max_acceleration,
-                                                    (reverse ? -1 * min_max_accel.min_acceleration() : min_max_accel.max_acceleration()));
+                                                            (reverse ? -1 * min_max_accel.min_acceleration() : min_max_accel.max_acceleration()));
           }
           if (constraint_states.at(i)->min_acceleration > constraint_states.at(i)->max_acceleration) {
             printf("you might have an really big issue - TimingUtil::179\n");

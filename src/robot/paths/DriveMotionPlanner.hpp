@@ -12,6 +12,9 @@
 namespace path_planning {
   class DriveMotionPlanner {
    public:
+    static physics::DCMotorTransmission transmission;
+    static physics::DifferentialDrive drive_model;
+   public:
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> generateTrajectory(
         bool reversed,
         std::vector<geometry::Pose2d> waypoints,

@@ -24,6 +24,7 @@ namespace subsystems {
     pros::Motor* backRight;
     DriveControlState currentState;
     path_planning::PathFollower* currentFollower;
+    units::QTime startTime;
     bool forceStopTrajectory_;
     double left_demand, right_demand;
     double left_accel, right_accel;

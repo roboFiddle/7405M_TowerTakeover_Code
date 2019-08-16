@@ -447,6 +447,15 @@ namespace units {
         (std::fabs(num.getValue()));
   }
 
+  template <typename M, typename L, typename T, typename A>
+  constexpr RQuantity<M, L, T, A>
+  Qdeadband(const RQuantity<M, L, T, A>& val, const RQuantity<M, L, T, A>& min_abs)
+  {
+    if(Qabs(val) < min_abs)
+      return RQuantity<M, L, T, A>(0.0);
+    return val;
+  }
+
 
   template <typename M, typename L, typename T, typename A, typename P>
   constexpr RQuantity<std::ratio_multiply<M, P>, std::ratio_multiply<L, P>,
