@@ -10,9 +10,9 @@ namespace util {
       double val_;
     public:
       InterpolatingDouble(double v);
-      InterpolatingDouble interpolate(InterpolatingDouble other, units::Number x);
+      InterpolatingDouble interpolate(InterpolatingDouble& other, units::Number x);
       double getVal() const { return val_; }
-      double inverseInterpolate(InterpolatingDouble upper, InterpolatingDouble query);
+      double inverseInterpolate(InterpolatingDouble& upper, InterpolatingDouble& query);
       bool operator==(const InterpolatingDouble& other);
       bool operator<(const InterpolatingDouble& other);
       bool operator<=(const InterpolatingDouble& other);
