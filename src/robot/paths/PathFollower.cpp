@@ -56,6 +56,7 @@ namespace path_planning {
     dt_ = 0;
     last_time_ = INFINITY;
     mFollowerType_ = follower_type;
+    is_reversed_ = false;
   }
   bool PathFollower::isDone() {
     return current_trajectory_.isDone();
@@ -105,12 +106,74 @@ namespace path_planning {
 
   }
   Output PathFollower::updatePID(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
-
+    return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_, dynamics.voltage.left_, dynamics.voltage.right_);
   }
   Output PathFollower::updatePurePursuit(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
+    double lookahead_time = constants::PathConstants::kPathLookaheadTime.getValue();
+    double kLookaheadSearchDt = 0.01;
+    trajectory::TimedState<geometry::Pose2dWithCurvature> lookahead_state = current_trajectory_.preview(lookahead_time).state();
+    units::QLength actual_lookahead_distance = setpoint_.state().distance(lookahead_state.state());
+    while (actual_lookahead_distance < constants::PathConstants::kPathMinLookaheadDistance && current_trajectory_.getRemainingProgress() > lookahead_time) {
+      lookahead_time += kLookaheadSearchDt;
+      lookahead_state = current_trajectory_.preview(lookahead_time).state();
+      actual_lookahead_distance = setpoint_.state().distance(lookahead_state.state());
+    }
+    if (actual_lookahead_distance < constants::PathConstants::kPathMinLookaheadDistance) {
+      lookahead_state = trajectory::TimedState<geometry::Pose2dWithCurvature>(geometry::Pose2dWithCurvature(lookahead_state.state()
+                                                                 .pose().transformBy(geometry::Pose2d::fromTranslation(geometry::Translation2d(
+              (is_reversed_ ? -1.0 : 1.0) * (constants::PathConstants::kPathMinLookaheadDistance -
+                  actual_lookahead_distance), 0.0))), 0.0), lookahead_state.t()
+          , lookahead_state.velocity(), lookahead_state.acceleration());
+    }
 
+    physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> adjusted_velocity;
+    // Feedback on longitudinal error (distance).
+    adjusted_velocity.linear_ = dynamics.chassis_velocity.linear_ + constants::PathConstants::kPathKX * error_.translation().x();
+
+    // Use pure pursuit to peek ahead along the trajectory and generate a new curvature.
+    trajectory::Arc<geometry::Pose2dWithCurvature> arc(current_state, lookahead_state.state());
+
+    units::QCurvature curvature = 1.0 / arc.radius;
+    if (std::isinf(curvature.getValue())) {
+      adjusted_velocity.linear_ = 0.0;
+      adjusted_velocity.angular_ = dynamics.chassis_velocity.angular_;
+    } else {
+      adjusted_velocity.angular_ = curvature * dynamics.chassis_velocity.linear_;
+    }
+
+    dynamics.chassis_velocity = adjusted_velocity;
+    dynamics.wheel_velocity = model_->solveInverseKinematics(adjusted_velocity);
+    return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_, dynamics.voltage.left_, dynamics.voltage.right_);
   }
   Output PathFollower::updateNonlinearFeedback(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
+
+    units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> kBeta = 2.0;  // >0.
+    units::Number kZeta = 0.7;  // Damping coefficient, [0, 1].
+
+    // Compute gain parameter.
+    units::QAngularSpeed k = 2.0 * kZeta * units::Qsqrt((kBeta * dynamics.chassis_velocity.linear_ * dynamics.chassis_velocity.linear_) + (dynamics.chassis_velocity.angular_ * dynamics.chassis_velocity.angular_));
+
+    // Compute error components.
+    units::Number angle_error_rads = error_.rotation().getRadians();
+    units::Number sin_x_over_x = FEQUALS(angle_error_rads, 0 * units::num) ? 1.0 : error_.rotation().sin() / angle_error_rads;
+    physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> adjusted_velocity (
+        dynamics.chassis_velocity.linear_ * error_.rotation().cos() + k * error_.translation().x(),
+        dynamics.chassis_velocity.angular_ + k * angle_error_rads + dynamics.chassis_velocity.linear_ * kBeta * sin_x_over_x * error_.translation().y());
+
+    // Compute adjusted left and right wheel velocities.
+    dynamics.chassis_velocity = adjusted_velocity;
+    dynamics.wheel_velocity = model_->solveInverseKinematics(adjusted_velocity);
+
+    dynamics.chassis_acceleration.linear_ = (dt_ == 0*units::second) ? 0.0 : (dynamics.chassis_velocity.linear_ - prev_velocity_
+        .linear_) / dt_;
+    dynamics.chassis_acceleration.angular_ = (dt_ == 0*units::second) ? 0.0 : (dynamics.chassis_velocity.angular_ - prev_velocity_
+        .angular_) / dt_;
+
+    prev_velocity_ = dynamics.chassis_velocity;
+
+    physics::DifferentialDrive::WheelState<units::Number> feedforward_voltages = model_->solveInverseDynamics(dynamics.chassis_velocity, dynamics.chassis_acceleration).voltage;
+
+    return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_, feedforward_voltages.left_, feedforward_voltages.right_);
 
   }
 }

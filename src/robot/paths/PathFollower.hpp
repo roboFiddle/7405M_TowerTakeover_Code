@@ -38,10 +38,12 @@ namespace path_planning {
     physics::DifferentialDrive* model_;
     trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> current_trajectory_;
     trajectory::TimedState<geometry::Pose2dWithCurvature> setpoint_;
+    physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> prev_velocity_;
     geometry::Pose2d error_;
     Output current_output_;
     units::QTime dt_;
     units::QTime last_time_;
+    bool is_reversed_;
    protected:
     Output updatePID(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state);
     Output updatePurePursuit(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state);

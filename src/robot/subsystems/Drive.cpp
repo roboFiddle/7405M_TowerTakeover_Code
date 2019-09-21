@@ -15,6 +15,7 @@ namespace subsystems {
     backLeft = new pros::Motor(3, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
     backRight = new pros::Motor(4, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
     setBrakeMode(false);
+    setOpenLoop(util::DriveSignal::NEUTRAL);
   }
 
   void Drive::stop()  {
@@ -30,7 +31,7 @@ namespace subsystems {
   void Drive::setOpenLoop(util::DriveSignal signal) {
     if (currentState != DriveControlState::OPEN_LOOP) {
       currentState = DriveControlState::OPEN_LOOP;
-      setBrakeMode(false);
+      setBrakeMode(true);
     }
 
     left_demand = signal.left_voltage();

@@ -18,8 +18,8 @@ namespace constants {
     static constexpr units::Number kTrackScrubFactor = 1.0;
 
     static constexpr units::QLength kDeadwheelRadius = 1.375*units::inch;
-    static constexpr units::QLength kDeadwheelBaseWidth = 8.5*units::inch;
-    static constexpr units::QLength kDeadwheelTurnRadius = 6.75*units::inch;
+    static constexpr units::QLength kDeadwheelBaseWidth = 9*units::inch;
+    static constexpr units::QLength kDeadwheelTurnRadius = 7 * units::inch;
 
     static constexpr units::QAngularSpeed kDriveSpeedPerVolt = 1.09; // RADIANS / SECOND / VOTL
     static constexpr units::QTorque kDriveTorquePerVolt = 0.56; // Nm / VOLT
