@@ -16,13 +16,17 @@ namespace auton {
     std::vector<geometry::Pose2d> waypoints;
 
     waypoints.push_back(geometry::Pose2d(0.0, 0.0, geometry::Rotation2d::fromDegrees(0.0)));
-    waypoints.push_back(geometry::Pose2d(0.75, .35, geometry::Rotation2d::fromDegrees(0.0)));
+    waypoints.push_back(geometry::Pose2d(1.0, 0.01, geometry::Rotation2d::fromDegrees(0.0)));
 
     trajectory::Trajectory<geometry::Pose2dWithCurvature>
         traj = trajectory::TrajectoryUtil::trajectoryFromSplineWaypoints(waypoints,
                                                                          0.05,
                                                                          0.02,
                                                                          geometry::Rotation2d::fromDegrees(3.0).getRadians());
+    for(int i = 0; i < traj.length(); i++) {
+      std::cout << traj.getState(i).toString() << std::endl;
+    }
+
 
     physics::DCMotorTransmission transmission(
         constants::RobotConstants::kDriveSpeedPerVolt,
@@ -45,7 +49,7 @@ namespace auton {
     trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>>
         timed_trajectory = trajectory::TimingUtil::timeParameterizeTrajectory(
         false, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .1, constraints_list,
-        0.0, 0.0, 5, 2.5);
+        0.0, 0.0, 5, 5);
 
     for(int i = 0; i < timed_trajectory.length(); i++) {
       std::cout << timed_trajectory.getState(i).toString() << std::endl;

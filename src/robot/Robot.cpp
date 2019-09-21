@@ -52,6 +52,8 @@ namespace meecan {
   void Robot::driverInit() {
     auton::AutoModeRunner::instance->stop();
     enabledLooper->enable();
+
+
   }
   void Robot::driverLoop() {
     pros::lcd::print(0, "driver loop %d", pros::millis());
@@ -60,8 +62,8 @@ namespace meecan {
     units::Number throttle = controller_->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y) / 127.0;
     units::Number turn = controller_->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X) / 127.0;
 
-    units::Number left = units::Qdeadband(LIMIT(200*(throttle+turn), -200.0*units::num, 200.0*units::num), 15*units::num);
-    units::Number right = units::Qdeadband(LIMIT(200*(throttle-turn), -200.0*units::num, 200.0*units::num), 15*units::num);
+    units::Number left = 200*(throttle+turn);
+    units::Number right = 200*(throttle-turn);
 
     subsystems::Drive::instance->setOpenLoop(util::DriveSignal(left, right));
     //printf("%f, %f\n", subsystems::Drive::instance->getLeftVoltage(), subsystems::Drive::instance->getRightVoltage());
