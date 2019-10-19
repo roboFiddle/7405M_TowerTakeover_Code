@@ -9,11 +9,15 @@
 #include "Constants.hpp"
 #include "auto/AutoModeRunner.hpp"
 #include "auto/modes/TestMode.hpp"
+#include "auto/modes/DoNothingMode.hpp"
 #include "loops/Loop.hpp"
 #include "loops/Looper.hpp"
 #include "paths/TrajectorySet.hpp"
 #include "subsystems/Drive.hpp"
 #include "subsystems/Odometry.hpp"
+#include "subsystems/Intake.hpp"
+#include "subsystems/Tray.hpp"
+#include "subsystems/Lift.hpp"
 
 namespace meecan {
   Robot::RobotManager instance;
@@ -29,7 +33,10 @@ namespace meecan {
     mainLooper->enable();
     subsystems::Drive::instance->registerEnabledLoops(enabledLooper);
     subsystems::Odometry::instance->registerEnabledLoops(enabledLooper);
-    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::TestMode());
+    subsystems::Intake::instance->registerEnabledLoops(enabledLooper);
+    subsystems::Tray::instance->registerEnabledLoops(enabledLooper);
+    subsystems::Lift::instance->registerEnabledLoops(enabledLooper);
+    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::DoNothingMode());
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
     pros::lcd::initialize();
   }
@@ -66,6 +73,15 @@ namespace meecan {
     units::Number right = 200*(throttle-turn);
 
     subsystems::Drive::instance->setOpenLoop(util::DriveSignal(left, right));
+
+    units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2));
+    subsystems::Intake::instance->setOpenLoop(intake * 200);
+
+    units::Number tray = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT));
+    subsystems::Tray::instance->setOpenLoop(tray * constants::RobotConstants::MAX_TRAY_RPM);
+
+    units::Number lift = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2));
+    subsystems::Lift::instance->setOpenLoop(lift * 200);
     //printf("%f, %f\n", subsystems::Drive::instance->getLeftVoltage(), subsystems::Drive::instance->getRightVoltage());
   }
 }

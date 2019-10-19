@@ -10,9 +10,9 @@ namespace util {
       long val_;
     public:
       InterpolatingLong(long v);
-      InterpolatingLong interpolate(InterpolatingLong& other, units::Number x);
+      InterpolatingLong interpolate(InterpolatingLong other, units::Number x);
       inline long getVal() const { return val_; }
-      double inverseInterpolate(InterpolatingLong& upper, InterpolatingLong& query);
+      double inverseInterpolate(InterpolatingLong upper, InterpolatingLong query);
       bool operator<(const InterpolatingLong& other);
       bool operator<=(const InterpolatingLong& other);
       bool operator>(const InterpolatingLong& other);

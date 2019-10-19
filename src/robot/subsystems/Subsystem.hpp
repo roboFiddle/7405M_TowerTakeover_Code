@@ -8,8 +8,12 @@
 #include "../loops/Looper.hpp"
 
 namespace subsystems {
+  enum ControlState {
+    OPEN_LOOP, // open loop voltage control
+    PATH_FOLLOWING, // velocity PID control
+    POSITION_CONTROL, // position PID control
+  };
   class Subsystem {
-
    public:
     virtual void writeToLog() {};
     virtual void initializeSystem() {};

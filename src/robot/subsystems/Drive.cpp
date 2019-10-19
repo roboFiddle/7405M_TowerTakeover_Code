@@ -4,16 +4,17 @@
 
 #include "Drive.hpp"
 #include "Odometry.hpp"
+#include "../Constants.hpp"
 #include <stdio.h>
 
 namespace subsystems {
   Drive::DriveManager Drive::instance;
 
   Drive::Drive() {
-    frontLeft = new pros::Motor(1, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
-    frontRight = new pros::Motor(2, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-    backLeft = new pros::Motor(3, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
-    backRight = new pros::Motor(4, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+    frontLeft = new pros::Motor(constants::RobotConstants::motor_drive_frontleft, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+    frontRight = new pros::Motor(constants::RobotConstants::motor_drive_frontright, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+    backLeft = new pros::Motor(constants::RobotConstants::motor_drive_backleft, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+    backRight = new pros::Motor(constants::RobotConstants::motor_drive_backright, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
     setBrakeMode(false);
     setOpenLoop(util::DriveSignal::NEUTRAL);
   }
@@ -29,8 +30,8 @@ namespace subsystems {
 
   }
   void Drive::setOpenLoop(util::DriveSignal signal) {
-    if (currentState != DriveControlState::OPEN_LOOP) {
-      currentState = DriveControlState::OPEN_LOOP;
+    if (currentState != ControlState::OPEN_LOOP) {
+      currentState = ControlState::OPEN_LOOP;
       setBrakeMode(true);
     }
 
@@ -38,8 +39,8 @@ namespace subsystems {
     right_demand = signal.right_voltage();
   }
   void Drive::setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward) {
-    if (currentState != DriveControlState::PATH_FOLLOWING) {
-      currentState = DriveControlState::PATH_FOLLOWING;
+    if (currentState != ControlState::PATH_FOLLOWING) {
+      currentState = ControlState::PATH_FOLLOWING;
       setBrakeMode(true);
     }
 
@@ -53,9 +54,9 @@ namespace subsystems {
     thisLoop->onStart = []() {};
     thisLoop->onLoop = []() {
       switch (Drive::instance->getState()) {
-        case DriveControlState::OPEN_LOOP:
+        case ControlState::OPEN_LOOP:
           break;
-        case DriveControlState::PATH_FOLLOWING:
+        case ControlState::PATH_FOLLOWING:
           Drive::instance->updatePathFollower();
           break;
         default:printf("Unexpected drive control state\n");
@@ -67,7 +68,7 @@ namespace subsystems {
     enabledLooper->add(std::shared_ptr<loops::Loop>(thisLoop));
   }
   void Drive::updatePathFollower() {
-    if (currentState != DriveControlState::PATH_FOLLOWING)
+    if (currentState != ControlState::PATH_FOLLOWING)
       return;
 
     units::QTime now = pros::millis() * units::millisecond;
@@ -81,7 +82,7 @@ namespace subsystems {
 
   }
   void Drive::updateOutputs() {
-    if(currentState == DriveControlState::OPEN_LOOP) {
+    if(currentState == ControlState::OPEN_LOOP) {
       frontLeft->move_velocity(left_demand);
       backLeft->move_velocity(left_demand);
       frontRight->move_velocity(right_demand);
@@ -109,13 +110,13 @@ namespace subsystems {
     backLeft->set_brake_mode(set ? pros::E_MOTOR_BRAKE_BRAKE : pros::E_MOTOR_BRAKE_COAST);
   }
 
-  DriveControlState Drive::getState() {
+  ControlState Drive::getState() {
     return currentState;
   }
 
   void Drive::setTrajectory(trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory) {
     currentFollower = new path_planning::PathFollower(trajectory, path_planning::FollowerType::FEEDFORWARD_ONLY);
-    currentState = DriveControlState::PATH_FOLLOWING;
+    currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }
 

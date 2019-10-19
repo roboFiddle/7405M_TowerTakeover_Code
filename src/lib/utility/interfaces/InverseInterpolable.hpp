@@ -6,7 +6,7 @@
 namespace util {
   template<typename T> class InverseInterpolable {
     public:
-      virtual double inverseInterpolate(T& upper, T& query) = 0;
+      virtual double inverseInterpolate(T upper, T query) = 0;
   };
 }
 

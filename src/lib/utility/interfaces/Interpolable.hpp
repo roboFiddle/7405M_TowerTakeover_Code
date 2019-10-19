@@ -7,7 +7,7 @@
 namespace util {
   template<typename T> class Interpolable {
     public:
-      virtual T interpolate(const T& other, units::Number scale) = 0;
+      virtual T interpolate(const T other, units::Number scale) = 0;
   };
 }
 

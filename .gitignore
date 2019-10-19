@@ -1,4 +1,18 @@
-.idea
-bin
-gcc
-/cmake-build-debug/
+# Compiled Object files
+*.o
+*.obj
+
+# Executables
+*.bin
+*.elf
+
+# PROS
+bin/
+.vscode/
+compile_commands.json
+temp.log
+temp.errors
+*.ini
+.d/
+gcc/
+firmware/

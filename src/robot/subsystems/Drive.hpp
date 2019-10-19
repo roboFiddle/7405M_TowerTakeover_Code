@@ -11,18 +11,13 @@
 #include "main.h"
 
 namespace subsystems {
-  enum DriveControlState {
-    OPEN_LOOP, // open loop voltage control
-    PATH_FOLLOWING, // velocity PID control
-  };
-
   class Drive : Subsystem {
    private:
     pros::Motor* frontLeft;
     pros::Motor* frontRight;
     pros::Motor* backLeft;
     pros::Motor* backRight;
-    DriveControlState currentState;
+    ControlState currentState;
     path_planning::PathFollower* currentFollower;
     units::QTime startTime;
     bool forceStopTrajectory_;
@@ -41,7 +36,7 @@ namespace subsystems {
     void updatePathFollower();
     void updateOutputs();
     void setBrakeMode(bool set);
-    DriveControlState getState();
+    ControlState getState();
     bool isDoneWithTrajectory();
     void overrideTrajectory();
 

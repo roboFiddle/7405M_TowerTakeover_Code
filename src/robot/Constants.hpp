@@ -25,6 +25,17 @@ namespace constants {
     static constexpr units::QTorque kDriveTorquePerVolt = 0.56; // Nm / VOLT
     static constexpr units::Number kDriveFrictionVoltage = 1.0; // voltage to overcome friction (V)
 
+    static constexpr int motor_drive_frontleft = 6;
+    static constexpr int motor_drive_backleft = 7;
+    static constexpr int motor_drive_frontright = 11;
+    static constexpr int motor_drive_backright = 12;
+    static constexpr int motor_intake_left = 2;
+    static constexpr int motor_intake_right = 19;
+    static constexpr int motor_tray = 1;
+    static constexpr int motor_lift = 20;
+
+    static constexpr double MAX_TRAY_RPM = 25;
+
   };
 }
 

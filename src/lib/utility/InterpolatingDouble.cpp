@@ -4,12 +4,12 @@ namespace util {
   InterpolatingDouble::InterpolatingDouble(double v) {
     val_ = v;
   }
-  InterpolatingDouble InterpolatingDouble::interpolate(InterpolatingDouble& other, units::Number x) {
+  InterpolatingDouble InterpolatingDouble::interpolate(InterpolatingDouble other, units::Number x) {
     double dydx = other.val_ - val_;
     double searchY = dydx * x.getValue() + val_;
     return InterpolatingDouble(searchY);
   }
-  double InterpolatingDouble::inverseInterpolate(InterpolatingDouble& upper, InterpolatingDouble& query) {
+  double InterpolatingDouble::inverseInterpolate(InterpolatingDouble upper, InterpolatingDouble query) {
     double upper_to_lower = upper.val_ - val_;
     if (upper_to_lower <= 0) {
       return 0;
