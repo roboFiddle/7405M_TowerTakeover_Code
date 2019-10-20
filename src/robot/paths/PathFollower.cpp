@@ -145,6 +145,7 @@ namespace path_planning {
     dynamics.wheel_velocity = model_->solveInverseKinematics(adjusted_velocity);
     return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_, dynamics.voltage.left_, dynamics.voltage.right_);
   }
+
   Output PathFollower::updateNonlinearFeedback(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
 
     units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> kBeta = 2.0;  // >0.

@@ -34,7 +34,8 @@ namespace constants {
     static constexpr int motor_tray = 1;
     static constexpr int motor_lift = 20;
 
-    static constexpr double MAX_TRAY_RPM = 25;
+    static constexpr double MAX_TRAY_RPM = 65;
+    static constexpr double MAX_LIFT_RPM = 150;
 
   };
 }

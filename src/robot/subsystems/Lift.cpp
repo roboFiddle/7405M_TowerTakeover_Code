@@ -30,7 +30,10 @@ namespace subsystems {
     return state;
   }
   void Lift::updateOutputs() {
-    motor->move_velocity(demand.getValue());
+    if(state == ControlState::OPEN_LOOP)
+      motor->move_velocity(demand.getValue());
+    else if(state == ControlState::POSITION_CONTROL)
+      motor->move_absolute(demand.getValue(), constants::RobotConstants::MAX_LIFT_RPM);
   }
   void Lift::stop() {
     setOpenLoop(0);

@@ -46,18 +46,15 @@ namespace path_planning {
                                                                          0.05,
                                                                          geometry::Rotation2d::fromDegrees(3.0).getRadians());
 
-    trajectory::DifferentialDriveDynamicsConstraint<geometry::Pose2dWithCurvature> drive_constraints(&drive_model, 12.0);
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature> *> constraints_list;
-    constraints_list.push_back(&drive_constraints);
 
-    /* trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>>
+    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature> *> constraints_list;
+
+    trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>>
         timed_trajectory = trajectory::TimingUtil::timeParameterizeTrajectory(
-        false, traj, .05, constraints_list,
+        false, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .05, constraints_list,
         start_vel, end_vel, max_vel, max_accel);
 
-    return timed_trajectory; */
-
-    return trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>>();
+    return timed_trajectory;
 
 
   }

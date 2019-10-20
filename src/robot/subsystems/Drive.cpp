@@ -6,6 +6,7 @@
 #include "Odometry.hpp"
 #include "../Constants.hpp"
 #include <stdio.h>
+#include <memory>
 
 namespace subsystems {
   Drive::DriveManager Drive::instance;
@@ -114,8 +115,13 @@ namespace subsystems {
     return currentState;
   }
 
-  void Drive::setTrajectory(trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory) {
-    currentFollower = new path_planning::PathFollower(trajectory, path_planning::FollowerType::FEEDFORWARD_ONLY);
+  void Drive::setTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> traj) {
+    currentTrajectory = traj;
+
+    currentTimedView = new trajectory::TimedView(&currentTrajectory);
+    std::shared_ptr<trajectory::TimedView<geometry::Pose2dWithCurvature>> ptr(currentTimedView);
+    trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> iterator(ptr);
+    currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::FEEDFORWARD_ONLY);
     currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }

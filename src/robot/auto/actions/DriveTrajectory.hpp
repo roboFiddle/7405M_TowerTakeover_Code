@@ -12,11 +12,11 @@ namespace auton {
   namespace actions {
     class DriveTrajectory : public Action {
      private:
-      trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory_;
+      trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory_;
       bool reset_pose_;
      public:
-      DriveTrajectory(trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory);
-      DriveTrajectory(trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory, bool reset_pose);
+      DriveTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory);
+      DriveTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory, bool reset_pose);
       bool isFinished();
       void start();
       void update();

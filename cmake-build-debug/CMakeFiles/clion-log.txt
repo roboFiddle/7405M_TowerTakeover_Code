@@ -1,0 +1,42 @@
+/home/alexweiss/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/192.6262.62/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/home/alexweiss/CLionProjects/pros_cross/bin/arm-none-eabi-gcc -DCMAKE_CXX_COMPILER=/home/alexweiss/CLionProjects/pros_cross/bin/arm-none-eabi-g++ -G "CodeBlocks - Unix Makefiles" /home/alexweiss/CLionProjects/7405M_code
+-- The C compiler identification is GNU 8.2.1
+-- The CXX compiler identification is GNU 8.2.1
+-- Check for working C compiler: /home/alexweiss/CLionProjects/pros_cross/bin/arm-none-eabi-gcc
+-- Check for working C compiler: /home/alexweiss/CLionProjects/pros_cross/bin/arm-none-eabi-gcc -- broken
+CMake Error at /home/alexweiss/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/192.6262.62/bin/cmake/linux/share/cmake-3.14/Modules/CMakeTestCCompiler.cmake:60 (message):
+  The C compiler
+
+    "/home/alexweiss/CLionProjects/pros_cross/bin/arm-none-eabi-gcc"
+
+  is not able to compile a simple test program.
+
+  It fails with the following output:
+
+    Change Dir: /home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles/CMakeTmp
+    
+    Run Build Command(s):/usr/bin/make cmTC_c012f/fast 
+    /usr/bin/make -f CMakeFiles/cmTC_c012f.dir/build.make CMakeFiles/cmTC_c012f.dir/build
+    make[1]: Entering directory '/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles/CMakeTmp'
+    Building C object CMakeFiles/cmTC_c012f.dir/testCCompiler.c.o
+    /home/alexweiss/CLionProjects/pros_cross/bin/arm-none-eabi-gcc    -o CMakeFiles/cmTC_c012f.dir/testCCompiler.c.o   -c /home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
+    Linking C executable cmTC_c012f
+    /home/alexweiss/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/192.6262.62/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c012f.dir/link.txt --verbose=1
+    /home/alexweiss/CLionProjects/pros_cross/bin/arm-none-eabi-gcc      CMakeFiles/cmTC_c012f.dir/testCCompiler.c.o  -o cmTC_c012f 
+    /home/alexweiss/CLionProjects/pros_cross/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/bin/ld: /home/alexweiss/CLionProjects/pros_cross/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/libc.a(lib_a-exit.o): in function `exit':
+    exit.c:(.text.exit+0x2c): undefined reference to `_exit'
+    collect2: error: ld returned 1 exit status
+    make[1]: *** [CMakeFiles/cmTC_c012f.dir/build.make:87: cmTC_c012f] Error 1
+    make[1]: Leaving directory '/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles/CMakeTmp'
+    make: *** [Makefile:121: cmTC_c012f/fast] Error 2
+    
+
+  
+
+  CMake will not be able to correctly generate this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:2 (project)
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles/CMakeOutput.log".
+See also "/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles/CMakeError.log".

@@ -21,17 +21,18 @@ namespace path_planning {
   class TrajectorySet {
    private:
     std::map<std::string, MirroredTrajectory> trajectories_;
-    bool complete_;
-    void addToMap(std::string name, MirroredTrajectory traj);
-    void generatorCalls();
+
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getTestForwardTrajectory();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getTestSCurveTrajecory();
    public:
+    bool complete_;
+
     TrajectorySet();
     bool isDoneGenerating();
     bool inSet(std::string name);
     MirroredTrajectory get(std::string name);
-
+    void addToMap(std::string name, MirroredTrajectory traj);
+    static void generatorCalls(void* param);
     struct TrajectorySetManager : public util::Singleton<TrajectorySet, TrajectorySetManager> {};
     static TrajectorySetManager instance;
   };

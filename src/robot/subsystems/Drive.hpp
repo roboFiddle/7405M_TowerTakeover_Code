@@ -18,6 +18,8 @@ namespace subsystems {
     pros::Motor* backLeft;
     pros::Motor* backRight;
     ControlState currentState;
+    trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> currentTrajectory;
+    trajectory::TimedView<geometry::Pose2dWithCurvature>* currentTimedView;
     path_planning::PathFollower* currentFollower;
     units::QTime startTime;
     bool forceStopTrajectory_;
@@ -32,7 +34,7 @@ namespace subsystems {
     void setOpenLoop(util::DriveSignal voltage);
     void setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward);
     void registerEnabledLoops(loops::Looper* enabledLooper);
-    void setTrajectory(trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory);
+    void setTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory);
     void updatePathFollower();
     void updateOutputs();
     void setBrakeMode(bool set);

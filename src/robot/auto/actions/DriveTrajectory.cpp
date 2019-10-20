@@ -7,9 +7,9 @@
 
 namespace auton {
   namespace actions {
-    DriveTrajectory::DriveTrajectory(trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory)
+    DriveTrajectory::DriveTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory)
     : DriveTrajectory( trajectory, false) {}
-    DriveTrajectory::DriveTrajectory(trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory, bool reset_pose) :
+    DriveTrajectory::DriveTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory, bool reset_pose) :
     trajectory_(trajectory), reset_pose_(reset_pose ) {}
     bool DriveTrajectory::isFinished() {
       return subsystems::Drive::instance->isDoneWithTrajectory();
