@@ -10,6 +10,7 @@
 #include "auto/AutoModeRunner.hpp"
 #include "auto/modes/TestMode.hpp"
 #include "auto/modes/DoNothingMode.hpp"
+#include "auto/modes/TestTrajectoryMode.hpp"
 #include "loops/Loop.hpp"
 #include "loops/Looper.hpp"
 #include "paths/TrajectorySet.hpp"
@@ -30,13 +31,14 @@ namespace meecan {
   }
 
   void Robot::robotInit() {
+    printf("robot init\n");
     mainLooper->enable();
     subsystems::Drive::instance->registerEnabledLoops(enabledLooper);
     subsystems::Odometry::instance->registerEnabledLoops(enabledLooper);
     subsystems::Intake::instance->registerEnabledLoops(enabledLooper);
     subsystems::Tray::instance->registerEnabledLoops(enabledLooper);
     subsystems::Lift::instance->registerEnabledLoops(enabledLooper);
-    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::DoNothingMode());
+    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::TestTrajectoryMode());
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
     pros::lcd::initialize();
   }
@@ -49,7 +51,9 @@ namespace meecan {
   }
   void Robot::autonomousInit() {
     enabledLooper->enable();
-    auton::AutoModeRunner::instance->start();
+    //auton::AutoModeRunner::instance->start();
+    test::testTrajectory::newTest();
+
   }
   void Robot::autonomousLoop() {
     //printf("%f, %f\n", subsystems::Drive::instance->getLeftVoltage(), subsystems::Drive::instance->getRightVoltage());

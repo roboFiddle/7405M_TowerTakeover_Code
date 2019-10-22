@@ -338,4 +338,35 @@ namespace test {
 
       }
     }
+    void testTrajectory::newTest() {
+      printf("started");
+      std::vector<geometry::Pose2d> waypoints;
+      waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
+      waypoints.push_back(geometry::Pose2d(10 * units::inch, 10 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+      waypoints.push_back(geometry::Pose2d(0 * units::inch, 20 * units::inch, geometry::Rotation2d::fromDegrees(180)));
+      waypoints.push_back(geometry::Pose2d(-10 * units::inch, 30 * units::inch, geometry::Rotation2d::fromDegrees(90)));
+      waypoints.push_back(geometry::Pose2d(0 * units::inch, 40 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+
+      trajectory::Trajectory<geometry::Pose2dWithCurvature>
+          traj = trajectory::TrajectoryUtil::trajectoryFromSplineWaypoints(waypoints,
+                                                                           0.2,
+                                                                           0.05,
+                                                                           geometry::Rotation2d::fromDegrees(3.0).getRadians());
+
+
+      std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature> *> constraints_list;
+      printf("stcuk");
+
+
+
+      trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>>
+          timed_trajectory = trajectory::TimingUtil::timeParameterizeTrajectory(
+          false, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .05, constraints_list,
+          0, 0, 1, .33);
+
+      for(int i = 0; i < traj.length(); i++)
+        std::cout << (traj.getState(i).toString()) << std::endl;
+
+
+    }
 }

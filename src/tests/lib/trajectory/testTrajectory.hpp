@@ -16,6 +16,7 @@ namespace test {
     static void testIntegration();
     static void somethingElse();
     static void realisticConstants();
+    static void newTest();
   };
 }
 

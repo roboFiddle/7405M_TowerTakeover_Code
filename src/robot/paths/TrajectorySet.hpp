@@ -32,7 +32,7 @@ namespace path_planning {
     bool inSet(std::string name);
     MirroredTrajectory get(std::string name);
     void addToMap(std::string name, MirroredTrajectory traj);
-    static void generatorCalls(void* param);
+    static void generatorCalls();
     struct TrajectorySetManager : public util::Singleton<TrajectorySet, TrajectorySetManager> {};
     static TrajectorySetManager instance;
   };

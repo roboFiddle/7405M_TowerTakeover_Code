@@ -22,7 +22,8 @@ namespace path_planning {
 
   TrajectorySet::TrajectorySet() {
     complete_ = false;
-    pros::Task task(TrajectorySet::generatorCalls, (void*) this, TASK_PRIORITY_DEFAULT - 1, TASK_STACK_DEPTH_DEFAULT, "GENERATE TRAJECTORY TASK");
+    //generatorCalls();
+    //pros::Task task(TrajectorySet::generatorCalls, (void*) this, TASK_PRIORITY_DEFAULT - 1, TASK_STACK_DEPTH_DEFAULT, "GENERATE TRAJECTORY TASK");
   }
   bool TrajectorySet::isDoneGenerating() {
     return complete_;
@@ -58,9 +59,12 @@ namespace path_planning {
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
         constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
   }
-  void TrajectorySet::generatorCalls(void* param) {
+  void TrajectorySet::generatorCalls() {
+    printf("start gen");
     TrajectorySet::instance->addToMap("testForward", MirroredTrajectory(getTestForwardTrajectory()));
+    printf("mid gen");
     TrajectorySet::instance->addToMap("testSCurve", MirroredTrajectory(getTestSCurveTrajecory()));
+    printf("end gen");
     TrajectorySet::instance->complete_ = true;
   }
 }

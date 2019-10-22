@@ -201,33 +201,6 @@ namespace trajectory {
       }
 
       std::vector<TimedState<S>> timed_states;
-      units::QTime t = 0.0;
-      units::QLength s = 0.0;
-      units::QSpeed v = 0.0;
-      for (int i = 0; i < states.size(); ++i) {
-        // Advance t.
-        units::QLength ds = constraint_states.at(i)->distance - s;
-        units::QAcceleration accel = (constraint_states.at(i)->max_velocity * constraint_states.at(i)->max_velocity - v * v) / (2.0 * ds);
-        units::QTime dt = 0.0;
-        if (i > 0) {
-          timed_states.at(i - 1).set_acceleration(reverse ? -1*accel : accel);
-          if (std::fabs(accel.getValue()) > EPSILON) {
-            dt = (constraint_states.at(i)->max_velocity - v) / accel;
-          } else if (std::fabs(v.getValue()) > EPSILON) {
-            dt = ds / v;
-          } else {
-            printf("you might have an really big issue - TimingUtil::217\n");
-          }
-        }
-        t += dt;
-        if (std::isnan(t.getValue()) || std::isinf(t.getValue())) {
-          printf("you might have an really big issue - TimingUtil::223\n");
-        }
-
-        v = constraint_states.at(i)->max_velocity;
-        s = constraint_states.at(i)->distance;
-        timed_states.push_back(TimedState<S>(constraint_states.at(i)->state, t, reverse ? -1*v : v, reverse ? -1*accel : accel));
-      }
 
       return Trajectory<TimedState<S>>(timed_states);
     }
