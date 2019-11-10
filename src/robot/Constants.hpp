@@ -31,7 +31,7 @@ namespace constants {
     static constexpr int motor_drive_backright = 5;
     static constexpr int motor_intake_left = 1;
     static constexpr int motor_intake_right = 15;
-    static constexpr int motor_tray = 2;
+    static constexpr int motor_tray = 7;
     static constexpr int motor_lift = 14;
 
     static constexpr double MAX_TRAY_RPM = 65;

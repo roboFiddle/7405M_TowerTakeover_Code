@@ -13,6 +13,7 @@
 #include "auto/modes/TestTrajectoryMode.hpp"
 #include "loops/Loop.hpp"
 #include "loops/Looper.hpp"
+#include "paths/DriveMotionPlanner.hpp"
 #include "paths/TrajectorySet.hpp"
 #include "subsystems/Drive.hpp"
 #include "subsystems/Odometry.hpp"
@@ -38,6 +39,7 @@ namespace meecan {
     subsystems::Intake::instance->registerEnabledLoops(enabledLooper);
     subsystems::Tray::instance->registerEnabledLoops(enabledLooper);
     subsystems::Lift::instance->registerEnabledLoops(enabledLooper);
+    path_planning::TrajectorySet::instance->generatorCalls();
     std::shared_ptr<auton::AutoModeBase> activeMode(new auton::TestTrajectoryMode());
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
     pros::lcd::initialize();
@@ -64,6 +66,22 @@ namespace meecan {
     auton::AutoModeRunner::instance->stop();
     enabledLooper->enable();
 
+    path_planning::TrajectorySet::instance->generatorCalls();
+    auto timed_path = path_planning::TrajectorySet::instance->get("testSCurve").get(0);
+    for(int i = 0; i < timed_path.length(); i++) {
+      trajectory::TimedState<geometry::Pose2dWithCurvature> state = timed_path.getState(i);
+      physics::DifferentialDrive::DriveDynamics
+          dynamics = path_planning::DriveMotionPlanner::drive_model.solveInverseDynamics(
+          physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed>(state.velocity(),
+                                                                                        state.velocity()
+                                                                                            * state.state().curvature()),
+          physics::DifferentialDrive::ChassisState<units::QAcceleration,
+                                                   units::QAngularAcceleration>((state.acceleration()),
+                                                                                state.acceleration()
+                                                                                    * state.state().curvature())
+      );
+      printf("X (%f, %f, %f, %f, %f)\n", state.t(), dynamics.chassis_velocity.linear_, dynamics.chassis_velocity.angular_, dynamics.wheel_velocity.get(0), dynamics.wheel_velocity.get(1));
+    }
 
   }
   void Robot::driverLoop() {

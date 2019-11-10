@@ -27,6 +27,7 @@ namespace physics {
   bool DifferentialDrive::MinMaxAcceleration::valid() {
     return min_acceleration() <= max_acceleration();
   }
+  DifferentialDrive::MinMaxAcceleration DifferentialDrive::MinMaxAcceleration::kNoLimits;
   DifferentialDrive::DifferentialDrive(units::QMass mass, units::QMoment moi, units::QAngularDrag angular_drag,
                                        units::QLength wheel_radius, units::QLength effective_wheelbase_radius,
                                        DCMotorTransmission left_transmission, DCMotorTransmission right_transmission) :

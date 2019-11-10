@@ -40,19 +40,29 @@ namespace path_planning {
       units::QAcceleration max_accel,  // inches/s^2
       units::Number max_voltage)  {
 
+    printf("B length %d\n", waypoints.size());
+
     trajectory::Trajectory<geometry::Pose2dWithCurvature>
         traj = trajectory::TrajectoryUtil::trajectoryFromSplineWaypoints(waypoints,
                                                                          0.2,
                                                                          0.05,
                                                                          geometry::Rotation2d::fromDegrees(3.0).getRadians());
 
+    printf("C length %d\n", traj.length());
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature> *> constraints_list;
+    trajectory::DifferentialDriveDynamicsConstraint<geometry::Pose2dWithCurvature> drive_constraints(&drive_model, max_voltage);
+    trajectory::CentripetalAccelerationConstraint centripetal_acceleration_constraint(constants::PathConstants::kMaxCentripetalAccel);
+    //constraints_list.push_back(&drive_constraints);
+    constraints_list.push_back(&centripetal_acceleration_constraint);
+
 
     trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>>
         timed_trajectory = trajectory::TimingUtil::timeParameterizeTrajectory(
-        false, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .05, constraints_list,
+        false, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .025, constraints_list,
         start_vel, end_vel, max_vel, max_accel);
+
+    printf("D length %d\n", timed_trajectory.length());
 
     return timed_trajectory;
 

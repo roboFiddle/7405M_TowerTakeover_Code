@@ -18,7 +18,7 @@ namespace subsystems {
     units::QLength rightTravel = -(right->get_value()) * 0.0174533 * constants::RobotConstants::kDeadwheelRadius;
     units::QLength backTravel = (back->get_value()) * 0.0174533 * constants::RobotConstants::kDeadwheelRadius;
 
-    printf("%f %f %f \n", left->get_value(), right->get_value(), back->get_value());
+    //printf("%f %f %f \n", left->get_value(), right->get_value(), back->get_value());
 
     left->reset();
     right->reset();

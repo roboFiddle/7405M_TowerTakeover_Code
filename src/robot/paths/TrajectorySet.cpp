@@ -5,12 +5,15 @@
 #include "TrajectorySet.hpp"
 #include "DriveMotionPlanner.hpp"
 #include "PathConstants.hpp"
-#include "main.h"
 
 namespace path_planning {
   TrajectorySet::TrajectorySetManager TrajectorySet::instance;
 
   MirroredTrajectory::MirroredTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> forward) {
+    printf("length %d\n", forward.length());
+    for(int i = 0; i < forward.length(); i++) {
+      printf("(%f, %f)\n", forward.getState(i).t(),  forward.getState(i).state().translation().y());
+    }
     forward_ = forward;
     backward_ = trajectory::TrajectoryUtil::mirrorTimed(forward);
   }
@@ -22,8 +25,6 @@ namespace path_planning {
 
   TrajectorySet::TrajectorySet() {
     complete_ = false;
-    //generatorCalls();
-    //pros::Task task(TrajectorySet::generatorCalls, (void*) this, TASK_PRIORITY_DEFAULT - 1, TASK_STACK_DEPTH_DEFAULT, "GENERATE TRAJECTORY TASK");
   }
   bool TrajectorySet::isDoneGenerating() {
     return complete_;
@@ -49,10 +50,9 @@ namespace path_planning {
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getTestSCurveTrajecory() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(10 * units::inch, 10 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 20 * units::inch, geometry::Rotation2d::fromDegrees(180)));
-    waypoints.push_back(geometry::Pose2d(-10 * units::inch, 30 * units::inch, geometry::Rotation2d::fromDegrees(90)));
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 40 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(20 * units::inch, 20 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+
+    printf("A length %d\n", waypoints.size());
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
@@ -60,11 +60,10 @@ namespace path_planning {
         constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
   }
   void TrajectorySet::generatorCalls() {
-    printf("start gen");
-    TrajectorySet::instance->addToMap("testForward", MirroredTrajectory(getTestForwardTrajectory()));
-    printf("mid gen");
-    TrajectorySet::instance->addToMap("testSCurve", MirroredTrajectory(getTestSCurveTrajecory()));
-    printf("end gen");
-    TrajectorySet::instance->complete_ = true;
+    printf("start\n");
+    addToMap("testForward", MirroredTrajectory(getTestForwardTrajectory()));
+    addToMap("testSCurve", MirroredTrajectory(getTestSCurveTrajecory()));
+    complete_ = true;
+    printf("end\n");
   }
 }
