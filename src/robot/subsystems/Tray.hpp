@@ -15,6 +15,8 @@ namespace subsystems {
       pros::Motor* motor;
       units::Number demand;
       ControlState current_state;
+      int scoring_state_;
+
     public:
       Tray();
       ~Tray();
@@ -24,6 +26,7 @@ namespace subsystems {
       double get_position();
       ControlState getState();
       void updateOutputs();
+      void activateScore();
       void stop();
       void registerEnabledLoops(loops::Looper* enabledLooper);
 

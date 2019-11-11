@@ -9,8 +9,8 @@ namespace subsystems {
   Intake::Intake() {
     left = new pros::Motor(constants::RobotConstants::motor_intake_left, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
     right = new pros::Motor(constants::RobotConstants::motor_intake_right, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-    left->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-    right->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    left->set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    right->set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   }
 
   void Intake::setOpenLoop(units::Number control) {

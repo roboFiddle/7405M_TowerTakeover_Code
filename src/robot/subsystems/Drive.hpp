@@ -22,6 +22,9 @@ namespace subsystems {
     trajectory::TimedView<geometry::Pose2dWithCurvature>* currentTimedView;
     path_planning::PathFollower* currentFollower;
     units::QTime startTime;
+    units::Angle goalAngle;
+    units::Angle lastTurnError;
+    units::Angle totalTurnError;
     bool forceStopTrajectory_;
     double left_demand = 0, right_demand = 0;
     double left_accel, right_accel;
@@ -35,6 +38,7 @@ namespace subsystems {
     void setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward);
     void registerEnabledLoops(loops::Looper* enabledLooper);
     void setTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory);
+    void setTurn(units::Angle heading);
     void updatePathFollower();
     void updateOutputs();
     void setBrakeMode(bool set);

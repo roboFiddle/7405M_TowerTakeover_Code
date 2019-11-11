@@ -5,18 +5,18 @@
 
 namespace util {
   DriveSignal::DriveSignal(units::Number l, units::Number r) {
-    left_voltage_ = l.getValue();
-    right_voltage_ = r.getValue();
+    left_ = l.getValue();
+    right_ = r.getValue();
   }
-  double DriveSignal::left_voltage() {
-    return left_voltage_;
+  double DriveSignal::left() {
+    return left_;
   }
-  double DriveSignal::right_voltage() {
-    return right_voltage_;
+  double DriveSignal::right() {
+    return right_;
   }
   std::string DriveSignal::toCSV() {
     std::ostringstream stringStream;
-    stringStream << "DriveSignal," << std::to_string(left_voltage_) << "," << std::to_string(right_voltage_);
+    stringStream << "DriveSignal," << std::to_string(left_) << "," << std::to_string(right_);
     return stringStream.str();
   }
 

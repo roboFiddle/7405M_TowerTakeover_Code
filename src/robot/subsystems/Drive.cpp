@@ -36,8 +36,8 @@ namespace subsystems {
       setBrakeMode(true);
     }
 
-    left_demand = signal.left_voltage();
-    right_demand = signal.right_voltage();
+    left_demand = signal.left();
+    right_demand = signal.right();
   }
   void Drive::setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward) {
     if (currentState != ControlState::PATH_FOLLOWING) {
@@ -45,10 +45,10 @@ namespace subsystems {
       setBrakeMode(true);
     }
 
-    left_demand = velocity.left_voltage();
-    right_demand = velocity.right_voltage();
-    left_feed_forward = feedforward.left_voltage();
-    right_feed_forward = feedforward.right_voltage();
+    left_demand = velocity.left();
+    right_demand = velocity.right();
+    left_feed_forward = feedforward.left();
+    right_feed_forward = feedforward.right();
   }
   void Drive::registerEnabledLoops(loops::Looper* enabledLooper){
     loops::Loop* thisLoop = new loops::Loop();
@@ -89,8 +89,8 @@ namespace subsystems {
       frontRight->move_velocity(right_demand);
       backRight->move_velocity(right_demand);
     }
-    else {
-      double leftScaled = left_demand * 9.5493;
+    else if(currentState == ControlState::PATH_FOLLOWING) {
+      double leftScaled = left_demand * 9.5493; // 9.5493 = rad/s to RPM (60/2pi)
       leftScaled += left_feed_forward;
 
       double rightScaled = right_demand * 9.5493;
@@ -102,6 +102,22 @@ namespace subsystems {
       backLeft->move_velocity(leftScaled);
       frontRight->move_velocity(rightScaled);
       backRight->move_velocity(rightScaled);
+    }
+    else if(currentState == ControlState::TURN_FOLLOWING) {
+      units::Angle currentHeading = Odometry::instance->getPosition().rotation().getAngle();
+      units::Angle error = goalAngle - currentHeading;
+      units::Angle deltaError = error - lastTurnError;
+      totalTurnError += error;
+      double velo = constants::RobotConstants::turnKP * error.getValue();
+      velo += constants::RobotConstants::turnKI * totalTurnError.getValue();
+      velo += constants::RobotConstants::turnKD * deltaError.getValue();
+
+      frontLeft->move_velocity(velo);
+      backLeft->move_velocity(velo);
+      frontRight->move_velocity(-velo);
+      backRight->move_velocity(-velo);
+
+      lastTurnError = error;
     }
   }
   void Drive::setBrakeMode(bool set) {
@@ -125,7 +141,12 @@ namespace subsystems {
     currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }
-
+  void Drive::setTurn(units::Angle heading) {
+    currentState = ControlState::TURN_FOLLOWING;
+    goalAngle = heading;
+    lastTurnError = 0;
+    totalTurnError = 0;
+  }
   bool Drive::isDoneWithTrajectory() {
     if(forceStopTrajectory_) {
       forceStopTrajectory_ = false;

@@ -28,6 +28,12 @@ namespace subsystems {
       motor->move_velocity(demand.getValue());
     else if(current_state == ControlState::POSITION_CONTROL)
       motor->move_absolute(demand.getValue(), constants::RobotConstants::MAX_TRAY_RPM);
+    else if(current_state == ControlState::SCORE_TRAY)
+      ;
+  }
+  void Tray::activateScore() {
+    current_state = SCORE_TRAY;
+    scoring_state_ = 0;
   }
   ControlState Tray::getState() {
     return current_state;

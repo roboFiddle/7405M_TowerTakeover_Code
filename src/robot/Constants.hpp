@@ -19,11 +19,14 @@ namespace constants {
 
     static constexpr units::QLength kDeadwheelRadius = 1.375*units::inch;
     static constexpr units::QLength kDeadwheelBaseWidth = 9*units::inch;
-    static constexpr units::QLength kDeadwheelTurnRadius = 7 * units::inch;
 
     static constexpr units::QAngularSpeed kDriveSpeedPerVolt = 1.09; // RADIANS / SECOND / VOTL
     static constexpr units::QTorque kDriveTorquePerVolt = 0.56; // Nm / VOLT
     static constexpr units::Number kDriveFrictionVoltage = 1.0; // voltage to overcome friction (V)
+
+    static constexpr double turnKP = 125;
+    static constexpr double turnKI = 0;
+    static constexpr double turnKD = 1;
 
     static constexpr int motor_drive_frontleft = 4;
     static constexpr int motor_drive_backleft = 3;
@@ -36,6 +39,10 @@ namespace constants {
 
     static constexpr double MAX_TRAY_RPM = 65;
     static constexpr double MAX_LIFT_RPM = 150;
+
+    static constexpr double LIFT_STAGE[2] = {0.0, 100.0};
+    static constexpr double TRAY_LIFT[3] = {0.0, 100.0, 200.0};
+    static constexpr double LIFT_PRESETS[3] = {0.0, 200.0, 400.0};
 
   };
 }

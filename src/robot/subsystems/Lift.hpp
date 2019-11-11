@@ -21,6 +21,7 @@ namespace subsystems {
       void setPosition(units::Number control);
       units::Number get_demand();
       double get_position();
+      double getTrayForDemand();
       ControlState getState();
       void updateOutputs();
       void stop();

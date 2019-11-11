@@ -116,7 +116,7 @@ namespace path_planning {
     while (actual_lookahead_distance < constants::PathConstants::kPathMinLookaheadDistance && current_trajectory_.getRemainingProgress() > lookahead_time) {
       lookahead_time += kLookaheadSearchDt;
       lookahead_state = current_trajectory_.preview(lookahead_time).state();
-      actual_lookahead_distance = setpoint_.state().distance(lookahead_state.state());
+      actual_lookahead_distance = units::Qabs(setpoint_.state().distance(lookahead_state.state()));
     }
     if (actual_lookahead_distance < constants::PathConstants::kPathMinLookaheadDistance) {
       lookahead_state = trajectory::TimedState<geometry::Pose2dWithCurvature>(geometry::Pose2dWithCurvature(lookahead_state.state()

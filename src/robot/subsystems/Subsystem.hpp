@@ -11,7 +11,9 @@ namespace subsystems {
   enum ControlState {
     OPEN_LOOP, // open loop voltage control
     PATH_FOLLOWING, // velocity PID control
+    TURN_FOLLOWING,
     POSITION_CONTROL, // position PID control
+    SCORE_TRAY,
   };
   class Subsystem {
    public:

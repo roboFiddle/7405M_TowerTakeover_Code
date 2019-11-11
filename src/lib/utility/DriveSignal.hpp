@@ -7,12 +7,12 @@
 namespace util {
   class DriveSignal : public CSVLoggable {
     private:
-      double left_voltage_;
-      double right_voltage_;
+      double left_;
+      double right_;
     public:
       DriveSignal(units::Number l, units::Number r);
-      double left_voltage();
-      double right_voltage();
+      double left();
+      double right();
       std::string toCSV();
 
       static DriveSignal NEUTRAL;

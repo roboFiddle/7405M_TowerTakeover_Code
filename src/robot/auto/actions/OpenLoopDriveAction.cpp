@@ -8,14 +8,14 @@ namespace auton {
   namespace actions {
     OpenLoopDriveAction::OpenLoopDriveAction(util::DriveSignal signal, units::QTime duration) {
       duration_ = duration;
-      left_ = signal.left_voltage();
-      right_ = signal.right_voltage();
+      left_ = signal.left();
+      right_ = signal.right();
     }
     bool OpenLoopDriveAction::isFinished() {
       return start_time_ + duration_ < (pros::millis() * units::millisecond);
     }
     void OpenLoopDriveAction::start() {
-      printf("started open loop\n");
+      printf("started open loop drive\n");
       start_time_ = pros::millis() * units::millisecond;
       subsystems::Drive::instance->setOpenLoop(util::DriveSignal(left_, right_));
     }
@@ -23,7 +23,7 @@ namespace auton {
 
     }
     void OpenLoopDriveAction::done() {
-      printf("finished open loop\n");
+      printf("finished open loop drive\n");
       subsystems::Drive::instance->setOpenLoop(util::DriveSignal(0.0, 0.0));
     }
   }

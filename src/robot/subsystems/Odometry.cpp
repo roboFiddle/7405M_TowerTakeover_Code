@@ -26,7 +26,7 @@ namespace subsystems {
 
     units::Number dTheta = (rightTravel - leftTravel) / (constants::RobotConstants::kDeadwheelBaseWidth);
     units::QLength dY =  (0.5 * (leftTravel + rightTravel));
-    units::QLength dX = backTravel + constants::RobotConstants::kDeadwheelTurnRadius *  dTheta;
+    units::QLength dX = backTravel + constants::RobotConstants::kDeadwheelBaseWidth *  dTheta;
 
     geometry::Twist2d delta(dX, dY, dTheta * units::radian);
     geometry::Pose2d change = geometry::Pose2d::exp(delta);
