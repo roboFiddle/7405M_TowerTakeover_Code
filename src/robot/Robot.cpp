@@ -52,7 +52,7 @@ namespace meecan {
   }
   void Robot::autonomousInit() {
     enabledLooper->enable();
-    //auton::AutoModeRunner::instance->start();
+    auton::AutoModeRunner::instance->start();
 
   }
   void Robot::autonomousLoop() {
@@ -88,20 +88,31 @@ namespace meecan {
     pros::lcd::print(1, "%f %f %f", curPos.translation().x().Convert(units::inch), curPos.translation().y().Convert(units::inch), curPos.rotation().getDegrees());
     units::Number throttle = controller_->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0 * 200.0;
     units::Number turn = controller_->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0 * 200.0;
+    if(std::fabs(throttle.getValue()) < 20)
+      throttle = 0;
+    if(std::fabs(turn.getValue()) < 20)
+        turn = 0;
 
     subsystems::Drive::instance->setOpenLoop(util::DriveSignal(throttle+turn, throttle-turn));
 
     units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1));
-    if(intake.getValue() != 0.0)
-      subsystems::Intake::instance->setOpenLoop(intake * 200);
+    subsystems::Intake::instance->setOpenLoop(intake * 200);
 
     units::Number tray = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y));
-    if(tray.getValue() != 0.0)
+    if(subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
       subsystems::Tray::instance->setOpenLoop(tray * constants::RobotConstants::MAX_TRAY_RPM);
+    }
+
 
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_X))
       subsystems::Tray::instance->activateScore(); // SCORE MACRO
 
+    units::Number lift = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2));
+    if(subsystems::Lift::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+      subsystems::Lift::instance->setOpenLoop(lift * constants::RobotConstants::MAX_LIFT_RPM);
+
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
+      subsystems::Lift::instance->setPosition(0);
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
       subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[0]);
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))

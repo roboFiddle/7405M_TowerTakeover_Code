@@ -9,7 +9,7 @@ namespace subsystems {
 
   Lift::Lift() {
     motor = new pros::Motor(constants::RobotConstants::motor_lift, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
-    motor->set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    motor->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     state = ControlState::OPEN_LOOP;
   }
 
@@ -31,10 +31,10 @@ namespace subsystems {
     return state;
   }
   double Lift::getTrayForDemand() {
-    if(demand.getValue() < constants::RobotConstants::LIFT_STAGE[0]) {
+    if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[0] && demand.getValue() != 0) {
       return constants::RobotConstants::TRAY_LIFT[0];
     }
-    else if(demand.getValue() < constants::RobotConstants::LIFT_STAGE[1]) {
+    else if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[1]) {
       return constants::RobotConstants::TRAY_LIFT[1];
     }
     else {
@@ -46,9 +46,9 @@ namespace subsystems {
       motor->move_velocity(demand.getValue());
     else if(state == ControlState::POSITION_CONTROL) {
       Tray::instance->setPosition(getTrayForDemand());
-      double e = Tray::instance->get_position() - getTrayForDemand();
-      if(Tray::instance->get_position() > getTrayForDemand()*.85)
-        motor->move_absolute(demand.getValue(), constants::RobotConstants::MAX_LIFT_RPM);
+      double e = std::fabs(Tray::instance->get_position() - getTrayForDemand());
+      if(e < std::fabs(getTrayForDemand()*0.8))
+        motor->move_absolute(demand.getValue(), 200);
     }
   }
   void Lift::stop() {

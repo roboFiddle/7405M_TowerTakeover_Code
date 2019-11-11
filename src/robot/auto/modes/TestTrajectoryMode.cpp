@@ -9,7 +9,7 @@
 namespace auton {
   void TestTrajectoryMode::routine() {
     printf("started test mode\n");
-    //runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("testForward").get(false)));
+    runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("testSCurve").get(false)));
   }
 
 }
