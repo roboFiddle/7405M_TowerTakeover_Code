@@ -40,7 +40,7 @@ namespace constants {
     static constexpr double MAX_TRAY_RPM = 65;
     static constexpr double MAX_LIFT_RPM = 150;
 
-    static constexpr double LIFT_STAGE[2] = {0.0, 100.0};
+    static constexpr double LIFT_STAGE[2] = {10, 100.0};
     static constexpr double TRAY_LIFT[3] = {0.0, 100.0, 200.0};
     static constexpr double LIFT_PRESETS[3] = {0.0, 200.0, 400.0};
 

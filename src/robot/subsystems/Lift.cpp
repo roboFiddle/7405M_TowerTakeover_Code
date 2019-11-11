@@ -46,6 +46,7 @@ namespace subsystems {
       motor->move_velocity(demand.getValue());
     else if(state == ControlState::POSITION_CONTROL) {
       Tray::instance->setPosition(getTrayForDemand());
+      double e = Tray::instance->get_position() - getTrayForDemand();
       if(Tray::instance->get_position() > getTrayForDemand()*.85)
         motor->move_absolute(demand.getValue(), constants::RobotConstants::MAX_LIFT_RPM);
     }

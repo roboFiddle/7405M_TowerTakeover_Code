@@ -7,6 +7,7 @@
 
 #include "Action.hpp"
 #include "../../../lib/meecan_lib.hpp"
+#include <string>
 
 namespace auton {
   namespace actions {
@@ -15,6 +16,8 @@ namespace auton {
       trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory_;
       bool reset_pose_;
      public:
+      DriveTrajectory(std::string name);
+      DriveTrajectory(std::string name, bool reset_pose);
       DriveTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory);
       DriveTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory, bool reset_pose);
       bool isFinished();
