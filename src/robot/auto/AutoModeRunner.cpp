@@ -28,6 +28,8 @@ namespace auton {
   void AutoModeRunner::runAuton(void* param) {
     AutoModeRunner* instance = static_cast<AutoModeRunner*>(param);
     instance->mode_->run();
+    while(1)
+      pros::Task::delay(50);
   };
 
   AutoModeRunner::AutoModeRunnerManager AutoModeRunner::instance;

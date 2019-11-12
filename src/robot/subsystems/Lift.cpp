@@ -9,7 +9,7 @@ namespace subsystems {
 
   Lift::Lift() {
     motor = new pros::Motor(constants::RobotConstants::motor_lift, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
-    motor->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    motor->set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     state = ControlState::OPEN_LOOP;
   }
 

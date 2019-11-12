@@ -40,7 +40,7 @@ namespace meecan {
     subsystems::Tray::instance->registerEnabledLoops(enabledLooper);
     subsystems::Lift::instance->registerEnabledLoops(enabledLooper);
     path_planning::TrajectorySet::instance->generatorCalls();
-    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::TestTrajectoryMode());
+    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::DoNothingMode());
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
     pros::lcd::initialize();
   }
@@ -93,10 +93,12 @@ namespace meecan {
     if(std::fabs(turn.getValue()) < 20)
         turn = 0;
 
+    if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) > 5 || std::fabs(turn.getValue()) > 5)
     subsystems::Drive::instance->setOpenLoop(util::DriveSignal(throttle+turn, throttle-turn));
 
     units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1));
-    subsystems::Intake::instance->setOpenLoop(intake * 200);
+    if(subsystems::Intake::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+      subsystems::Intake::instance->setOpenLoop(intake * 200);
 
     units::Number tray = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y));
     if(subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
@@ -107,7 +109,7 @@ namespace meecan {
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_X))
       subsystems::Tray::instance->activateScore(); // SCORE MACRO
 
-    units::Number lift = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2));
+    units::Number lift = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1));
     if(subsystems::Lift::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
       subsystems::Lift::instance->setOpenLoop(lift * constants::RobotConstants::MAX_LIFT_RPM);
 

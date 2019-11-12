@@ -1,4 +1,6 @@
 #include "Tray.hpp"
+#include "Drive.hpp"
+#include "Intake.hpp"
 #include "../Constants.hpp"
 
 #include <stdio.h>
@@ -28,8 +30,26 @@ namespace subsystems {
       motor->move_velocity(demand.getValue());
     else if(current_state == ControlState::POSITION_CONTROL)
       motor->move_absolute(demand.getValue(), constants::RobotConstants::MAX_TRAY_RPM);
-    else if(current_state == ControlState::SCORE_TRAY)
-      ;
+    else if(current_state == ControlState::SCORE_TRAY) {
+      motor->move_absolute(constants::RobotConstants::TRAY_SCORE, constants::RobotConstants::MAX_TRAY_RPM);
+      if(motor->get_position() > constants::RobotConstants::SCORE_START_INTAKE && motor->get_position() < constants::RobotConstants::SCORE_END_INTAKE) {
+        Intake::instance->setFromMacro(200);
+      } else {
+        Intake::instance->setFromMacro(0);
+      }
+      if(std::fabs(motor->get_position() - constants::RobotConstants::TRAY_SCORE) < 30 && std::fabs(motor->get_actual_velocity()) < 20) {
+        count_stop_states_++;
+      }
+      else {
+        count_stop_states_ = 0;
+      }
+      if(count_stop_states_ > 10 & count_stop_states_ < 25) {
+        Intake::instance->setFromMacro(-200);
+        Drive::instance->setFromMacro(util::DriveSignal(-100, -100));
+      }
+    }
+
+
   }
   void Tray::activateScore() {
     current_state = SCORE_TRAY;

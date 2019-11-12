@@ -16,6 +16,7 @@ namespace subsystems {
       units::Number demand;
       ControlState current_state;
       int scoring_state_;
+      int count_stop_states_;
 
     public:
       Tray();

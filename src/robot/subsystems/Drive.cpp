@@ -39,6 +39,15 @@ namespace subsystems {
     left_demand = signal.left();
     right_demand = signal.right();
   }
+  void Drive::setFromMacro(util::DriveSignal signal) {
+    if (currentState != ControlState::POSITION_CONTROL) {
+      currentState = ControlState::POSITION_CONTROL;
+      setBrakeMode(true);
+    }
+
+    left_demand = signal.left();
+    right_demand = signal.right();
+  }
   void Drive::setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward) {
     if (currentState != ControlState::PATH_FOLLOWING) {
       currentState = ControlState::PATH_FOLLOWING;
@@ -83,7 +92,7 @@ namespace subsystems {
 
   }
   void Drive::updateOutputs() {
-    if(currentState == ControlState::OPEN_LOOP) {
+    if(currentState == ControlState::OPEN_LOOP || currentState == ControlState::POSITION_CONTROL) {
       frontLeft->move_velocity(left_demand);
       backLeft->move_velocity(left_demand);
       frontRight->move_velocity(right_demand);

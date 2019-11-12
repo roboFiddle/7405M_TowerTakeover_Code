@@ -15,11 +15,14 @@ namespace subsystems {
       pros::Motor* left;
       pros::Motor* right;
       units::Number demand;
+      ControlState state_;
     public:
       Intake();
       void setOpenLoop(units::Number control);
+      void setFromMacro(units::Number control);
       void updateOutputs();
       void stop();
+      ControlState getState();
       void registerEnabledLoops(loops::Looper* enabledLooper);
 
       struct IntakeManager : util::Singleton<Intake, IntakeManager> {};
