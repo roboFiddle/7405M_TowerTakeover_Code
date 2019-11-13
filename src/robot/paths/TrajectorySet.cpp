@@ -49,8 +49,10 @@ namespace path_planning {
   }
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getTestSCurveTrajecory() {
     std::vector<geometry::Pose2d> waypoints;
-    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(80 * units::inch, 20 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+
+    waypoints.push_back(geometry::Pose2d(20 * units::inch, 20 * units::inch, geometry::Rotation2d::fromDegrees(-90)));
+    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+
 
     printf("A length %d\n", waypoints.size());
 

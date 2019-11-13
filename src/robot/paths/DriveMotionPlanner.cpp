@@ -42,8 +42,19 @@ namespace path_planning {
 
     printf("B length %d\n", waypoints.size());
 
+    std::vector<geometry::Pose2d> waypoints_flipped_if_needed = waypoints;
+    geometry::Pose2d flip = geometry::Pose2d::fromRotation(geometry::Rotation2d(-1, 0));
+    if (reversed) {
+      waypoints_flipped_if_needed.clear();
+      for (geometry::Pose2d waypoint : waypoints) {
+        waypoints_flipped_if_needed.push_back(waypoint.transformBy(flip));
+      }
+    }
+
+
+
     trajectory::Trajectory<geometry::Pose2dWithCurvature>
-        traj = trajectory::TrajectoryUtil::trajectoryFromSplineWaypoints(waypoints,
+        traj = trajectory::TrajectoryUtil::trajectoryFromSplineWaypoints(waypoints_flipped_if_needed,
                                                                          0.2,
                                                                          0.05,
                                                                          geometry::Rotation2d::fromDegrees(3.0).getRadians());

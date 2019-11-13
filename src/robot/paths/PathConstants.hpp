@@ -20,7 +20,7 @@ namespace constants {
     static constexpr units::Number kMaxVoltage = 12.0;
 
     static constexpr units::QTime kPathLookaheadTime = 0.4;
-    static constexpr units::QLength kPathMinLookaheadDistance = .20;
+    static constexpr units::QLength kPathMinLookaheadDistance = .05;
     static constexpr units::QAngularSpeed kPathKX = .05;
   };
 
