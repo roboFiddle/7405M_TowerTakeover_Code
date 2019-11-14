@@ -40,8 +40,6 @@ namespace path_planning {
       units::QAcceleration max_accel,  // inches/s^2
       units::Number max_voltage)  {
 
-    printf("B length %d\n", waypoints.size());
-
     std::vector<geometry::Pose2d> waypoints_flipped_if_needed = waypoints;
     geometry::Pose2d flip = geometry::Pose2d::fromRotation(geometry::Rotation2d(-1, 0));
     if (reversed) {
@@ -59,8 +57,6 @@ namespace path_planning {
                                                                          0.05,
                                                                          geometry::Rotation2d::fromDegrees(3.0).getRadians());
 
-    printf("C length %d\n", traj.length());
-
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature> *> constraints_list;
     trajectory::DifferentialDriveDynamicsConstraint<geometry::Pose2dWithCurvature> drive_constraints(&drive_model, max_voltage);
     trajectory::CentripetalAccelerationConstraint centripetal_acceleration_constraint(constants::PathConstants::kMaxCentripetalAccel);
@@ -73,7 +69,6 @@ namespace path_planning {
         false, trajectory::DistanceView<geometry::Pose2dWithCurvature>(&traj), .025, constraints_list,
         start_vel, end_vel, max_vel, max_accel);
 
-    printf("D length %d\n", timed_trajectory.length());
 
     return timed_trajectory;
 

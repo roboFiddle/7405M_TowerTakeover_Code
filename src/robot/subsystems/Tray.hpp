@@ -28,6 +28,7 @@ namespace subsystems {
       ControlState getState();
       void updateOutputs();
       void activateScore();
+      bool doneWithScore();
       void stop();
       void registerEnabledLoops(loops::Looper* enabledLooper);
 

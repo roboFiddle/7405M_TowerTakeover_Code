@@ -33,7 +33,7 @@ namespace constants {
     static constexpr int motor_drive_frontright = 6;
     static constexpr int motor_drive_backright = 5;
     static constexpr int motor_intake_left = 18;
-    static constexpr int motor_intake_right = 17;
+    static constexpr int motor_intake_right = 16;
     static constexpr int motor_tray = 8;
     static constexpr int motor_lift = 14;
 
@@ -46,7 +46,7 @@ namespace constants {
     static constexpr double trayErrorBeforeLiftStart = 25;
 
     static constexpr double TRAY_SCORE = 1140;
-    static constexpr double SCORE_START_INTAKE = 700;
+    static constexpr double SCORE_START_INTAKE = 600;
     static constexpr double SCORE_END_INTAKE = 900;
 
   };

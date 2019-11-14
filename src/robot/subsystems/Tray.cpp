@@ -33,7 +33,7 @@ namespace subsystems {
     else if(current_state == ControlState::SCORE_TRAY) {
       motor->move_absolute(constants::RobotConstants::TRAY_SCORE, constants::RobotConstants::MAX_TRAY_RPM);
       if(motor->get_position() > constants::RobotConstants::SCORE_START_INTAKE && motor->get_position() < constants::RobotConstants::SCORE_END_INTAKE) {
-        Intake::instance->setFromMacro(200);
+        Intake::instance->setFromMacro(100);
       } else {
         Intake::instance->setFromMacro(0);
       }
@@ -43,9 +43,14 @@ namespace subsystems {
       else {
         count_stop_states_ = 0;
       }
-      if(count_stop_states_ > 10 & count_stop_states_ < 25) {
+      if(count_stop_states_ > 10 & count_stop_states_ < 75) {
         Intake::instance->setFromMacro(-200);
-        Drive::instance->setFromMacro(util::DriveSignal(-100, -100));
+        if(count_stop_states_ > 15)
+          Drive::instance->setFromMacro(util::DriveSignal(-100, -100));
+      }
+      else if( count_stop_states_ > 75) {
+        scoring_state_ = 1;
+        Drive::instance->setFromMacro(util::DriveSignal(0, 0));
       }
     }
 
@@ -54,6 +59,9 @@ namespace subsystems {
   void Tray::activateScore() {
     current_state = SCORE_TRAY;
     scoring_state_ = 0;
+  }
+  bool Tray::doneWithScore() {
+    return scoring_state_;
   }
   ControlState Tray::getState() {
     return current_state;
