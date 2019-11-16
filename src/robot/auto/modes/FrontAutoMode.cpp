@@ -2,7 +2,7 @@
 // Created by alexweiss on 10/20/19.
 //
 
-#include "BackAutoMode.hpp"
+#include "FrontAutoMode.hpp"
 #include "../actions/DriveTrajectory.hpp"
 #include "../actions/WaitAction.hpp"
 #include "../actions/OpenLoopDriveAction.hpp"
@@ -15,7 +15,7 @@
 #include "../actions/ResetLiftTrayPosition.hpp"
 
 namespace auton {
-  void BackAutoMode::routine() {
+  void FrontAutoMode::routine() {
     runAction(new actions::OpenLoopDriveAction(util::DriveSignal(200, 200), 0.3));
     runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-200, -200), 0.5));
     runAction(new actions::OpenLoopIntakeAction(200, 0.6));
@@ -32,7 +32,7 @@ namespace auton {
 
 
     std::list<actions::Action*> driveAndIntake;
-    driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backForward").get(flip_)));
+    driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backS").get(flip_)));
     driveAndIntake.push_back(new actions::TrayPosition(0, false));
     driveAndIntake.push_back(new actions::OpenLoopIntakeAction(200, -1));
     runAction(new actions::ParallelAction(driveAndIntake));
@@ -41,7 +41,7 @@ namespace auton {
     driveAndIntake2.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backS").get(flip_))));
     driveAndIntake2.push_back(new actions::OpenLoopIntakeAction(100, 0));
     runAction(new actions::ParallelAction(driveAndIntake2));
-    runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backSetup").get(flip_)));
+    runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontSetup").get(flip_)));
 
     runAction(new actions::OpenLoopIntakeAction(-100, 0.8));
     runAction(new actions::TrayEnableStackAction());

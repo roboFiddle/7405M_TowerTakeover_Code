@@ -42,7 +42,7 @@ namespace constants {
 
     static constexpr double LIFT_STAGE[2] = {-10, -900};
     static constexpr double TRAY_LIFT[4] = {25, 300, 600, 750};
-    static constexpr double LIFT_PRESETS[3] = {-700, -900, -1300};
+    static constexpr double LIFT_PRESETS[4] = {0, -700, -900, -1300};
     static constexpr double trayErrorBeforeLiftStart = 25;
 
     static constexpr double TRAY_SCORE = 1140;

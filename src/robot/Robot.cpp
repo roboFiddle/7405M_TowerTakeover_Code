@@ -12,6 +12,7 @@
 #include "auto/modes/DoNothingMode.hpp"
 #include "auto/modes/TestTrajectoryMode.hpp"
 #include "auto/modes/BackAutoMode.hpp"
+#include "auto/modes/FrontAutoMode.hpp"
 #include "auto/modes/FlipOutMode.hpp"
 #include "loops/Loop.hpp"
 #include "loops/Looper.hpp"
@@ -42,7 +43,7 @@ namespace meecan {
     subsystems::Tray::instance->registerEnabledLoops(enabledLooper);
     subsystems::Lift::instance->registerEnabledLoops(enabledLooper);
     path_planning::TrajectorySet::instance->generatorCalls();
-    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::BackAutoMode());
+    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::BackAutoMode(BACK_RED));
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
     pros::lcd::initialize();
   }
@@ -51,9 +52,68 @@ namespace meecan {
     auton::AutoModeRunner::instance->stop();
   }
   void Robot::disabledLoop() {
+    if(pros::lcd::read_buttons() == 4)  //left
+      current_auton--;
+    else if(pros::lcd::read_buttons() == 1) //right
+      current_auton++;
+    if(current_auton < 0)
+      current_auton = 5;
+    if(current_auton > 5)
+      current_auton = 0;
+
+    switch(current_auton) {
+      case 0:
+        pros::lcd::print(4, "DO NOTHING");
+        break;
+      case 1:
+        pros::lcd::print(4, "RELEASE ONLY");
+        break;
+      case 2:
+        pros::lcd::print(4, "SINGLE/BACK RED");
+        break;
+      case 3:
+        pros::lcd::print(4, "SINGLE/BACK BLUE");
+        break;
+      case 4:
+        pros::lcd::print(4, "DOUBLE/FRONT RED");
+        break;
+      case 5:
+        pros::lcd::print(4, "DOUBLE/FRONT BLUE");
+        break;
+      default:
+        pros::lcd::print(4, "YOU BROKE IT");
+        break;
+    }
+
   }
   void Robot::autonomousInit() {
     enabledLooper->enable();
+    switch(current_auton) {
+      case 1: {
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FlipOutMode());
+        auton::AutoModeRunner::instance->setAutoMode(activeMode); }
+        break;
+      case 2: {
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::BackAutoMode(BACK_RED));
+        auton::AutoModeRunner::instance->setAutoMode(activeMode); }
+        break;
+      case 3: {
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::BackAutoMode(BACK_BLUE));
+        auton::AutoModeRunner::instance->setAutoMode(activeMode); }
+        break;
+      case 4: {
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FrontAutoMode(FRONT_RED));
+        auton::AutoModeRunner::instance->setAutoMode(activeMode); }
+        break;
+      case 5: {
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FrontAutoMode(FRONT_RED));
+        auton::AutoModeRunner::instance->setAutoMode(activeMode); }
+        break;
+      default: {
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::DoNothingMode());
+        auton::AutoModeRunner::instance->setAutoMode(activeMode); }
+        break;
+    }
     auton::AutoModeRunner::instance->start();
 
   }
@@ -77,8 +137,10 @@ namespace meecan {
     if(std::fabs(turn.getValue()) < 20)
         turn = 0;
 
+
+    turn = (turn / 200) * (turn / 200) * 200;
     if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) > 5 || std::fabs(turn.getValue()) > 5)
-    subsystems::Drive::instance->setOpenLoop(util::DriveSignal(throttle+turn, throttle-turn));
+      subsystems::Drive::instance->setOpenLoop(util::DriveSignal(throttle+turn, throttle-turn));
 
     units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1));
     if(subsystems::Intake::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1))
@@ -101,13 +163,24 @@ namespace meecan {
     if(subsystems::Lift::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
       subsystems::Lift::instance->setOpenLoop(lift * constants::RobotConstants::MAX_LIFT_RPM);
 
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
-      subsystems::Lift::instance->setPosition(0);
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
+    /* if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
       subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[0]);
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
       subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[1]);
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_UP))
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
       subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[2]);
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_UP))
+      subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[3]); */
+
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
+      lift_state = 0;
+    else if(controller_->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT))
+      lift_state--;
+    else if(controller_->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT))
+      lift_state ++;
+
+    if(lift_state < 0) lift_state = 0;
+    if(lift_state > 3) lift_state = 3;
+    subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[lift_state]);
   }
 }

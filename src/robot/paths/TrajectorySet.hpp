@@ -23,6 +23,7 @@ namespace path_planning {
     std::map<std::string, MirroredTrajectory> trajectories_;
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackForward();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackS();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontSetup();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackSetup();
    public:
     bool complete_;
