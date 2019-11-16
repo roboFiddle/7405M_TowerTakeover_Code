@@ -12,6 +12,7 @@
 #include "auto/modes/DoNothingMode.hpp"
 #include "auto/modes/TestTrajectoryMode.hpp"
 #include "auto/modes/BackAutoMode.hpp"
+#include "auto/modes/FlipOutMode.hpp"
 #include "loops/Loop.hpp"
 #include "loops/Looper.hpp"
 #include "paths/DriveMotionPlanner.hpp"
@@ -89,8 +90,12 @@ namespace meecan {
     }
 
 
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_X))
-      subsystems::Tray::instance->activateScore(); // SCORE MACRO
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
+      std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FlipOutMode());
+      auton::AutoModeRunner::instance->setAutoMode(activeMode);
+      auton::AutoModeRunner::instance->start();
+      pros::Task::delay(4000);
+    }
 
     units::Number lift = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1));
     if(subsystems::Lift::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y))

@@ -12,7 +12,7 @@ namespace auton {
       right_ = signal.right();
     }
     bool OpenLoopDriveAction::isFinished() {
-      return start_time_ + duration_ < (pros::millis() * units::millisecond);
+      return (start_time_.getValue() + duration_.getValue()) * 1000 < (pros::millis());
     }
     void OpenLoopDriveAction::start() {
       printf("started open loop drive\n");

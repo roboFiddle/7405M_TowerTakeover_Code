@@ -5,18 +5,15 @@
 #include "Action.hpp"
 #include "../../../lib/meecan_lib.hpp"
 #include "../../subsystems/Tray.hpp"
+#include "../../subsystems/Lift.hpp"
 
 namespace auton {
   namespace actions {
-    class TrayPosition : public Action {
+    class ResetLiftTrayPosition : public Action {
      private:
-      units::QTime start_time_;
-      double goal_;
-      bool limit_velo_;
 
      public:
-      TrayPosition(double goal);
-      TrayPosition(double goal, bool limit_velo);
+      ResetLiftTrayPosition();
       bool isFinished();
       void start();
       void update();

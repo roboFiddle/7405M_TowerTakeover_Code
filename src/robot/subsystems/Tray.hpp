@@ -13,22 +13,30 @@ namespace subsystems {
   class Tray : Subsystem {
     private:
       pros::Motor* motor;
+      pros::ADIAnalogIn* pot;
       units::Number demand;
       ControlState current_state;
       int scoring_state_;
       int count_stop_states_;
+      bool limit_velo_;
+
+      double getMultiplier();
 
     public:
       Tray();
       ~Tray();
       void setOpenLoop(units::Number control);
       void setPosition(units::Number control);
+      void setPosition(units::Number control, bool limit_velo);
+      void tare();
       units::Number get_demand();
       double get_position();
       ControlState getState();
       void updateOutputs();
       void activateScore();
       bool doneWithScore();
+      double getMotorVelocity();
+      double getPositionError();
       void stop();
       void registerEnabledLoops(loops::Looper* enabledLooper);
 

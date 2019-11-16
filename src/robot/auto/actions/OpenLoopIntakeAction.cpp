@@ -19,7 +19,8 @@ namespace auton {
       subsystems::Intake::instance->setOpenLoop(signal_);
     }
     void OpenLoopIntakeAction::update() {
-
+      if(isFinished() && duration_.getValue() > 0)
+        done();
     }
     void OpenLoopIntakeAction::done() {
       printf("finished open loop intake\n");

@@ -13,8 +13,11 @@ namespace subsystems {
   class Lift : Subsystem {
     private:
       pros::Motor* motor;
+      pros::ADIAnalogIn* pot;
       units::Number demand;
       ControlState state;
+      double lastTray;
+
     public:
       Lift();
       void setOpenLoop(units::Number control);
@@ -25,6 +28,7 @@ namespace subsystems {
       ControlState getState();
       void updateOutputs();
       void stop();
+      void tare();
       void registerEnabledLoops(loops::Looper* enabledLooper);
 
       struct LiftManager : util::Singleton<Lift, LiftManager> {};
