@@ -48,7 +48,7 @@ namespace subsystems {
     else if(current_state == ControlState::POSITION_CONTROL)
       motor->move_absolute(demand.getValue(), constants::RobotConstants::MAX_TRAY_RPM * (demand.getValue() > 0 ? getMultiplier() : 1));
     else if(current_state == ControlState::SCORE_TRAY) {
-      motor->move_absolute(constants::RobotConstants::TRAY_SCORE, constants::RobotConstants::MAX_TRAY_RPM * getMultiplier());
+      motor->move_absolute(constants::RobotConstants::TRAY_SCORE, constants::RobotConstants::MAX_TRAY_RPM * getMultiplier() + 15);
       if(std::fabs(motor->get_position() - constants::RobotConstants::SCORE_START_INTAKE) < 50 || std::fabs(motor->get_position() - constants::RobotConstants::SCORE_END_INTAKE) < 50) {
         Intake::instance->setFromMacro(200);
         Drive::instance->setFromMacro(util::DriveSignal(30, 30));

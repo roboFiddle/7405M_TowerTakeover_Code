@@ -18,7 +18,7 @@ namespace auton {
   void FlipOutMode::routine() {
     runAction(new actions::OpenLoopDriveAction(util::DriveSignal(200, 200), 0.3));
     runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-200, -200), 0.5));
-    runAction(new actions::OpenLoopIntakeAction(200, 0.6));
+    runAction(new actions::OpenLoopIntakeAction(200, 1));
     std::list<actions::Action*> TrayAndOuttakeRelease;
     TrayAndOuttakeRelease.push_back(new actions::TrayPosition(1000, false));
     TrayAndOuttakeRelease.push_back(new actions::OpenLoopIntakeAction(-200, 0));

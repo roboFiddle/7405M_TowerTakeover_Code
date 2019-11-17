@@ -17,6 +17,7 @@ namespace subsystems {
       units::Number demand;
       ControlState state;
       double lastTray;
+      int encoder_offset = 0;
 
     public:
       Lift();

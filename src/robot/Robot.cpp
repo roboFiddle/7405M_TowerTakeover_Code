@@ -52,10 +52,14 @@ namespace meecan {
     auton::AutoModeRunner::instance->stop();
   }
   void Robot::disabledLoop() {
-    if(pros::lcd::read_buttons() == 4)  //left
+    if(pros::lcd::read_buttons() == 4) {  //left
+      while(pros::lcd::read_buttons() == 4) {pros::Task::delay(20);}
       current_auton--;
-    else if(pros::lcd::read_buttons() == 1) //right
+    }
+    else if(pros::lcd::read_buttons() == 1) { //right
+      while(pros::lcd::read_buttons() == 1) {pros::Task::delay(20);}
       current_auton++;
+    }
     if(current_auton < 0)
       current_auton = 5;
     if(current_auton > 5)
@@ -88,6 +92,7 @@ namespace meecan {
   }
   void Robot::autonomousInit() {
     enabledLooper->enable();
+
     switch(current_auton) {
       case 1: {
         std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FlipOutMode());
@@ -125,6 +130,8 @@ namespace meecan {
   void Robot::driverInit() {
     auton::AutoModeRunner::instance->stop();
     enabledLooper->enable();
+    subsystems::Lift::instance->tare();
+    subsystems::Tray::instance->setOpenLoop(0);
   }
   void Robot::driverLoop() {
     pros::lcd::print(0, "driver loop %d", pros::millis());
@@ -138,7 +145,7 @@ namespace meecan {
         turn = 0;
 
 
-    turn = (turn / 200) * (turn / 200) * 200;
+    turn = (turn.getValue() > 0 ? 1 : -1) * (turn / 200) * (turn / 200) * 200 ;
     if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) > 5 || std::fabs(turn.getValue()) > 5)
       subsystems::Drive::instance->setOpenLoop(util::DriveSignal(throttle+turn, throttle-turn));
 
@@ -150,6 +157,7 @@ namespace meecan {
     if(subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
       subsystems::Tray::instance->setOpenLoop(tray * constants::RobotConstants::MAX_TRAY_RPM);
     }
+    printf("TRAY STATE %f, %d\n", tray.getValue(), subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y));
 
 
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
@@ -181,6 +189,10 @@ namespace meecan {
 
     if(lift_state < 0) lift_state = 0;
     if(lift_state > 3) lift_state = 3;
-    subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[lift_state]);
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)  || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) )
+      subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[lift_state]);
+
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_B))
+      subsystems::Lift::instance->tare();
   }
 }

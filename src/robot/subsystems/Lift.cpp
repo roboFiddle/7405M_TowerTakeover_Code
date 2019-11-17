@@ -66,7 +66,8 @@ namespace subsystems {
     setOpenLoop(0);
   }
   void Lift::tare() {
-    motor->tare_position();
+    printf("TARE %f \n", pros::c::motor_get_position(constants::RobotConstants::motor_lift));
+    pros::c::motor_tare_position(constants::RobotConstants::motor_lift);
   }
   void Lift::registerEnabledLoops(loops::Looper* enabledLooper) {
     loops::Loop* thisLoop = new loops::Loop();

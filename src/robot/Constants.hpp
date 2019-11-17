@@ -32,20 +32,20 @@ namespace constants {
     static constexpr int motor_drive_backleft = 3;
     static constexpr int motor_drive_frontright = 6;
     static constexpr int motor_drive_backright = 5;
-    static constexpr int motor_intake_left = 18;
+    static constexpr int motor_intake_left = 20;
     static constexpr int motor_intake_right = 16;
     static constexpr int motor_tray = 8;
     static constexpr int motor_lift = 14;
 
-    static constexpr double MAX_TRAY_RPM = 100;
+    static constexpr double MAX_TRAY_RPM = 60;
     static constexpr double MAX_LIFT_RPM = 150;
 
     static constexpr double LIFT_STAGE[2] = {-10, -900};
-    static constexpr double TRAY_LIFT[4] = {25, 300, 600, 750};
-    static constexpr double LIFT_PRESETS[4] = {0, -700, -900, -1300};
+    static constexpr double TRAY_LIFT[4] = {100, 300, 600, 750};
+    static constexpr double LIFT_PRESETS[4] = {0, -600, -850, -1500};
     static constexpr double trayErrorBeforeLiftStart = 25;
 
-    static constexpr double TRAY_SCORE = 1140;
+    static constexpr double TRAY_SCORE = 1050;
     static constexpr double SCORE_START_INTAKE = 700;
     static constexpr double SCORE_END_INTAKE = 900;
 
