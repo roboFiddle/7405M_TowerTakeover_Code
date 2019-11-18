@@ -115,7 +115,7 @@ namespace meecan {
         auton::AutoModeRunner::instance->setAutoMode(activeMode); }
         break;
       default: {
-        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::DoNothingMode());
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::TestTrajectoryMode());
         auton::AutoModeRunner::instance->setAutoMode(activeMode); }
         break;
     }

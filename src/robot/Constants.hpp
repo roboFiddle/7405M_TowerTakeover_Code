@@ -10,44 +10,44 @@
 namespace constants {
   class RobotConstants {
    public:
-    static constexpr units::QLength kDriveWheelRadius = 2*units::inch;
-    static constexpr units::QMass kRobotMass = 4*units::kg;
-    static constexpr units::QMoment kRobotMoment = 6*units::kgm2;
-    static constexpr units::QAngularDrag kRobotAngularDrag = 0.0;
-    static constexpr units::QLength kDriveWheelTrackWidth = 14.875 * units::inch;
-    static constexpr units::Number kTrackScrubFactor = 1.0;
+    static units::QLength kDriveWheelRadius;
+    static units::QMass kRobotMass;
+    static units::QMoment kRobotMoment;
+    static units::QAngularDrag kRobotAngularDrag;
+    static units::QLength kDriveWheelTrackWidth;
+    static units::Number kTrackScrubFactor;
 
-    static constexpr units::QLength kDeadwheelRadius = 1.375*units::inch;
-    static constexpr units::QLength kDeadwheelBaseWidth = 9*units::inch;
+    static units::QLength kDeadwheelRadius;
+    static units::QLength kDeadwheelBaseWidth;
 
-    static constexpr units::QAngularSpeed kDriveSpeedPerVolt = 1.09; // RADIANS / SECOND / VOTL
-    static constexpr units::QTorque kDriveTorquePerVolt = 0.56; // Nm / VOLT
-    static constexpr units::Number kDriveFrictionVoltage = 1.0; // voltage to overcome friction (V)
+    static units::QAngularSpeed kDriveSpeedPerVolt; // RADIANS / SECOND / VOTL
+    static units::QTorque kDriveTorquePerVolt;
+    static units::Number kDriveFrictionVoltage; // voltage to overcome friction (V)
 
-    static constexpr double turnKP = 125;
-    static constexpr double turnKI = 0;
-    static constexpr double turnKD = 1;
+    static double turnKP;
+    static double turnKI;
+    static double turnKD;
 
-    static constexpr int motor_drive_frontleft = 4;
-    static constexpr int motor_drive_backleft = 3;
-    static constexpr int motor_drive_frontright = 6;
-    static constexpr int motor_drive_backright = 5;
-    static constexpr int motor_intake_left = 20;
-    static constexpr int motor_intake_right = 16;
-    static constexpr int motor_tray = 8;
-    static constexpr int motor_lift = 14;
+    static int motor_drive_frontleft;
+    static int motor_drive_backleft;
+    static int motor_drive_frontright;
+    static int motor_drive_backright;
+    static int motor_intake_left;
+    static int motor_intake_right;
+    static int motor_tray;
+    static int motor_lift;
 
-    static constexpr double MAX_TRAY_RPM = 60;
-    static constexpr double MAX_LIFT_RPM = 150;
+    static double MAX_TRAY_RPM;
+    static double MAX_LIFT_RPM;
 
-    static constexpr double LIFT_STAGE[2] = {-10, -900};
-    static constexpr double TRAY_LIFT[4] = {100, 300, 600, 750};
-    static constexpr double LIFT_PRESETS[4] = {0, -600, -850, -1500};
-    static constexpr double trayErrorBeforeLiftStart = 25;
+    static double LIFT_STAGE[2];
+    static double TRAY_LIFT[4];
+    static double LIFT_PRESETS[4];
+    static double trayErrorBeforeLiftStart;
 
-    static constexpr double TRAY_SCORE = 1050;
-    static constexpr double SCORE_START_INTAKE = 700;
-    static constexpr double SCORE_END_INTAKE = 900;
+    static double TRAY_SCORE;
+    static double SCORE_START_INTAKE;
+    static double SCORE_END_INTAKE;
 
   };
 }

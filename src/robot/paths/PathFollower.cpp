@@ -147,6 +147,32 @@ namespace path_planning {
   }
 
   Output PathFollower::updateNonlinearFeedback(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
-    return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_, dynamics.voltage.left_, dynamics.voltage.right_);
+    units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> kBeta = 2.0;  // >0.
+    units::Number kZeta = 0.7;  // Damping coefficient, [0, 1].
+
+    // Compute gain parameter.
+    units::QAngularSpeed k = 2.0 * kZeta * units::Qsqrt((kBeta * dynamics.chassis_velocity.linear_ * dynamics.chassis_velocity.linear_) + (dynamics.chassis_velocity.angular_ * dynamics.chassis_velocity.angular_));
+
+    // Compute error components.
+    units::Number angle_error_rads = error_.rotation().getRadians();
+    units::Number sin_x_over_x = FEQUALS(angle_error_rads, 0 * units::num) ? 1.0 : error_.rotation().sin() / angle_error_rads;
+    physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> adjusted_velocity (
+        dynamics.chassis_velocity.linear_ * error_.rotation().cos() + k * error_.translation().x(),
+        dynamics.chassis_velocity.angular_ + k * angle_error_rads + dynamics.chassis_velocity.linear_ * kBeta * sin_x_over_x * error_.translation().y());
+
+    // Compute adjusted left and right wheel velocities.
+    dynamics.chassis_velocity = adjusted_velocity;
+    dynamics.wheel_velocity = model_->solveInverseKinematics(adjusted_velocity);
+
+    dynamics.chassis_acceleration.linear_ = (dt_ == 0*units::second) ? 0.0 : (dynamics.chassis_velocity.linear_ - prev_velocity_
+        .linear_) / dt_;
+    dynamics.chassis_acceleration.angular_ = (dt_ == 0*units::second) ? 0.0 : (dynamics.chassis_velocity.angular_ - prev_velocity_
+        .angular_) / dt_;
+
+    prev_velocity_ = dynamics.chassis_velocity;
+
+    physics::DifferentialDrive::WheelState<units::Number> feedforward_voltages = model_->solveInverseDynamics(dynamics.chassis_velocity, dynamics.chassis_acceleration).voltage;
+
+    return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_, feedforward_voltages.left_, feedforward_voltages.right_);
   }
 }
