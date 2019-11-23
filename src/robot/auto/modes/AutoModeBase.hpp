@@ -11,6 +11,7 @@ namespace auton {
   class AutoModeBase {
    protected:
     bool active_ = true;
+    void flipOut();
     virtual void routine() = 0;
    public:
     virtual void done() {};

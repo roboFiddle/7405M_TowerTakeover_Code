@@ -19,6 +19,7 @@ namespace constants {
 
     static units::QLength kDeadwheelRadius;
     static units::QLength kDeadwheelBaseWidth;
+    static units::QLength kDeadwheelBackTurningRadius;
 
     static units::QAngularSpeed kDriveSpeedPerVolt; // RADIANS / SECOND / VOTL
     static units::QTorque kDriveTorquePerVolt;

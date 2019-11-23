@@ -32,21 +32,30 @@ namespace subsystems {
   double Tray::getMultiplier() {
     if(!limit_velo_)
       return 1.5;
-    if(pot->get_value() < 1500) {
+
+    if(pot->get_value() < 1600) {
       return 1;
     }
+    else if(pot->get_value() > 2850) {
+      return 0;
+    }
     else {
-      return 1 - (pot->get_value() - 1500) * (0.75/1250);
+      return 1 - (pot->get_value() - 1400) * (0.5/1550);
     }
   }
   double Tray::get_position() {
     return motor->get_position();
   }
+  void Tray::runPID() {
+    double error = demand.getValue() - pot->get_value();
+    double m = limit_velo_ ? 0.05 : .2;
+    motor->move_velocity((int) error * m);
+  }
   void Tray::updateOutputs() {
     if(current_state == ControlState::OPEN_LOOP)
       motor->move_velocity(demand.getValue() * (demand.getValue() > 0 ? getMultiplier() : 1));
     else if(current_state == ControlState::POSITION_CONTROL)
-      motor->move_absolute(demand.getValue(), constants::RobotConstants::MAX_TRAY_RPM * (demand.getValue() > 0 ? getMultiplier() : 1));
+      runPID();
     else if(current_state == ControlState::SCORE_TRAY) {
       motor->move_absolute(constants::RobotConstants::TRAY_SCORE, constants::RobotConstants::MAX_TRAY_RPM * getMultiplier() + 15);
       if(std::fabs(motor->get_position() - constants::RobotConstants::SCORE_START_INTAKE) < 50 || std::fabs(motor->get_position() - constants::RobotConstants::SCORE_END_INTAKE) < 50) {
@@ -92,7 +101,7 @@ namespace subsystems {
     return current_state;
   }
   double Tray::getPositionError() {
-    return demand.getValue() - motor->get_position();
+    return demand.getValue() -  pot->get_value();
   }
   double Tray::getMotorVelocity() {
     return motor->get_actual_velocity();

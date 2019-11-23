@@ -33,23 +33,31 @@ namespace subsystems {
     return state;
   }
   double Lift::getTrayForDemand() {
-    if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[0]) {
-      if(pot->get_value() > 2000)
-        return constants::RobotConstants::TRAY_LIFT[2];
-      else if(pot->get_value() > 1900)
+    if(demand.getValue() > pot->get_value()) { // going up
+      if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[0]) { // levels 1/2
         return constants::RobotConstants::TRAY_LIFT[1];
-      else
-        return constants::RobotConstants::TRAY_LIFT[0];
-    }
-    else if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[1]) {
-      return constants::RobotConstants::TRAY_LIFT[2];
-    }
-    else {
-      if(pot->get_value() > 2000)
+      }
+      else { // level 3
         return constants::RobotConstants::TRAY_LIFT[3];
-      else
-        return constants::RobotConstants::TRAY_LIFT[2];
+      }
     }
+    else { // going down
+      if(demand.getValue() < constants::RobotConstants::LIFT_STAGE[0]) { // level 0
+        if(pot->get_value() > constants::RobotConstants::LIFT_STAGE[1]) { // top of two level drop
+          return constants::RobotConstants::TRAY_LIFT[2];
+        }
+        else {
+          return constants::RobotConstants::TRAY_LIFT[0];
+        }
+      }
+      else { // going down to 1/2
+        return constants::RobotConstants::TRAY_LIFT[1];
+      }
+    }
+  }
+  void Lift::runPID() {
+    double error = demand.getValue() - pot->get_value();
+    motor->move_velocity((int) error * .05);
   }
   void Lift::updateOutputs() {
     if(state == ControlState::OPEN_LOOP)
@@ -57,9 +65,9 @@ namespace subsystems {
     else if(state == ControlState::POSITION_CONTROL) {
       Tray::instance->setPosition(getTrayForDemand());
       lastTray = getTrayForDemand();
-      double e = std::fabs(Tray::instance->get_position() - getTrayForDemand());
-      if(e < std::fabs(getTrayForDemand()*0.8))
-        motor->move_absolute(demand.getValue(), 200);
+      double tray_error = std::fabs(Tray::instance->get_position() - getTrayForDemand());
+      if(tray_error < std::fabs(getTrayForDemand()*0.8))
+        runPID();
     }
   }
   void Lift::stop() {

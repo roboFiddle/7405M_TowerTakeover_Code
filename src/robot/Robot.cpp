@@ -157,7 +157,7 @@ namespace meecan {
     if(subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
       subsystems::Tray::instance->setOpenLoop(tray * constants::RobotConstants::MAX_TRAY_RPM);
     }
-    printf("TRAY STATE %f, %d\n", tray.getValue(), subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y));
+  
 
 
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
@@ -193,6 +193,7 @@ namespace meecan {
       subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[lift_state]);
 
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_B))
-      subsystems::Lift::instance->tare();
+      subsystems::Tray::instance->setPosition(2000);
+      //subsystems::Lift::instance->tare();
   }
 }

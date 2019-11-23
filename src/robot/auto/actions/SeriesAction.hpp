@@ -15,6 +15,7 @@ namespace auton {
      private:
       Action* current_;
       std::list<Action*> actions_;
+      bool isDoneWithFinal;
      public:
       SeriesAction(std::list<Action*> actions);
       bool isFinished();

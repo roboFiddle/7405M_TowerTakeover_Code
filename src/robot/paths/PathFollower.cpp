@@ -106,7 +106,28 @@ namespace path_planning {
 
   }
   Output PathFollower::updatePID(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
-    return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_, dynamics.voltage.left_, dynamics.voltage.right_);
+    physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> adjusted_velocity;
+    // Feedback on longitudinal error (distance).
+    units::RQuantity<std::ratio<0>, std::ratio<0>, std::ratio<-1>, std::ratio<0>> kPathKX = 0;
+    units::RQuantity<std::ratio<0>, std::ratio<-2>, std::ratio<0>, std::ratio<0>> kPathKY = 0;
+    double kPathKTheta = 0;
+    adjusted_velocity.linear_ = dynamics.chassis_velocity.linear_ + kPathKX * error_.translation().x();
+    adjusted_velocity.angular_ = dynamics.chassis_velocity.angular_ + dynamics.chassis_velocity.linear_ * kPathKY *
+            error_.translation().y() + kPathKTheta * error_.rotation().getRadians();
+    units::QCurvature curvature = adjusted_velocity.angular_ / adjusted_velocity.linear_;
+    if (std::isinf(curvature.getValue())) {
+        adjusted_velocity.linear_ = 0.0;
+        adjusted_velocity.angular_ = dynamics.chassis_velocity.angular_;
+    }
+    // Compute adjusted left and right wheel velocities.
+    physics::DifferentialDrive::WheelState<units::QAngularSpeed> wheel_velocities = model_->solveInverseKinematics(adjusted_velocity);
+    units::Number left_voltage = dynamics.voltage.left_ + (wheel_velocities.left_ - dynamics.wheel_velocity
+            .left_) / model_->left_transmission()->speed_per_volt();
+    units::Number right_voltage = dynamics.voltage.right_ + (wheel_velocities.right_ - dynamics.wheel_velocity
+            .right_) / model_->right_transmission()->speed_per_volt();
+    return Output(wheel_velocities.left_, wheel_velocities.right_, dynamics.wheel_acceleration.left_, dynamics
+                    .wheel_acceleration.right_, left_voltage, right_voltage);
+
   }
   Output PathFollower::updatePurePursuit(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
     double lookahead_time = constants::PathConstants::kPathLookaheadTime.getValue();
@@ -147,8 +168,13 @@ namespace path_planning {
   }
 
   Output PathFollower::updateNonlinearFeedback(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
-    units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> kBeta = 2.0;  // >0.
-    units::Number kZeta = 0.7;  // Damping coefficient, [0, 1].
+    error_ = current_state.inverse().transformBy(setpoint_.state().pose());
+
+    std::cout << "ERROR " << error_.toString() << std::endl;
+    std::cout << "SETPOINT " << setpoint_.toString() << std::endl;
+
+    units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> kBeta = 0.5;  // >0.
+    units::Number kZeta = 1;  // Damping coefficient, [0, 1].
 
     // Compute gain parameter.
     units::QAngularSpeed k = 2.0 * kZeta * units::Qsqrt((kBeta * dynamics.chassis_velocity.linear_ * dynamics.chassis_velocity.linear_) + (dynamics.chassis_velocity.angular_ * dynamics.chassis_velocity.angular_));

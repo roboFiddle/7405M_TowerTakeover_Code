@@ -15,10 +15,13 @@ namespace subsystems {
     pros::ADIEncoder* right;
     pros::ADIEncoder* back;
     geometry::Pose2d currentPosition;
+    int counter;
    public:
     Odometry();
     void updatePosition();
+    void setCurrentPosition(units::QLength x, units::QLength y, units::Angle theta);
     geometry::Pose2d getPosition();
+    bool shouldUpdate();
     void registerEnabledLoops(loops::Looper* enabledLooper);
     void stop();
 

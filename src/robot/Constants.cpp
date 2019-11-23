@@ -10,6 +10,7 @@ namespace constants {
 
     units::QLength RobotConstants::kDeadwheelRadius = 1.375*units::inch;
     units::QLength RobotConstants::kDeadwheelBaseWidth = 9*units::inch;
+    units::QLength RobotConstants::kDeadwheelBackTurningRadius = 7.5 * units::inch;
 
     units::QAngularSpeed RobotConstants::kDriveSpeedPerVolt = 1.09; // RADIANS / SECOND / VOTL
     units::QTorque RobotConstants::kDriveTorquePerVolt = 0.56; // Nm / VOLT
@@ -28,12 +29,12 @@ namespace constants {
     int RobotConstants::motor_tray = 8;
     int RobotConstants::motor_lift = 14;
 
-    double RobotConstants::MAX_TRAY_RPM = 60;
+    double RobotConstants::MAX_TRAY_RPM = 100;
     double RobotConstants::MAX_LIFT_RPM = 150;
 
-    double RobotConstants::LIFT_STAGE[2] = {-10, -900};
+    double RobotConstants::LIFT_STAGE[2] = {200, 1500};
     double RobotConstants::TRAY_LIFT[4] = {100, 300, 600, 750};
-    double RobotConstants::LIFT_PRESETS[4] = {0, -600, -850, -1500};
+    double RobotConstants::LIFT_PRESETS[4] = {0, 500, 1000, 2500};
     double RobotConstants::trayErrorBeforeLiftStart = 25;
 
     double RobotConstants::TRAY_SCORE = 1050;

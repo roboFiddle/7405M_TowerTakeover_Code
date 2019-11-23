@@ -27,6 +27,7 @@ namespace subsystems {
       double get_position();
       double getTrayForDemand();
       ControlState getState();
+      void runPID();
       void updateOutputs();
       void stop();
       void tare();

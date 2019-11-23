@@ -100,13 +100,13 @@ namespace subsystems {
     }
     else if(currentState == ControlState::PATH_FOLLOWING) {
       double leftScaled = left_demand * 9.5493; // 9.5493 = rad/s to RPM (60/2pi)
-      leftScaled += left_feed_forward;
+      //leftScaled += left_feed_forward;
 
       double rightScaled = right_demand * 9.5493;
-      rightScaled += right_feed_forward;
+      //rightScaled += right_feed_forward;
 
 
-      printf("setting velo %f %f \n", leftScaled, rightScaled);
+      printf("setting velo %f %f \n\n", leftScaled, rightScaled);
       frontLeft->move_velocity(leftScaled);
       backLeft->move_velocity(leftScaled);
       frontRight->move_velocity(rightScaled);
@@ -146,7 +146,7 @@ namespace subsystems {
     currentTimedView = new trajectory::TimedView(&currentTrajectory);
     std::shared_ptr<trajectory::TimedView<geometry::Pose2dWithCurvature>> ptr(currentTimedView);
     trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> iterator(ptr);
-    currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::NONLINEAR_FEEDBACK);
+    currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::PID);
     currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }

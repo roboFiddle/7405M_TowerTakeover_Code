@@ -16,20 +16,7 @@
 
 namespace auton {
   void FrontAutoMode::routine() {
-    runAction(new actions::OpenLoopDriveAction(util::DriveSignal(200, 200), 0.3));
-    runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-200, -200), 0.5));
-    runAction(new actions::OpenLoopIntakeAction(200, 0.6));
-    std::list<actions::Action*> TrayAndOuttakeRelease;
-    TrayAndOuttakeRelease.push_back(new actions::TrayPosition(1000, false));
-    TrayAndOuttakeRelease.push_back(new actions::OpenLoopIntakeAction(-200, 0));
-    runAction(new actions::ParallelAction(TrayAndOuttakeRelease));
-
-    std::list<actions::Action*> TrayAndLiftDown;
-    TrayAndLiftDown.push_back(new actions::OpenLoopLiftAction(50, 0));
-    TrayAndLiftDown.push_back(new actions::TrayPosition(300, false));
-    runAction(new actions::ParallelAction(TrayAndLiftDown));
-    runAction(new actions::ResetLiftTrayPosition());
-
+    flipOut();
 
     std::list<actions::Action*> driveAndIntake;
     driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backS").get(flip_)));
