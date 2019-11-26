@@ -36,15 +36,15 @@ namespace subsystems {
     if(pot->get_value() < 1600) {
       return 1;
     }
-    else if(pot->get_value() > 2850) {
-      return 0;
+    else if(pot->get_value() > 2750) {
+      return -.05;
     }
     else {
       return 1 - (pot->get_value() - 1400) * (0.5/1550);
     }
   }
   double Tray::get_position() {
-    return motor->get_position();
+    return pot->get_value();
   }
   void Tray::runPID() {
     double error = demand.getValue() - pot->get_value();

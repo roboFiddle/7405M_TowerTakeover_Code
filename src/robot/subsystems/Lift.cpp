@@ -57,16 +57,17 @@ namespace subsystems {
   }
   void Lift::runPID() {
     double error = demand.getValue() - pot->get_value();
-    motor->move_velocity((int) error * .05);
+    motor->move_velocity( (int) (error * -.5));
   }
   void Lift::updateOutputs() {
     if(state == ControlState::OPEN_LOOP)
       motor->move_velocity(demand.getValue());
     else if(state == ControlState::POSITION_CONTROL) {
-      Tray::instance->setPosition(getTrayForDemand());
+      Tray::instance->setPosition(getTrayForDemand(), false);
       lastTray = getTrayForDemand();
       double tray_error = std::fabs(Tray::instance->get_position() - getTrayForDemand());
-      if(tray_error < std::fabs(getTrayForDemand()*0.8))
+      printf("LIFT MACRO %f %f\n", lastTray, tray_error);
+      if(tray_error < 100 || Tray::instance->get_position() > 700 && lastTray < 1500)
         runPID();
     }
   }
