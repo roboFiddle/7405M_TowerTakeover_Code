@@ -77,7 +77,6 @@ namespace path_planning {
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
         constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
   }
-
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPurePursuitTest() {
     std::vector<geometry::Pose2d> waypoints;
 
@@ -89,6 +88,16 @@ namespace path_planning {
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
         constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
   }
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getStackPullBack() {
+    std::vector<geometry::Pose2d> waypoints;
+    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(12 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
+
+    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
+
+    return trajectory::TimingUtil::reverseTimed(DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
+        constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0));
+  }
 
   void TrajectorySet::generatorCalls() {
     printf("start\n");
@@ -96,6 +105,7 @@ namespace path_planning {
     addToMap("backS", MirroredTrajectory(getBackS()));
     addToMap("frontSetup", MirroredTrajectory(getFrontSetup()));
     addToMap("backSetup", MirroredTrajectory(getBackSetup()));
+    addToMap("stackPullBack", MirroredTrajectory(getStackPullBack()));
     addToMap("pptest", MirroredTrajectory(getPurePursuitTest()));
     complete_ = true;
     printf("end\n");

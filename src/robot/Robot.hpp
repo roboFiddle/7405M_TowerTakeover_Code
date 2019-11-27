@@ -20,7 +20,7 @@ namespace meecan {
     loops::Looper* enabledLooper;
     pros::Controller* controller_;
     int lastState = -1;
-    int current_auton = 0;
+    int current_auton = 2;
     int lift_state = 0;
 
    public:

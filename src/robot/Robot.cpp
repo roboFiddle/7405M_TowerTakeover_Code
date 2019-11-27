@@ -137,17 +137,23 @@ namespace meecan {
     pros::lcd::print(0, "driver loop %d", pros::millis());
     geometry::Pose2d curPos = subsystems::Odometry::instance->getPosition();
     pros::lcd::print(1, "%f %f %f", curPos.translation().x().Convert(units::inch), curPos.translation().y().Convert(units::inch), curPos.rotation().getDegrees());
-    units::Number throttle = controller_->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0 * 200.0;
-    units::Number turn = controller_->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0 * 200.0;
-    if(std::fabs(throttle.getValue()) < 20)
+    units::Number throttle = controller_->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0;
+    units::Number turn = controller_->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0;
+    if(std::fabs(throttle.getValue()) < .075)
       throttle = 0;
-    if(std::fabs(turn.getValue()) < 20)
+    if(std::fabs(turn.getValue()) < 0.075)
         turn = 0;
 
+    units::Number sign_throttle = throttle.getValue() > 0.0 ? 1 : -1;
+    units::Number sign_turn = turn.getValue() > 0.0 ? 1 : -1;
 
-    turn = (turn.getValue() > 0 ? 1 : -1) * (turn / 200) * (turn / 200) * 200 ;
+    throttle *= throttle;
+    throttle *= sign_throttle;
+    turn *= turn;
+    turn *= sign_turn;
+
     if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) > 5 || std::fabs(turn.getValue()) > 5)
-      subsystems::Drive::instance->setOpenLoop(util::DriveSignal(throttle+turn, throttle-turn));
+      subsystems::Drive::instance->setOpenLoop(util::DriveSignal(200*(throttle+turn), 200*(throttle-turn)));
 
     units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1));
     if(subsystems::Intake::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1))
@@ -157,7 +163,7 @@ namespace meecan {
     if(subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
       subsystems::Tray::instance->setOpenLoop(tray * constants::RobotConstants::MAX_TRAY_RPM);
     }
-  
+
 
 
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
@@ -171,15 +177,6 @@ namespace meecan {
     if(subsystems::Lift::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
       subsystems::Lift::instance->setOpenLoop(lift * constants::RobotConstants::MAX_LIFT_RPM);
 
-    /* if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
-      subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[0]);
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT))
-      subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[1]);
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT))
-      subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[2]);
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_UP))
-      subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[3]); */
-
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
       lift_state = 0;
     else if(controller_->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT))
@@ -187,13 +184,13 @@ namespace meecan {
     else if(controller_->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT))
       lift_state ++;
 
-    if(lift_state < 0) lift_state = 0;
+    if(lift_state < 0) {
+      subsystems::Tray::instance->setPosition(constants::RobotConstants::TRAY_LIFT[0]);
+      lift_state = 0;
+    }
     if(lift_state > 3) lift_state = 3;
+    // printf("LS %d\n", lift_state);
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)  || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) )
       subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[lift_state]);
-
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_B))
-      subsystems::Tray::instance->setPosition(2000);
-      //subsystems::Lift::instance->tare();
   }
 }

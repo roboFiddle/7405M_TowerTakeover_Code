@@ -121,10 +121,10 @@ namespace subsystems {
       velo += constants::RobotConstants::turnKI * totalTurnError.getValue();
       velo += constants::RobotConstants::turnKD * deltaError.getValue();
 
-      frontLeft->move_velocity(velo);
-      backLeft->move_velocity(velo);
-      frontRight->move_velocity(-velo);
-      backRight->move_velocity(-velo);
+      frontLeft->move_velocity(-velo);
+      backLeft->move_velocity(-velo);
+      frontRight->move_velocity(velo);
+      backRight->move_velocity(velo);
 
       lastTurnError = error;
     }
@@ -146,7 +146,7 @@ namespace subsystems {
     currentTimedView = new trajectory::TimedView(&currentTrajectory);
     std::shared_ptr<trajectory::TimedView<geometry::Pose2dWithCurvature>> ptr(currentTimedView);
     trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> iterator(ptr);
-    currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::PID);
+    currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::FEEDFORWARD_ONLY);
     currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }

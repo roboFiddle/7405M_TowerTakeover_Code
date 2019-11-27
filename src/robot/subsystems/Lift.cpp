@@ -22,6 +22,7 @@ namespace subsystems {
   void Lift::setPosition(units::Number control) {
     state = ControlState::POSITION_CONTROL;
     demand = control;
+    last_error = 0;
   }
   units::Number Lift::get_demand() {
     return demand;
@@ -34,7 +35,7 @@ namespace subsystems {
   }
   double Lift::getTrayForDemand() {
     if(demand.getValue() > pot->get_value()) { // going up
-      if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[0]) { // levels 1/2
+      if(demand.getValue() < constants::RobotConstants::LIFT_STAGE[1]) { // levels 1/2
         return constants::RobotConstants::TRAY_LIFT[1];
       }
       else { // level 3
@@ -42,12 +43,12 @@ namespace subsystems {
       }
     }
     else { // going down
-      if(demand.getValue() < constants::RobotConstants::LIFT_STAGE[0]) { // level 0
+      if(demand.getValue() < constants::RobotConstants::LIFT_STAGE[2]) { // level 0
         if(pot->get_value() > constants::RobotConstants::LIFT_STAGE[1]) { // top of two level drop
           return constants::RobotConstants::TRAY_LIFT[2];
         }
         else {
-          return constants::RobotConstants::TRAY_LIFT[0];
+          return constants::RobotConstants::TRAY_LIFT[1];
         }
       }
       else { // going down to 1/2
@@ -57,17 +58,20 @@ namespace subsystems {
   }
   void Lift::runPID() {
     double error = demand.getValue() - pot->get_value();
-    motor->move_velocity( (int) (error * -.5));
+    double error_change = error - last_error;
+    motor->move_velocity( (int) (error * -0.5 + error_change * -10));
+    last_error = error;
   }
   void Lift::updateOutputs() {
+    //("LIFT MOTOR STATE %f %d %d\n", motor->get_temperature(), motor->is_over_current(), motor->is_over_temp());
     if(state == ControlState::OPEN_LOOP)
       motor->move_velocity(demand.getValue());
     else if(state == ControlState::POSITION_CONTROL) {
       Tray::instance->setPosition(getTrayForDemand(), false);
       lastTray = getTrayForDemand();
       double tray_error = std::fabs(Tray::instance->get_position() - getTrayForDemand());
-      printf("LIFT MACRO %f %f\n", lastTray, tray_error);
-      if(tray_error < 100 || Tray::instance->get_position() > 700 && lastTray < 1500)
+      //printf("LIFT MACRO %f %f\n", lastTray, tray_error);
+      if(tray_error < 100 || Tray::instance->get_position() > 700 && lastTray < 1900)
         runPID();
     }
   }

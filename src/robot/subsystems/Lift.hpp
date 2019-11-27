@@ -18,6 +18,7 @@ namespace subsystems {
       ControlState state;
       double lastTray;
       int encoder_offset = 0;
+      int last_error = 0;
 
     public:
       Lift();

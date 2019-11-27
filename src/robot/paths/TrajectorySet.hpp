@@ -26,7 +26,11 @@ namespace path_planning {
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontSetup();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackSetup();
 
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getStackPullBack();
+
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPurePursuitTest();
+
+
    public:
     bool complete_;
 

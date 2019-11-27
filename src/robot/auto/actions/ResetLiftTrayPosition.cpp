@@ -10,6 +10,7 @@ namespace auton {
     void ResetLiftTrayPosition::start() {
       subsystems::Tray::instance->tare();
       subsystems::Lift::instance->tare();
+      subsystems::Tray::instance->setOpenLoop(0.0);
     }
     void ResetLiftTrayPosition::update() {
 

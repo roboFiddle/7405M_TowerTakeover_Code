@@ -58,14 +58,14 @@ namespace subsystems {
       runPID();
     else if(current_state == ControlState::SCORE_TRAY) {
       motor->move_absolute(constants::RobotConstants::TRAY_SCORE, constants::RobotConstants::MAX_TRAY_RPM * getMultiplier() + 15);
-      if(std::fabs(motor->get_position() - constants::RobotConstants::SCORE_START_INTAKE) < 50 || std::fabs(motor->get_position() - constants::RobotConstants::SCORE_END_INTAKE) < 50) {
+      if(std::fabs(pot->get_value() - constants::RobotConstants::SCORE_START_INTAKE) < 75 || std::fabs(pot->get_value() - constants::RobotConstants::SCORE_END_INTAKE) < 75) {
         Intake::instance->setFromMacro(200);
-        Drive::instance->setFromMacro(util::DriveSignal(30, 30));
+        //Drive::instance->setFromMacro(util::DriveSignal(30, 30));
       } else {
         Intake::instance->setFromMacro(0);
         Drive::instance->setFromMacro(util::DriveSignal(0, 0));
       }
-      if(std::fabs(motor->get_position() - constants::RobotConstants::TRAY_SCORE) < 30 && std::fabs(motor->get_actual_velocity()) < 20) {
+      if(std::fabs(motor->get_position() - constants::RobotConstants::TRAY_SCORE) < 100 && std::fabs(motor->get_actual_velocity()) < 20) {
         count_stop_states_++;
       }
       else {
@@ -73,17 +73,7 @@ namespace subsystems {
       }
       if(count_stop_states_ && count_stop_states_ < 20) {
         Intake::instance->setFromMacro(-200);
-      }
-      else if(count_stop_states_ > 35 & count_stop_states_ < 85) {
-        Intake::instance->setFromMacro(-200);
-        Drive::instance->setFromMacro(util::DriveSignal(-75, -75));
-      }
-      else if( count_stop_states_ > 85) {
         scoring_state_ = 1;
-        Drive::instance->setFromMacro(util::DriveSignal(0, 0));
-      }
-      else if(count_stop_states_) {
-        Drive::instance->setFromMacro(util::DriveSignal(0, 0));
       }
     }
 

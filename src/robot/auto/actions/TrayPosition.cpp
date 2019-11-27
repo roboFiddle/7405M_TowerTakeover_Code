@@ -10,7 +10,7 @@ namespace auton {
       limit_velo_ = limit_velo;
     }
     bool TrayPosition::isFinished() {
-      printf("TP %f %f\n", std::fabs(subsystems::Tray::instance->getMotorVelocity()), std::fabs(subsystems::Tray::instance->getPositionError()));
+      //printf("TP %f %f\n", std::fabs(subsystems::Tray::instance->getMotorVelocity()), std::fabs(subsystems::Tray::instance->getPositionError()));
       return std::fabs(subsystems::Tray::instance->getMotorVelocity()) < 15 && std::fabs(subsystems::Tray::instance->getPositionError()) < 100;
     }
     void TrayPosition::start() {
@@ -20,7 +20,7 @@ namespace auton {
 
     }
     void TrayPosition::done() {
-
+      subsystems::Tray::instance->setOpenLoop(0.0);
     }
   }
 }

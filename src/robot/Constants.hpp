@@ -41,7 +41,7 @@ namespace constants {
     static double MAX_TRAY_RPM;
     static double MAX_LIFT_RPM;
 
-    static double LIFT_STAGE[2];
+    static double LIFT_STAGE[3];
     static double TRAY_LIFT[4];
     static double LIFT_PRESETS[4];
     static double trayErrorBeforeLiftStart;

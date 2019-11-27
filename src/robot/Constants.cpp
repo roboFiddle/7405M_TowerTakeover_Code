@@ -25,19 +25,19 @@ namespace constants {
     int RobotConstants::motor_drive_frontright = 6;
     int RobotConstants::motor_drive_backright = 5;
     int RobotConstants::motor_intake_left = 19;
-    int RobotConstants::motor_intake_right = 16;
+    int RobotConstants::motor_intake_right = 17;
     int RobotConstants::motor_tray = 8;
-    int RobotConstants::motor_lift = 14;
+    int RobotConstants::motor_lift = 13;
 
     double RobotConstants::MAX_TRAY_RPM = 100;
     double RobotConstants::MAX_LIFT_RPM = 200;
 
-    double RobotConstants::LIFT_STAGE[2] = {1500, 2500};
-    double RobotConstants::TRAY_LIFT[4] = {1200, 1600, 1800, 2055};
-    double RobotConstants::LIFT_PRESETS[4] = {0, 2300, 2700, 2900};
+    double RobotConstants::LIFT_STAGE[3] = {1000, 2000, 2500};
+    double RobotConstants::TRAY_LIFT[4] = {400, 1400, 1800, 2055};
+    double RobotConstants::LIFT_PRESETS[4] = {1150, 1900, 2125, 3000};
     double RobotConstants::trayErrorBeforeLiftStart = 25;
 
-    double RobotConstants::TRAY_SCORE = 1050;
-    double RobotConstants::SCORE_START_INTAKE = 700;
-    double RobotConstants::SCORE_END_INTAKE = 900;
+    double RobotConstants::TRAY_SCORE = 2800;
+    double RobotConstants::SCORE_START_INTAKE = 1200;
+    double RobotConstants::SCORE_END_INTAKE = 1800;
 }

@@ -42,14 +42,24 @@ namespace auton {
   }
 
   void AutoModeBase::flipOut() {
+    printf("TIME %d\n", pros::millis());
     std::list<actions::Action*> IntakeRelease;
     std::list<actions::Action*> TrayAndOuttakeRelease;
+    std::list<actions::Action*> drives;
 
-    IntakeRelease.push_back(new actions::WaitAction(0));
+    IntakeRelease.push_back(new actions::OpenLoopIntakeAction(200, 0.5));
+    IntakeRelease.push_back(new actions::WaitAction(0.25));
     IntakeRelease.push_back(new actions::OpenLoopIntakeAction(-200, 0));
 
+    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(100, 100), 0.5));
+    drives.push_back(new actions::WaitAction(0.25));
+    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(-100, -100), 0.5));
+
+
+
     TrayAndOuttakeRelease.push_back(new actions::SeriesAction(IntakeRelease));
-    TrayAndOuttakeRelease.push_back(new actions::TrayPosition(2500, false));
+    TrayAndOuttakeRelease.push_back(new actions::SeriesAction(drives));
+    TrayAndOuttakeRelease.push_back(new actions::TrayPosition(2700, false));
     runAction(new actions::ParallelAction(TrayAndOuttakeRelease));
     runAction(new actions::WaitAction(0.1));
 
@@ -57,6 +67,7 @@ namespace auton {
     TrayAndLiftDown.push_back(new actions::OpenLoopLiftAction(50, 0));
     TrayAndLiftDown.push_back(new actions::TrayPosition(500, false));
     runAction(new actions::ParallelAction(TrayAndLiftDown));
-    runAction(new actions::ResetLiftTrayPosition());
+    //runAction(new actions::ResetLiftTrayPosition());
+    printf("TIME %d", pros::millis());
   }
 }
