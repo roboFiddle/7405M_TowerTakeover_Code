@@ -31,6 +31,7 @@ namespace subsystems {
 
   }
   void Drive::setOpenLoop(util::DriveSignal signal) {
+    currentState = ControlState::OPEN_LOOP;
     if (currentState != ControlState::OPEN_LOOP) {
       currentState = ControlState::OPEN_LOOP;
       setBrakeMode(true);
@@ -64,7 +65,9 @@ namespace subsystems {
     thisLoop->onStart = []() {};
     thisLoop->onLoop = []() {
       switch (Drive::instance->getState()) {
-        case ControlState::OPEN_LOOP:
+        case ControlState::OPEN_LOOP :
+          break;
+        case ControlState::TURN_FOLLOWING:
           break;
         case ControlState::PATH_FOLLOWING:
           Drive::instance->updatePathFollower();
@@ -113,7 +116,9 @@ namespace subsystems {
       backRight->move_velocity(rightScaled);
     }
     else if(currentState == ControlState::TURN_FOLLOWING) {
-      units::Angle currentHeading = Odometry::instance->getPosition().rotation().getAngle();
+      units::Angle currentHeading = Odometry::instance->getPosition().rotation().getRadians() * units::radian;
+      /* if(goalAngle.getValue() < 0)
+        currentHeading = currentHeading - 360*units::degree; */
       units::Angle error = goalAngle - currentHeading;
       units::Angle deltaError = error - lastTurnError;
       totalTurnError += error;
@@ -125,6 +130,8 @@ namespace subsystems {
       backLeft->move_velocity(-velo);
       frontRight->move_velocity(velo);
       backRight->move_velocity(velo);
+      printf("ROT FUCK %f \n",Odometry::instance->getPosition().rotation().getDegrees());
+      printf("TURN %f %f %f\n", std::fabs(goalAngle.getValue() - currentHeading.getValue()), Odometry::instance->getPosition().rotation().getRadians(), velo);
 
       lastTurnError = error;
     }
@@ -152,6 +159,7 @@ namespace subsystems {
   }
   void Drive::setTurn(units::Angle heading) {
     currentState = ControlState::TURN_FOLLOWING;
+    subsystems::Odometry::instance->resetPosition();
     goalAngle = heading;
     lastTurnError = 0;
     totalTurnError = 0;
@@ -160,6 +168,10 @@ namespace subsystems {
     if(forceStopTrajectory_) {
       forceStopTrajectory_ = false;
       return true;
+    }
+    if(currentState == ControlState::TURN_FOLLOWING) {
+      units::Angle cur =  subsystems::Odometry::instance->getPosition().rotation().getAngle();
+      return std::fabs(goalAngle.getValue() - cur.getValue()) < 0.25;
     }
     return currentFollower->isDone();
   }

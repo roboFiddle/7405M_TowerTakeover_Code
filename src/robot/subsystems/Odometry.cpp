@@ -29,7 +29,10 @@ namespace subsystems {
     right->reset();
     back->reset();
     currentPosition = currentPosition.transformBy(change);
-    //printf("X %f %f %f\n", currentPosition.translation().x(), currentPosition.translation().y(), currentPosition.rotation().getRadians());
+    printf("X %f %f %f\n", currentPosition.translation().x(), currentPosition.translation().y(), currentPosition.rotation().getRadians());
+  }
+  void Odometry::resetPosition() {
+    currentPosition = geometry::Pose2d();
   }
   void Odometry::setCurrentPosition(units::QLength x, units::QLength y, units::Angle theta) {
     currentPosition = geometry::Pose2d(geometry::Translation2d(x, y), geometry::Rotation2d(theta));

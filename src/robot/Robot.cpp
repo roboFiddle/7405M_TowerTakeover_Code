@@ -14,6 +14,7 @@
 #include "auto/modes/BackAutoMode.hpp"
 #include "auto/modes/FrontAutoMode.hpp"
 #include "auto/modes/FlipOutMode.hpp"
+#include "auto/modes/ProgrammingSkillsMode.hpp"
 #include "loops/Loop.hpp"
 #include "loops/Looper.hpp"
 #include "paths/DriveMotionPlanner.hpp"
@@ -61,8 +62,8 @@ namespace meecan {
       current_auton++;
     }
     if(current_auton < 0)
-      current_auton = 5;
-    if(current_auton > 5)
+      current_auton = 7;
+    if(current_auton > 7)
       current_auton = 0;
 
     switch(current_auton) {
@@ -83,6 +84,12 @@ namespace meecan {
         break;
       case 5:
         pros::lcd::print(4, "DOUBLE/FRONT BLUE");
+        break;
+      case 6:
+        pros::lcd::print(4, "PROG SKILLS");
+        break;
+      case 7:
+        pros::lcd::print(4, "TEST MODE PLS IGNORE");
         break;
       default:
         pros::lcd::print(4, "YOU BROKE IT");
@@ -114,8 +121,12 @@ namespace meecan {
         std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FrontAutoMode(FRONT_RED));
         auton::AutoModeRunner::instance->setAutoMode(activeMode); }
         break;
+      case 6: {
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::ProgrammingSkillsMode());
+        auton::AutoModeRunner::instance->setAutoMode(activeMode); }
+        break;
       default: {
-        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::TestTrajectoryMode());
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::TestMode());
         auton::AutoModeRunner::instance->setAutoMode(activeMode); }
         break;
     }

@@ -19,6 +19,7 @@ namespace subsystems {
    public:
     Odometry();
     void updatePosition();
+    void resetPosition();
     void setCurrentPosition(units::QLength x, units::QLength y, units::Angle theta);
     geometry::Pose2d getPosition();
     bool shouldUpdate();

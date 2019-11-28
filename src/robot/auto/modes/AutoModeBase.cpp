@@ -14,6 +14,7 @@
 #include "../../paths/TrajectorySet.hpp"
 #include "../actions/TrayPosition.hpp"
 #include "../actions/OpenLoopLiftAction.hpp"
+#include "../actions/OpenLoopTrayAction.hpp"
 #include "../actions/ResetLiftTrayPosition.hpp"
 #include "main.h"
 
@@ -47,27 +48,28 @@ namespace auton {
     std::list<actions::Action*> TrayAndOuttakeRelease;
     std::list<actions::Action*> drives;
 
-    IntakeRelease.push_back(new actions::OpenLoopIntakeAction(200, 0.5));
     IntakeRelease.push_back(new actions::WaitAction(0.25));
-    IntakeRelease.push_back(new actions::OpenLoopIntakeAction(-200, 0));
+    IntakeRelease.push_back(new actions::OpenLoopIntakeAction(150, 0.25));
+    IntakeRelease.push_back(new actions::WaitAction(0.1));
+    IntakeRelease.push_back(new actions::OpenLoopIntakeAction(-150, 0));
 
-    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(100, 100), 0.5));
-    drives.push_back(new actions::WaitAction(0.25));
-    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(-100, -100), 0.5));
+    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(150, 150), 0.35));
+    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(-150, -150), 0.35));
 
 
 
     TrayAndOuttakeRelease.push_back(new actions::SeriesAction(IntakeRelease));
     TrayAndOuttakeRelease.push_back(new actions::SeriesAction(drives));
-    TrayAndOuttakeRelease.push_back(new actions::TrayPosition(2700, false));
+    TrayAndOuttakeRelease.push_back(new actions::TrayPosition(2600, false));
     runAction(new actions::ParallelAction(TrayAndOuttakeRelease));
     runAction(new actions::WaitAction(0.1));
 
     std::list<actions::Action*> TrayAndLiftDown;
     TrayAndLiftDown.push_back(new actions::OpenLoopLiftAction(50, 0));
-    TrayAndLiftDown.push_back(new actions::TrayPosition(500, false));
+    TrayAndLiftDown.push_back(new actions::OpenLoopTrayAction(-200, 0.5));
+    //TrayAndLiftDown.push_back(new actions::TrayPosition(1800, false));
     runAction(new actions::ParallelAction(TrayAndLiftDown));
-    //runAction(new actions::ResetLiftTrayPosition());
+    runAction(new actions::OpenLoopLiftAction(0, 0));
     printf("TIME %d", pros::millis());
   }
 }

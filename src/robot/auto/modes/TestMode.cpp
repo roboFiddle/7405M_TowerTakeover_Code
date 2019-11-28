@@ -3,15 +3,17 @@
 //
 
 #include "TestMode.hpp"
+#include "../actions/DriveTurnAction.hpp"
 #include "../../Constants.hpp"
 #include "../../paths/TrajectorySet.hpp"
 
 namespace auton {
   void TestMode::routine() {
     printf("started test mode\n");
-    runAction(new actions::OpenLoopDriveAction(util::DriveSignal(100.0, 100.0), 1.0));
+    runAction(new actions::DriveTurnAction(90 * units::degree));
+    /*runAction(new actions::OpenLoopDriveAction(util::DriveSignal(100.0, 100.0), 1.0));
     runAction(new actions::WaitAction(1.5));
-    runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-100.0, -100.0), 1.0));
+    runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-100.0, -100.0), 1.0)); */
   }
 
 }
