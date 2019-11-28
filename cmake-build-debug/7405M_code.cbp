@@ -1110,6 +1110,9 @@
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/lib/utility/interfaces/InverseInterpolable.hpp">
 			<Option target="7405M_code"/>
 		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/Constants.cpp">
+			<Option target="7405M_code"/>
+		</Unit>
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/Constants.hpp">
 			<Option target="7405M_code"/>
 		</Unit>
@@ -1140,6 +1143,12 @@
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/DriveTrajectory.hpp">
 			<Option target="7405M_code"/>
 		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/LiftPosition.cpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/LiftPosition.hpp">
+			<Option target="7405M_code"/>
+		</Unit>
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopDriveAction.cpp">
 			<Option target="7405M_code"/>
 		</Unit>
@@ -1152,16 +1161,40 @@
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopIntakeAction.hpp">
 			<Option target="7405M_code"/>
 		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopLiftAction.cpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopLiftAction.hpp">
+			<Option target="7405M_code"/>
+		</Unit>
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/ParallelAction.cpp">
 			<Option target="7405M_code"/>
 		</Unit>
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/ParallelAction.hpp">
 			<Option target="7405M_code"/>
 		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/ResetLiftTrayPosition.cpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/ResetLiftTrayPosition.hpp">
+			<Option target="7405M_code"/>
+		</Unit>
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/SeriesAction.cpp">
 			<Option target="7405M_code"/>
 		</Unit>
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/SeriesAction.hpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayEnableStackAction.cpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayEnableStackAction.hpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayPosition.cpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayPosition.hpp">
 			<Option target="7405M_code"/>
 		</Unit>
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/WaitAction.cpp">
@@ -1176,7 +1209,25 @@
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/AutoModeBase.hpp">
 			<Option target="7405M_code"/>
 		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/BackAutoMode.cpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/BackAutoMode.hpp">
+			<Option target="7405M_code"/>
+		</Unit>
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/DoNothingMode.hpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FlipOutMode.cpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FlipOutMode.hpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FrontAutoMode.cpp">
+			<Option target="7405M_code"/>
+		</Unit>
+		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FrontAutoMode.hpp">
 			<Option target="7405M_code"/>
 		</Unit>
 		<Unit filename="/home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/TestMode.cpp">

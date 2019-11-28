@@ -27,6 +27,12 @@ namespace subsystems {
   units::Number Lift::get_demand() {
     return demand;
   }
+  double Lift::getPositionError() {
+    return demand.getValue() - pot->get_value();
+  }
+  double Lift::getMotorVelocity() {
+    return motor->get_actual_velocity();
+  }
   double Lift::get_position() {
     return motor->get_position();
   }

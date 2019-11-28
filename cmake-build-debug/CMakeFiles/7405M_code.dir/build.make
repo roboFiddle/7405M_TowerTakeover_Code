@@ -577,9 +577,35 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopDriveAction.cpp.s: cmak
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopDriveAction.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopDriveAction.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopDriveAction.cpp.s
 
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o: ../src/robot/auto/actions/OpenLoopIntakeAction.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopIntakeAction.cpp
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopIntakeAction.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.i
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopIntakeAction.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.o: ../src/robot/auto/actions/OpenLoopLiftAction.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopLiftAction.cpp
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopLiftAction.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.i
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopLiftAction.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.s
+
 CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.o: ../src/robot/auto/actions/ParallelAction.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/ParallelAction.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.i: cmake_force
@@ -590,9 +616,22 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.s: cmake_for
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/ParallelAction.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.s
 
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.o: ../src/robot/auto/actions/ResetLiftTrayPosition.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/ResetLiftTrayPosition.cpp
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/ResetLiftTrayPosition.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.i
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/ResetLiftTrayPosition.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.s
+
 CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.o: ../src/robot/auto/actions/SeriesAction.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/SeriesAction.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.i: cmake_force
@@ -603,9 +642,35 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/SeriesAction.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.s
 
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.o: ../src/robot/auto/actions/TrayEnableStackAction.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayEnableStackAction.cpp
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayEnableStackAction.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.i
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayEnableStackAction.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.s
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.o: ../src/robot/auto/actions/TrayPosition.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayPosition.cpp
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayPosition.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.i
+
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/TrayPosition.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.s
+
 CMakeFiles/7405M_code.dir/src/robot/auto/actions/WaitAction.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/auto/actions/WaitAction.cpp.o: ../src/robot/auto/actions/WaitAction.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/WaitAction.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/WaitAction.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/WaitAction.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/WaitAction.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/auto/actions/WaitAction.cpp.i: cmake_force
@@ -618,7 +683,7 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/WaitAction.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.o: ../src/robot/auto/modes/AutoModeBase.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/AutoModeBase.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.i: cmake_force
@@ -629,9 +694,48 @@ CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/AutoModeBase.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.s
 
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.o: ../src/robot/auto/modes/BackAutoMode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/BackAutoMode.cpp
+
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/BackAutoMode.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.i
+
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/BackAutoMode.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.s
+
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.o: ../src/robot/auto/modes/FlipOutMode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FlipOutMode.cpp
+
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FlipOutMode.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.i
+
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FlipOutMode.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.s
+
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.o: ../src/robot/auto/modes/FrontAutoMode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FrontAutoMode.cpp
+
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FrontAutoMode.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.i
+
+CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/FrontAutoMode.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.s
+
 CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestMode.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestMode.cpp.o: ../src/robot/auto/modes/TestMode.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestMode.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestMode.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestMode.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/TestMode.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestMode.cpp.i: cmake_force
@@ -644,7 +748,7 @@ CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestMode.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestTrajectoryMode.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestTrajectoryMode.cpp.o: ../src/robot/auto/modes/TestTrajectoryMode.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestTrajectoryMode.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestTrajectoryMode.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestTrajectoryMode.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/modes/TestTrajectoryMode.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestTrajectoryMode.cpp.i: cmake_force
@@ -657,7 +761,7 @@ CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestTrajectoryMode.cpp.s: cmake_f
 
 CMakeFiles/7405M_code.dir/src/robot/auto/AutoModeRunner.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/auto/AutoModeRunner.cpp.o: ../src/robot/auto/AutoModeRunner.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/AutoModeRunner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/AutoModeRunner.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/AutoModeRunner.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/AutoModeRunner.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/auto/AutoModeRunner.cpp.i: cmake_force
@@ -670,7 +774,7 @@ CMakeFiles/7405M_code.dir/src/robot/auto/AutoModeRunner.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/loops/Looper.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/loops/Looper.cpp.o: ../src/robot/loops/Looper.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/loops/Looper.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/loops/Looper.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/loops/Looper.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/loops/Looper.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/loops/Looper.cpp.i: cmake_force
@@ -683,7 +787,7 @@ CMakeFiles/7405M_code.dir/src/robot/loops/Looper.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/paths/DriveMotionPlanner.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/paths/DriveMotionPlanner.cpp.o: ../src/robot/paths/DriveMotionPlanner.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/paths/DriveMotionPlanner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/paths/DriveMotionPlanner.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/paths/DriveMotionPlanner.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/paths/DriveMotionPlanner.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/paths/DriveMotionPlanner.cpp.i: cmake_force
@@ -696,7 +800,7 @@ CMakeFiles/7405M_code.dir/src/robot/paths/DriveMotionPlanner.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/paths/PathFollower.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/paths/PathFollower.cpp.o: ../src/robot/paths/PathFollower.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/paths/PathFollower.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/paths/PathFollower.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/paths/PathFollower.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/paths/PathFollower.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/paths/PathFollower.cpp.i: cmake_force
@@ -709,7 +813,7 @@ CMakeFiles/7405M_code.dir/src/robot/paths/PathFollower.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/paths/TrajectorySet.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/paths/TrajectorySet.cpp.o: ../src/robot/paths/TrajectorySet.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/paths/TrajectorySet.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/paths/TrajectorySet.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/paths/TrajectorySet.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/paths/TrajectorySet.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/paths/TrajectorySet.cpp.i: cmake_force
@@ -722,7 +826,7 @@ CMakeFiles/7405M_code.dir/src/robot/paths/TrajectorySet.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Drive.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Drive.cpp.o: ../src/robot/subsystems/Drive.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Drive.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Drive.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/subsystems/Drive.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/subsystems/Drive.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Drive.cpp.i: cmake_force
@@ -735,7 +839,7 @@ CMakeFiles/7405M_code.dir/src/robot/subsystems/Drive.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Intake.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Intake.cpp.o: ../src/robot/subsystems/Intake.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Intake.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Intake.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/subsystems/Intake.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/subsystems/Intake.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Intake.cpp.i: cmake_force
@@ -748,7 +852,7 @@ CMakeFiles/7405M_code.dir/src/robot/subsystems/Intake.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Lift.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Lift.cpp.o: ../src/robot/subsystems/Lift.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Lift.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Lift.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/subsystems/Lift.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/subsystems/Lift.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Lift.cpp.i: cmake_force
@@ -761,7 +865,7 @@ CMakeFiles/7405M_code.dir/src/robot/subsystems/Lift.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Odometry.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Odometry.cpp.o: ../src/robot/subsystems/Odometry.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Odometry.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Odometry.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/subsystems/Odometry.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/subsystems/Odometry.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Odometry.cpp.i: cmake_force
@@ -774,7 +878,7 @@ CMakeFiles/7405M_code.dir/src/robot/subsystems/Odometry.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.o: ../src/robot/subsystems/Tray.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/subsystems/Tray.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.i: cmake_force
@@ -785,9 +889,22 @@ CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/subsystems/Tray.cpp -o CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.s
 
+CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.o: ../src/robot/Constants.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/Constants.cpp
+
+CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/Constants.cpp > CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.i
+
+CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/Constants.cpp -o CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.s
+
 CMakeFiles/7405M_code.dir/src/robot/Robot.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/Robot.cpp.o: ../src/robot/Robot.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/Robot.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/Robot.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/Robot.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/Robot.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/Robot.cpp.i: cmake_force
@@ -800,7 +917,7 @@ CMakeFiles/7405M_code.dir/src/robot/Robot.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/robot/RobotAux.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/robot/RobotAux.cpp.o: ../src/robot/RobotAux.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/RobotAux.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/RobotAux.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/RobotAux.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/RobotAux.cpp
 
 CMakeFiles/7405M_code.dir/src/robot/RobotAux.cpp.i: cmake_force
@@ -813,7 +930,7 @@ CMakeFiles/7405M_code.dir/src/robot/RobotAux.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/tests/lib/geometry/testGeometry.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/tests/lib/geometry/testGeometry.cpp.o: ../src/tests/lib/geometry/testGeometry.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/geometry/testGeometry.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_68) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/geometry/testGeometry.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/tests/lib/geometry/testGeometry.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/tests/lib/geometry/testGeometry.cpp
 
 CMakeFiles/7405M_code.dir/src/tests/lib/geometry/testGeometry.cpp.i: cmake_force
@@ -826,7 +943,7 @@ CMakeFiles/7405M_code.dir/src/tests/lib/geometry/testGeometry.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/tests/lib/physics/testPhysics.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/tests/lib/physics/testPhysics.cpp.o: ../src/tests/lib/physics/testPhysics.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/physics/testPhysics.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/physics/testPhysics.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/tests/lib/physics/testPhysics.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/tests/lib/physics/testPhysics.cpp
 
 CMakeFiles/7405M_code.dir/src/tests/lib/physics/testPhysics.cpp.i: cmake_force
@@ -839,7 +956,7 @@ CMakeFiles/7405M_code.dir/src/tests/lib/physics/testPhysics.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/tests/lib/spline/testSpline.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/tests/lib/spline/testSpline.cpp.o: ../src/tests/lib/spline/testSpline.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/spline/testSpline.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/spline/testSpline.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/tests/lib/spline/testSpline.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/tests/lib/spline/testSpline.cpp
 
 CMakeFiles/7405M_code.dir/src/tests/lib/spline/testSpline.cpp.i: cmake_force
@@ -852,7 +969,7 @@ CMakeFiles/7405M_code.dir/src/tests/lib/spline/testSpline.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/timing/testTimedState.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/timing/testTimedState.cpp.o: ../src/tests/lib/trajectory/timing/testTimedState.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/timing/testTimedState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/timing/testTimedState.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/timing/testTimedState.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/tests/lib/trajectory/timing/testTimedState.cpp
 
 CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/timing/testTimedState.cpp.i: cmake_force
@@ -865,7 +982,7 @@ CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/timing/testTimedState.cpp.s: 
 
 CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/testTrajectory.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/testTrajectory.cpp.o: ../src/tests/lib/trajectory/testTrajectory.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/testTrajectory.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_72) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/testTrajectory.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/testTrajectory.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/tests/lib/trajectory/testTrajectory.cpp
 
 CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/testTrajectory.cpp.i: cmake_force
@@ -878,7 +995,7 @@ CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/testTrajectory.cpp.s: cmake_f
 
 CMakeFiles/7405M_code.dir/src/tests/testAll.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/tests/testAll.cpp.o: ../src/tests/testAll.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/testAll.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_73) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/testAll.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/tests/testAll.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/tests/testAll.cpp
 
 CMakeFiles/7405M_code.dir/src/tests/testAll.cpp.i: cmake_force
@@ -891,7 +1008,7 @@ CMakeFiles/7405M_code.dir/src/tests/testAll.cpp.s: cmake_force
 
 CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.o: CMakeFiles/7405M_code.dir/flags.make
 CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.o: ../src/tests/testBase.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_74) "Building CXX object CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/tests/testBase.cpp
 
 CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.i: cmake_force
@@ -902,18 +1019,18 @@ CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/tests/testBase.cpp -o CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.s
 
-CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o: CMakeFiles/7405M_code.dir/flags.make
-CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o: ../src/robot/auto/actions/OpenLoopIntakeAction.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopIntakeAction.cpp
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.o: CMakeFiles/7405M_code.dir/flags.make
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.o: ../src/robot/auto/actions/LiftPosition.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_75) "Building CXX object CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.o -c /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/LiftPosition.cpp
 
-CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopIntakeAction.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.i
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/LiftPosition.cpp > CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.i
 
-CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/OpenLoopIntakeAction.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s
+CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alexweiss/CLionProjects/7405M_code/src/robot/auto/actions/LiftPosition.cpp -o CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.s
 
 # Object files for target 7405M_code
 7405M_code_OBJECTS = \
@@ -957,10 +1074,18 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s: cma
 "CMakeFiles/7405M_code.dir/src/lib/utility/Singleton.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/auto/actions/DriveTrajectory.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopDriveAction.cpp.o" \
+"CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o" \
+"CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.o" \
+"CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.o" \
+"CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.o" \
+"CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/auto/actions/WaitAction.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.o" \
+"CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.o" \
+"CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.o" \
+"CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestMode.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestTrajectoryMode.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/auto/AutoModeRunner.cpp.o" \
@@ -973,6 +1098,7 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s: cma
 "CMakeFiles/7405M_code.dir/src/robot/subsystems/Lift.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/subsystems/Odometry.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.o" \
+"CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/Robot.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/robot/RobotAux.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/tests/lib/geometry/testGeometry.cpp.o" \
@@ -982,7 +1108,7 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s: cma
 "CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/testTrajectory.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/tests/testAll.cpp.o" \
 "CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.o" \
-"CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o"
+"CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.o"
 
 # External object files for target 7405M_code
 7405M_code_EXTERNAL_OBJECTS =
@@ -1027,10 +1153,18 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s: cma
 7405M_code: CMakeFiles/7405M_code.dir/src/lib/utility/Singleton.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/DriveTrajectory.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopDriveAction.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/WaitAction.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestMode.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/modes/TestTrajectoryMode.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/AutoModeRunner.cpp.o
@@ -1043,6 +1177,7 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s: cma
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/subsystems/Lift.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/subsystems/Odometry.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/subsystems/Tray.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/Robot.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/robot/RobotAux.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/tests/lib/geometry/testGeometry.cpp.o
@@ -1052,10 +1187,10 @@ CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s: cma
 7405M_code: CMakeFiles/7405M_code.dir/src/tests/lib/trajectory/testTrajectory.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/tests/testAll.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/src/tests/testBase.cpp.o
-7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.o
+7405M_code: CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.o
 7405M_code: CMakeFiles/7405M_code.dir/build.make
 7405M_code: CMakeFiles/7405M_code.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Linking CXX executable 7405M_code"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alexweiss/CLionProjects/7405M_code/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_76) "Linking CXX executable 7405M_code"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/7405M_code.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -30,6 +30,11 @@ namespace path_planning {
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSetup();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPFirstTower();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPBackFirstTower();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsLongBackSecondTower();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsIntakeSecondTower();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsLineUpBackSecondStack();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsLineUpForwardSecondStack();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsIntakeLastTower();
 
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPurePursuitTest();
 

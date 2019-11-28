@@ -375,15 +375,31 @@ add_executable(7405M_code
         src/robot/auto/actions/DriveTrajectory.hpp
         src/robot/auto/actions/OpenLoopDriveAction.cpp
         src/robot/auto/actions/OpenLoopDriveAction.hpp
+        src/robot/auto/actions/OpenLoopIntakeAction.cpp
+        src/robot/auto/actions/OpenLoopIntakeAction.hpp
+        src/robot/auto/actions/OpenLoopLiftAction.cpp
+        src/robot/auto/actions/OpenLoopLiftAction.hpp
         src/robot/auto/actions/ParallelAction.cpp
         src/robot/auto/actions/ParallelAction.hpp
+        src/robot/auto/actions/ResetLiftTrayPosition.cpp
+        src/robot/auto/actions/ResetLiftTrayPosition.hpp
         src/robot/auto/actions/SeriesAction.cpp
         src/robot/auto/actions/SeriesAction.hpp
+        src/robot/auto/actions/TrayEnableStackAction.cpp
+        src/robot/auto/actions/TrayEnableStackAction.hpp
+        src/robot/auto/actions/TrayPosition.cpp
+        src/robot/auto/actions/TrayPosition.hpp
         src/robot/auto/actions/WaitAction.cpp
         src/robot/auto/actions/WaitAction.hpp
         src/robot/auto/modes/AutoModeBase.cpp
         src/robot/auto/modes/AutoModeBase.hpp
+        src/robot/auto/modes/BackAutoMode.cpp
+        src/robot/auto/modes/BackAutoMode.hpp
         src/robot/auto/modes/DoNothingMode.hpp
+        src/robot/auto/modes/FlipOutMode.cpp
+        src/robot/auto/modes/FlipOutMode.hpp
+        src/robot/auto/modes/FrontAutoMode.cpp
+        src/robot/auto/modes/FrontAutoMode.hpp
         src/robot/auto/modes/TestMode.cpp
         src/robot/auto/modes/TestMode.hpp
         src/robot/auto/modes/TestTrajectoryMode.cpp
@@ -413,6 +429,7 @@ add_executable(7405M_code
         src/robot/subsystems/Subsystem.hpp
         src/robot/subsystems/Tray.cpp
         src/robot/subsystems/Tray.hpp
+        src/robot/Constants.cpp
         src/robot/Constants.hpp
         src/robot/Robot.cpp
         src/robot/Robot.hpp
@@ -430,4 +447,4 @@ add_executable(7405M_code
         src/tests/testAll.cpp
         src/tests/testBase.cpp
         src/tests/testBase.hpp
-        src/tests/testsInclude.hpp src/robot/auto/actions/OpenLoopIntakeAction.hpp src/robot/auto/actions/OpenLoopIntakeAction.cpp)
+        src/tests/testsInclude.hpp src/robot/auto/actions/LiftPosition.cpp src/robot/auto/actions/LiftPosition.hpp)

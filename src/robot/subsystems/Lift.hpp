@@ -26,6 +26,8 @@ namespace subsystems {
       void setPosition(units::Number control);
       units::Number get_demand();
       double get_position();
+      double getPositionError();
+      double getMotorVelocity();
       double getTrayForDemand();
       ControlState getState();
       void runPID();

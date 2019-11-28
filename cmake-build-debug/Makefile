@@ -1149,6 +1149,33 @@ src/lib/utility/Singleton.cpp.s:
 	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/lib/utility/Singleton.cpp.s
 .PHONY : src/lib/utility/Singleton.cpp.s
 
+src/robot/Constants.o: src/robot/Constants.cpp.o
+
+.PHONY : src/robot/Constants.o
+
+# target to build an object file
+src/robot/Constants.cpp.o:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.o
+.PHONY : src/robot/Constants.cpp.o
+
+src/robot/Constants.i: src/robot/Constants.cpp.i
+
+.PHONY : src/robot/Constants.i
+
+# target to preprocess a source file
+src/robot/Constants.cpp.i:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.i
+.PHONY : src/robot/Constants.cpp.i
+
+src/robot/Constants.s: src/robot/Constants.cpp.s
+
+.PHONY : src/robot/Constants.s
+
+# target to generate assembly for a file
+src/robot/Constants.cpp.s:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/Constants.cpp.s
+.PHONY : src/robot/Constants.cpp.s
+
 src/robot/Robot.o: src/robot/Robot.cpp.o
 
 .PHONY : src/robot/Robot.o
@@ -1257,6 +1284,33 @@ src/robot/auto/actions/DriveTrajectory.cpp.s:
 	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/DriveTrajectory.cpp.s
 .PHONY : src/robot/auto/actions/DriveTrajectory.cpp.s
 
+src/robot/auto/actions/LiftPosition.o: src/robot/auto/actions/LiftPosition.cpp.o
+
+.PHONY : src/robot/auto/actions/LiftPosition.o
+
+# target to build an object file
+src/robot/auto/actions/LiftPosition.cpp.o:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.o
+.PHONY : src/robot/auto/actions/LiftPosition.cpp.o
+
+src/robot/auto/actions/LiftPosition.i: src/robot/auto/actions/LiftPosition.cpp.i
+
+.PHONY : src/robot/auto/actions/LiftPosition.i
+
+# target to preprocess a source file
+src/robot/auto/actions/LiftPosition.cpp.i:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.i
+.PHONY : src/robot/auto/actions/LiftPosition.cpp.i
+
+src/robot/auto/actions/LiftPosition.s: src/robot/auto/actions/LiftPosition.cpp.s
+
+.PHONY : src/robot/auto/actions/LiftPosition.s
+
+# target to generate assembly for a file
+src/robot/auto/actions/LiftPosition.cpp.s:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/LiftPosition.cpp.s
+.PHONY : src/robot/auto/actions/LiftPosition.cpp.s
+
 src/robot/auto/actions/OpenLoopDriveAction.o: src/robot/auto/actions/OpenLoopDriveAction.cpp.o
 
 .PHONY : src/robot/auto/actions/OpenLoopDriveAction.o
@@ -1311,6 +1365,33 @@ src/robot/auto/actions/OpenLoopIntakeAction.cpp.s:
 	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopIntakeAction.cpp.s
 .PHONY : src/robot/auto/actions/OpenLoopIntakeAction.cpp.s
 
+src/robot/auto/actions/OpenLoopLiftAction.o: src/robot/auto/actions/OpenLoopLiftAction.cpp.o
+
+.PHONY : src/robot/auto/actions/OpenLoopLiftAction.o
+
+# target to build an object file
+src/robot/auto/actions/OpenLoopLiftAction.cpp.o:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.o
+.PHONY : src/robot/auto/actions/OpenLoopLiftAction.cpp.o
+
+src/robot/auto/actions/OpenLoopLiftAction.i: src/robot/auto/actions/OpenLoopLiftAction.cpp.i
+
+.PHONY : src/robot/auto/actions/OpenLoopLiftAction.i
+
+# target to preprocess a source file
+src/robot/auto/actions/OpenLoopLiftAction.cpp.i:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.i
+.PHONY : src/robot/auto/actions/OpenLoopLiftAction.cpp.i
+
+src/robot/auto/actions/OpenLoopLiftAction.s: src/robot/auto/actions/OpenLoopLiftAction.cpp.s
+
+.PHONY : src/robot/auto/actions/OpenLoopLiftAction.s
+
+# target to generate assembly for a file
+src/robot/auto/actions/OpenLoopLiftAction.cpp.s:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/OpenLoopLiftAction.cpp.s
+.PHONY : src/robot/auto/actions/OpenLoopLiftAction.cpp.s
+
 src/robot/auto/actions/ParallelAction.o: src/robot/auto/actions/ParallelAction.cpp.o
 
 .PHONY : src/robot/auto/actions/ParallelAction.o
@@ -1338,6 +1419,33 @@ src/robot/auto/actions/ParallelAction.cpp.s:
 	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/ParallelAction.cpp.s
 .PHONY : src/robot/auto/actions/ParallelAction.cpp.s
 
+src/robot/auto/actions/ResetLiftTrayPosition.o: src/robot/auto/actions/ResetLiftTrayPosition.cpp.o
+
+.PHONY : src/robot/auto/actions/ResetLiftTrayPosition.o
+
+# target to build an object file
+src/robot/auto/actions/ResetLiftTrayPosition.cpp.o:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.o
+.PHONY : src/robot/auto/actions/ResetLiftTrayPosition.cpp.o
+
+src/robot/auto/actions/ResetLiftTrayPosition.i: src/robot/auto/actions/ResetLiftTrayPosition.cpp.i
+
+.PHONY : src/robot/auto/actions/ResetLiftTrayPosition.i
+
+# target to preprocess a source file
+src/robot/auto/actions/ResetLiftTrayPosition.cpp.i:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.i
+.PHONY : src/robot/auto/actions/ResetLiftTrayPosition.cpp.i
+
+src/robot/auto/actions/ResetLiftTrayPosition.s: src/robot/auto/actions/ResetLiftTrayPosition.cpp.s
+
+.PHONY : src/robot/auto/actions/ResetLiftTrayPosition.s
+
+# target to generate assembly for a file
+src/robot/auto/actions/ResetLiftTrayPosition.cpp.s:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/ResetLiftTrayPosition.cpp.s
+.PHONY : src/robot/auto/actions/ResetLiftTrayPosition.cpp.s
+
 src/robot/auto/actions/SeriesAction.o: src/robot/auto/actions/SeriesAction.cpp.o
 
 .PHONY : src/robot/auto/actions/SeriesAction.o
@@ -1364,6 +1472,60 @@ src/robot/auto/actions/SeriesAction.s: src/robot/auto/actions/SeriesAction.cpp.s
 src/robot/auto/actions/SeriesAction.cpp.s:
 	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/SeriesAction.cpp.s
 .PHONY : src/robot/auto/actions/SeriesAction.cpp.s
+
+src/robot/auto/actions/TrayEnableStackAction.o: src/robot/auto/actions/TrayEnableStackAction.cpp.o
+
+.PHONY : src/robot/auto/actions/TrayEnableStackAction.o
+
+# target to build an object file
+src/robot/auto/actions/TrayEnableStackAction.cpp.o:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.o
+.PHONY : src/robot/auto/actions/TrayEnableStackAction.cpp.o
+
+src/robot/auto/actions/TrayEnableStackAction.i: src/robot/auto/actions/TrayEnableStackAction.cpp.i
+
+.PHONY : src/robot/auto/actions/TrayEnableStackAction.i
+
+# target to preprocess a source file
+src/robot/auto/actions/TrayEnableStackAction.cpp.i:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.i
+.PHONY : src/robot/auto/actions/TrayEnableStackAction.cpp.i
+
+src/robot/auto/actions/TrayEnableStackAction.s: src/robot/auto/actions/TrayEnableStackAction.cpp.s
+
+.PHONY : src/robot/auto/actions/TrayEnableStackAction.s
+
+# target to generate assembly for a file
+src/robot/auto/actions/TrayEnableStackAction.cpp.s:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayEnableStackAction.cpp.s
+.PHONY : src/robot/auto/actions/TrayEnableStackAction.cpp.s
+
+src/robot/auto/actions/TrayPosition.o: src/robot/auto/actions/TrayPosition.cpp.o
+
+.PHONY : src/robot/auto/actions/TrayPosition.o
+
+# target to build an object file
+src/robot/auto/actions/TrayPosition.cpp.o:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.o
+.PHONY : src/robot/auto/actions/TrayPosition.cpp.o
+
+src/robot/auto/actions/TrayPosition.i: src/robot/auto/actions/TrayPosition.cpp.i
+
+.PHONY : src/robot/auto/actions/TrayPosition.i
+
+# target to preprocess a source file
+src/robot/auto/actions/TrayPosition.cpp.i:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.i
+.PHONY : src/robot/auto/actions/TrayPosition.cpp.i
+
+src/robot/auto/actions/TrayPosition.s: src/robot/auto/actions/TrayPosition.cpp.s
+
+.PHONY : src/robot/auto/actions/TrayPosition.s
+
+# target to generate assembly for a file
+src/robot/auto/actions/TrayPosition.cpp.s:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/actions/TrayPosition.cpp.s
+.PHONY : src/robot/auto/actions/TrayPosition.cpp.s
 
 src/robot/auto/actions/WaitAction.o: src/robot/auto/actions/WaitAction.cpp.o
 
@@ -1418,6 +1580,87 @@ src/robot/auto/modes/AutoModeBase.s: src/robot/auto/modes/AutoModeBase.cpp.s
 src/robot/auto/modes/AutoModeBase.cpp.s:
 	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/AutoModeBase.cpp.s
 .PHONY : src/robot/auto/modes/AutoModeBase.cpp.s
+
+src/robot/auto/modes/BackAutoMode.o: src/robot/auto/modes/BackAutoMode.cpp.o
+
+.PHONY : src/robot/auto/modes/BackAutoMode.o
+
+# target to build an object file
+src/robot/auto/modes/BackAutoMode.cpp.o:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.o
+.PHONY : src/robot/auto/modes/BackAutoMode.cpp.o
+
+src/robot/auto/modes/BackAutoMode.i: src/robot/auto/modes/BackAutoMode.cpp.i
+
+.PHONY : src/robot/auto/modes/BackAutoMode.i
+
+# target to preprocess a source file
+src/robot/auto/modes/BackAutoMode.cpp.i:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.i
+.PHONY : src/robot/auto/modes/BackAutoMode.cpp.i
+
+src/robot/auto/modes/BackAutoMode.s: src/robot/auto/modes/BackAutoMode.cpp.s
+
+.PHONY : src/robot/auto/modes/BackAutoMode.s
+
+# target to generate assembly for a file
+src/robot/auto/modes/BackAutoMode.cpp.s:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/BackAutoMode.cpp.s
+.PHONY : src/robot/auto/modes/BackAutoMode.cpp.s
+
+src/robot/auto/modes/FlipOutMode.o: src/robot/auto/modes/FlipOutMode.cpp.o
+
+.PHONY : src/robot/auto/modes/FlipOutMode.o
+
+# target to build an object file
+src/robot/auto/modes/FlipOutMode.cpp.o:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.o
+.PHONY : src/robot/auto/modes/FlipOutMode.cpp.o
+
+src/robot/auto/modes/FlipOutMode.i: src/robot/auto/modes/FlipOutMode.cpp.i
+
+.PHONY : src/robot/auto/modes/FlipOutMode.i
+
+# target to preprocess a source file
+src/robot/auto/modes/FlipOutMode.cpp.i:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.i
+.PHONY : src/robot/auto/modes/FlipOutMode.cpp.i
+
+src/robot/auto/modes/FlipOutMode.s: src/robot/auto/modes/FlipOutMode.cpp.s
+
+.PHONY : src/robot/auto/modes/FlipOutMode.s
+
+# target to generate assembly for a file
+src/robot/auto/modes/FlipOutMode.cpp.s:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/FlipOutMode.cpp.s
+.PHONY : src/robot/auto/modes/FlipOutMode.cpp.s
+
+src/robot/auto/modes/FrontAutoMode.o: src/robot/auto/modes/FrontAutoMode.cpp.o
+
+.PHONY : src/robot/auto/modes/FrontAutoMode.o
+
+# target to build an object file
+src/robot/auto/modes/FrontAutoMode.cpp.o:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.o
+.PHONY : src/robot/auto/modes/FrontAutoMode.cpp.o
+
+src/robot/auto/modes/FrontAutoMode.i: src/robot/auto/modes/FrontAutoMode.cpp.i
+
+.PHONY : src/robot/auto/modes/FrontAutoMode.i
+
+# target to preprocess a source file
+src/robot/auto/modes/FrontAutoMode.cpp.i:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.i
+.PHONY : src/robot/auto/modes/FrontAutoMode.cpp.i
+
+src/robot/auto/modes/FrontAutoMode.s: src/robot/auto/modes/FrontAutoMode.cpp.s
+
+.PHONY : src/robot/auto/modes/FrontAutoMode.s
+
+# target to generate assembly for a file
+src/robot/auto/modes/FrontAutoMode.cpp.s:
+	$(MAKE) -f CMakeFiles/7405M_code.dir/build.make CMakeFiles/7405M_code.dir/src/robot/auto/modes/FrontAutoMode.cpp.s
+.PHONY : src/robot/auto/modes/FrontAutoMode.cpp.s
 
 src/robot/auto/modes/TestMode.o: src/robot/auto/modes/TestMode.cpp.o
 
@@ -2028,6 +2271,9 @@ help:
 	@echo "... src/lib/utility/Singleton.o"
 	@echo "... src/lib/utility/Singleton.i"
 	@echo "... src/lib/utility/Singleton.s"
+	@echo "... src/robot/Constants.o"
+	@echo "... src/robot/Constants.i"
+	@echo "... src/robot/Constants.s"
 	@echo "... src/robot/Robot.o"
 	@echo "... src/robot/Robot.i"
 	@echo "... src/robot/Robot.s"
@@ -2040,24 +2286,48 @@ help:
 	@echo "... src/robot/auto/actions/DriveTrajectory.o"
 	@echo "... src/robot/auto/actions/DriveTrajectory.i"
 	@echo "... src/robot/auto/actions/DriveTrajectory.s"
+	@echo "... src/robot/auto/actions/LiftPosition.o"
+	@echo "... src/robot/auto/actions/LiftPosition.i"
+	@echo "... src/robot/auto/actions/LiftPosition.s"
 	@echo "... src/robot/auto/actions/OpenLoopDriveAction.o"
 	@echo "... src/robot/auto/actions/OpenLoopDriveAction.i"
 	@echo "... src/robot/auto/actions/OpenLoopDriveAction.s"
 	@echo "... src/robot/auto/actions/OpenLoopIntakeAction.o"
 	@echo "... src/robot/auto/actions/OpenLoopIntakeAction.i"
 	@echo "... src/robot/auto/actions/OpenLoopIntakeAction.s"
+	@echo "... src/robot/auto/actions/OpenLoopLiftAction.o"
+	@echo "... src/robot/auto/actions/OpenLoopLiftAction.i"
+	@echo "... src/robot/auto/actions/OpenLoopLiftAction.s"
 	@echo "... src/robot/auto/actions/ParallelAction.o"
 	@echo "... src/robot/auto/actions/ParallelAction.i"
 	@echo "... src/robot/auto/actions/ParallelAction.s"
+	@echo "... src/robot/auto/actions/ResetLiftTrayPosition.o"
+	@echo "... src/robot/auto/actions/ResetLiftTrayPosition.i"
+	@echo "... src/robot/auto/actions/ResetLiftTrayPosition.s"
 	@echo "... src/robot/auto/actions/SeriesAction.o"
 	@echo "... src/robot/auto/actions/SeriesAction.i"
 	@echo "... src/robot/auto/actions/SeriesAction.s"
+	@echo "... src/robot/auto/actions/TrayEnableStackAction.o"
+	@echo "... src/robot/auto/actions/TrayEnableStackAction.i"
+	@echo "... src/robot/auto/actions/TrayEnableStackAction.s"
+	@echo "... src/robot/auto/actions/TrayPosition.o"
+	@echo "... src/robot/auto/actions/TrayPosition.i"
+	@echo "... src/robot/auto/actions/TrayPosition.s"
 	@echo "... src/robot/auto/actions/WaitAction.o"
 	@echo "... src/robot/auto/actions/WaitAction.i"
 	@echo "... src/robot/auto/actions/WaitAction.s"
 	@echo "... src/robot/auto/modes/AutoModeBase.o"
 	@echo "... src/robot/auto/modes/AutoModeBase.i"
 	@echo "... src/robot/auto/modes/AutoModeBase.s"
+	@echo "... src/robot/auto/modes/BackAutoMode.o"
+	@echo "... src/robot/auto/modes/BackAutoMode.i"
+	@echo "... src/robot/auto/modes/BackAutoMode.s"
+	@echo "... src/robot/auto/modes/FlipOutMode.o"
+	@echo "... src/robot/auto/modes/FlipOutMode.i"
+	@echo "... src/robot/auto/modes/FlipOutMode.s"
+	@echo "... src/robot/auto/modes/FrontAutoMode.o"
+	@echo "... src/robot/auto/modes/FrontAutoMode.i"
+	@echo "... src/robot/auto/modes/FrontAutoMode.s"
 	@echo "... src/robot/auto/modes/TestMode.o"
 	@echo "... src/robot/auto/modes/TestMode.i"
 	@echo "... src/robot/auto/modes/TestMode.s"
