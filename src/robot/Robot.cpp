@@ -205,7 +205,7 @@ namespace meecan {
     if(lift_state < 0) lift_state = 0;
     if(lift_state > 3) lift_state = 3;
 
-    // printf("LS %d\n", lift_state);
+    printf("LS %d\n", lift_state);
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)  || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) )
       subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[lift_state]);
 

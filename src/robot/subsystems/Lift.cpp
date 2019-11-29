@@ -77,7 +77,7 @@ namespace subsystems {
       lastTray = getTrayForDemand();
       double tray_error = std::fabs(Tray::instance->get_position() - getTrayForDemand());
       //printf("LIFT MACRO %f %f\n", lastTray, tray_error);
-      if(tray_error < 100 || Tray::instance->get_position() > 700 && lastTray < 1900)
+      if(tray_error < 250 || Tray::instance->get_position() > 700 && lastTray < 1900)
         runPID();
     }
   }
