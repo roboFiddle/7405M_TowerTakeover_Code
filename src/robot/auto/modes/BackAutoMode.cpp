@@ -32,7 +32,7 @@ namespace auton {
     runAction(new actions::ParallelAction(driveAndIntake2));
 
     std::list<actions::Action*> turnSetup;
-    turnSetup.push_back(new actions::DriveTurnAction(-132 * units::degree));
+    turnSetup.push_back(new actions::DriveTurnAction(-132 * units::degree * (flip_ ? -1 : 1)));
     turnSetup.push_back(new actions::OpenLoopIntakeAction(200, -1));
     runAction(new actions::ParallelAction(turnSetup));
 

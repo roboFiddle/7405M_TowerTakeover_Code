@@ -52,7 +52,7 @@ namespace auton {
 
     // Align With First Tower
     runAction(new actions::DriveTurnAction(132 * units::degree));
-    runAction(new actions::TrayPosition(2000, false));
+    runAction(new actions::TrayPosition(1400, false));
 
     // Intake Cube for First Tower
     std::list<actions::Action*> intakeForTowerDrive;
@@ -122,7 +122,7 @@ namespace auton {
 
     // Line up With Third Tower
     runAction(new actions::DriveTurnAction(-132 * units::degree));
-    runAction(new actions::TrayPosition(2000, false));
+    runAction(new actions::TrayPosition(1400, false));
     runAction(new actions::ParallelAction(intakeForTower));
 
     // Score in Third Tower

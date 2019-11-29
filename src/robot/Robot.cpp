@@ -101,6 +101,10 @@ namespace meecan {
     enabledLooper->enable();
 
     switch(current_auton) {
+      case 0: {
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::DoNothingMode());
+        auton::AutoModeRunner::instance->setAutoMode(activeMode); }
+        break;
       case 1: {
         std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FlipOutMode());
         auton::AutoModeRunner::instance->setAutoMode(activeMode); }
@@ -143,6 +147,7 @@ namespace meecan {
     enabledLooper->enable();
     subsystems::Lift::instance->tare();
     subsystems::Tray::instance->setOpenLoop(0);
+    subsystems::Lift::instance->setOpenLoop(0);
   }
   void Robot::driverLoop() {
     pros::lcd::print(0, "driver loop %d", pros::millis());
@@ -159,11 +164,13 @@ namespace meecan {
     units::Number sign_turn = turn.getValue() > 0.0 ? 1 : -1;
 
     throttle *= throttle;
+    throttle *= throttle;
     throttle *= sign_throttle;
+    turn *= turn;
     turn *= turn;
     turn *= sign_turn;
 
-    if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) > 5 || std::fabs(turn.getValue()) > 5)
+    if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) != 0.0 || std::fabs(turn.getValue()) != 0.0)
       subsystems::Drive::instance->setOpenLoop(util::DriveSignal(200*(throttle+turn), 200*(throttle-turn)));
 
     units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1));
@@ -195,13 +202,14 @@ namespace meecan {
     else if(controller_->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT))
       lift_state ++;
 
-    if(lift_state < 0) {
-      subsystems::Tray::instance->setPosition(constants::RobotConstants::TRAY_LIFT[0]);
-      lift_state = 0;
-    }
+    if(lift_state < 0) lift_state = 0;
     if(lift_state > 3) lift_state = 3;
+
     // printf("LS %d\n", lift_state);
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)  || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) )
       subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[lift_state]);
+
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_B))
+      subsystems::Tray::instance->setPosition(constants::RobotConstants::TRAY_LIFT[0]);
   }
 }

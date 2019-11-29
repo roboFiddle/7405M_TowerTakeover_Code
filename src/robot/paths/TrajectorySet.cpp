@@ -37,13 +37,25 @@ namespace path_planning {
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getBackForward() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(32 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(38 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
         constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel, 8.0);
   }
+
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getFrontForward() {
+    std::vector<geometry::Pose2d> waypoints;
+    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(32 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
+
+    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
+
+    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
+                                                  constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel, 8.0);
+  }
+
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPSkillsForward() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
@@ -58,18 +70,29 @@ namespace path_planning {
     std::vector<geometry::Pose2d> waypoints;
 
     waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(18 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(24 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
         constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
   }
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getFrontS() {
+    std::vector<geometry::Pose2d> waypoints;
+
+    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(18 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+
+    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
+
+    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
+                                                  constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
+  }
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getFrontSetup() {
     std::vector<geometry::Pose2d> waypoints;
 
     waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(17 * units::inch, -4 * units::inch, geometry::Rotation2d::fromDegrees(-45)));
+    waypoints.push_back(geometry::Pose2d(25 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
@@ -200,6 +223,7 @@ namespace path_planning {
   void TrajectorySet::generatorCalls() {
     printf("start\n");
     addToMap("backForward", MirroredTrajectory(getBackForward()));
+    addToMap("frontForward", MirroredTrajectory(getBackForward()));
     addToMap("backS", MirroredTrajectory(getBackS()));
     addToMap("frontSetup", MirroredTrajectory(getFrontSetup()));
     addToMap("backSetup", MirroredTrajectory(getBackSetup()));

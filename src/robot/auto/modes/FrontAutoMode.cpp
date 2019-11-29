@@ -20,26 +20,21 @@ namespace auton {
     flipOut();
 
     std::list<actions::Action*> driveAndIntake;
-    driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backForward").get(false)));
+    driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontForward").get(false)));
     driveAndIntake.push_back(new actions::OpenLoopIntakeAction(200, -1));
     driveAndIntake.push_back(new actions::OpenLoopLiftAction(50, 0));
     driveAndIntake.push_back(new actions::TrayPosition(500, false));
     runAction(new actions::ParallelAction(driveAndIntake));
 
-    std::list<actions::Action*> driveAndIntake2;
-    driveAndIntake2.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("frontS").get(flip_))));
-    driveAndIntake2.push_back(new actions::OpenLoopIntakeAction(100, 0));
-    runAction(new actions::ParallelAction(driveAndIntake2));
-
     std::list<actions::Action*> turnSetup;
-    turnSetup.push_back(new actions::DriveTurnAction(-132 * units::degree));
+    turnSetup.push_back(new actions::DriveTurnAction(-132 * units::degree * (flip_ ? -1 : 1)));
     turnSetup.push_back(new actions::OpenLoopIntakeAction(200, -1));
     runAction(new actions::ParallelAction(turnSetup));
 
     runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0.0, 0.0), 0));
 
     std::list<actions::Action*> IntakeSetup;
-    IntakeSetup.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backSetup").get(flip_)));
+    IntakeSetup.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontSetup").get(flip_)));
     IntakeSetup.push_back(new actions::OpenLoopIntakeAction(200, -1));
     runAction(new actions::ParallelAction(IntakeSetup));
 
