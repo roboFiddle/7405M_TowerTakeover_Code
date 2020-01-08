@@ -9,18 +9,19 @@
 namespace subsystems {
   Odometry::OdometryManager Odometry::instance;
   Odometry::Odometry() {
-    left = new pros::ADIEncoder(3, 4, false);
-    right = new pros::ADIEncoder(7, 8, false);
-    back = new pros::ADIEncoder(5, 6, true);
+    left = new pros::ADIEncoder(5, 6, false);
+    right = new pros::ADIEncoder(3, 4, false);
+    back = new pros::ADIEncoder(1, 2, false);
   }
   void Odometry::updatePosition() {
     units::QLength leftTravel = (left->get_value()) * 0.0174533 * constants::RobotConstants::kDeadwheelRadius; // .0174533 = PI/180
     units::QLength rightTravel = (right->get_value()) * 0.0174533 * constants::RobotConstants::kDeadwheelRadius;
     units::QLength backTravel = (back->get_value()) * 0.0174533 * constants::RobotConstants::kDeadwheelRadius;
+    printf("deadwheels %f %f %f\n", leftTravel, rightTravel, backTravel);
 
     units::Number dTheta = (rightTravel - leftTravel) / (constants::RobotConstants::kDeadwheelBaseWidth);
     units::QLength dY =  (0.5 * (leftTravel + rightTravel));
-    units::QLength dX = backTravel + (constants::RobotConstants::kDeadwheelBackTurningRadius *  dTheta);
+    units::QLength dX = backTravel - (constants::RobotConstants::kDeadwheelBackTurningRadius *  dTheta);
 
     geometry::Twist2d delta(dY, dX, dTheta * units::radian);
     geometry::Pose2d change = geometry::Pose2d::exp(delta);
@@ -29,7 +30,7 @@ namespace subsystems {
     right->reset();
     back->reset();
     currentPosition = currentPosition.transformBy(change);
-    printf("X %f %f %f\n", currentPosition.translation().x(), currentPosition.translation().y(), currentPosition.rotation().getRadians());
+    //printf("X %f %f %f\n", currentPosition.translation().x(), currentPosition.translation().y(), currentPosition.rotation().getRadians());
   }
   void Odometry::resetPosition() {
     currentPosition = geometry::Pose2d();

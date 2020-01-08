@@ -8,6 +8,7 @@
 #include "../actions/OpenLoopDriveAction.hpp"
 #include "../actions/OpenLoopIntakeAction.hpp"
 #include "../actions/ParallelAction.hpp"
+#include "../actions/SeriesAction.hpp"
 #include "../actions/TrayEnableStackAction.hpp"
 #include "../../paths/TrajectorySet.hpp"
 #include "../actions/TrayPosition.hpp"
@@ -27,23 +28,29 @@ namespace auton {
     runAction(new actions::ParallelAction(driveAndIntake));
 
     std::list<actions::Action*> turnSetup;
-    turnSetup.push_back(new actions::DriveTurnAction(-132 * units::degree * (flip_ ? -1 : 1)));
+    turnSetup.push_back(new actions::DriveTurnAction(-135 * units::degree * (flip_ ? -1 : 1)));
     turnSetup.push_back(new actions::OpenLoopIntakeAction(200, -1));
     runAction(new actions::ParallelAction(turnSetup));
 
     runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0.0, 0.0), 0));
 
     std::list<actions::Action*> IntakeSetup;
-    IntakeSetup.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontSetup").get(flip_)));
+    std::list<actions::Action*> drive;
+    drive.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontSetup").get(flip_)));
+    drive.push_back(new actions::WaitAction(0.75));
+    IntakeSetup.push_back(new actions::SeriesAction(drive));
     IntakeSetup.push_back(new actions::OpenLoopIntakeAction(200, -1));
     runAction(new actions::ParallelAction(IntakeSetup));
 
     runAction(new actions::OpenLoopIntakeAction(-100, 0.8));
-    runAction(new actions::TrayEnableStackAction());
+    runAction(new actions::TrayEnableStackAction(0.75));
 
     std::list<actions::Action*> pullBackFromStack;
+    std::list<actions::Action*> drives;
     pullBackFromStack.push_back(new actions::OpenLoopIntakeAction(-200, 1));
-    pullBackFromStack.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("stackPullBack").get(flip_)));
+    drives.push_back(new actions::WaitAction(0.1));
+    drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("stackPullBack").get(flip_)));
+    pullBackFromStack.push_back(new actions::SeriesAction(drives));
     runAction(new actions::ParallelAction(pullBackFromStack));
   }
 

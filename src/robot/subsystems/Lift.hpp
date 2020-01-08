@@ -19,16 +19,18 @@ namespace subsystems {
       double lastTray;
       int encoder_offset = 0;
       int last_error = 0;
+      bool fromMacro;
 
     public:
       Lift();
       void setOpenLoop(units::Number control);
       void setPosition(units::Number control);
+      void setFromMacro(units::Number control);
       units::Number get_demand();
       double get_position();
       double getPositionError();
       double getMotorVelocity();
-      double getTrayForDemand();
+      double getTrayForDemand(double current);
       ControlState getState();
       void runPID();
       void updateOutputs();

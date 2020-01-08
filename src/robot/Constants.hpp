@@ -41,10 +41,11 @@ namespace constants {
     static double MAX_TRAY_RPM;
     static double MAX_LIFT_RPM;
 
-    static double LIFT_STAGE[3];
-    static double TRAY_LIFT[4];
-    static double LIFT_PRESETS[4];
+    static double LIFT_STAGE[1];
+    static double TRAY_LIFT[2];
+    static double LIFT_PRESETS[3];
     static double trayErrorBeforeLiftStart;
+    static double liftErrorBeforeTrayStart;
 
     static double TRAY_SCORE;
     static double SCORE_START_INTAKE;

@@ -9,8 +9,8 @@ namespace constants {
     units::Number RobotConstants::kTrackScrubFactor = 1.0;
 
     units::QLength RobotConstants::kDeadwheelRadius = 1.375*units::inch;
-    units::QLength RobotConstants::kDeadwheelBaseWidth = 9.75*units::inch;
-    units::QLength RobotConstants::kDeadwheelBackTurningRadius = 7.5 * units::inch;
+    units::QLength RobotConstants::kDeadwheelBaseWidth = 3.56*units::inch;
+    units::QLength RobotConstants::kDeadwheelBackTurningRadius = 9.45 * units::inch;
 
     units::QAngularSpeed RobotConstants::kDriveSpeedPerVolt = 1.09; // RADIANS / SECOND / VOTL
     units::QTorque RobotConstants::kDriveTorquePerVolt = 0.56; // Nm / VOLT
@@ -20,22 +20,23 @@ namespace constants {
     double RobotConstants::turnKI = 0;
     double RobotConstants::turnKD = 5;
 
-    int RobotConstants::motor_drive_frontleft = 4;
-    int RobotConstants::motor_drive_backleft = 3;
-    int RobotConstants::motor_drive_frontright = 6;
+    int RobotConstants::motor_drive_frontleft = 9;
+    int RobotConstants::motor_drive_backleft = 10;
+    int RobotConstants::motor_drive_frontright = 2;
     int RobotConstants::motor_drive_backright = 5;
-    int RobotConstants::motor_intake_left = 19;
-    int RobotConstants::motor_intake_right = 17;
-    int RobotConstants::motor_tray = 8;
-    int RobotConstants::motor_lift = 13;
+    int RobotConstants::motor_intake_left = 8;
+    int RobotConstants::motor_intake_right = 13;
+    int RobotConstants::motor_tray = 3;
+    int RobotConstants::motor_lift = 18;
 
     double RobotConstants::MAX_TRAY_RPM = 100;
     double RobotConstants::MAX_LIFT_RPM = 200;
 
-    double RobotConstants::LIFT_STAGE[3] = {1000, 2000, 2500};
-    double RobotConstants::TRAY_LIFT[4] = {400, 1250, 1600, 1850};
-    double RobotConstants::LIFT_PRESETS[4] = {1150, 1900, 2125, 3000};
-    double RobotConstants::trayErrorBeforeLiftStart = 25;
+    double RobotConstants::LIFT_STAGE[1] = {500};
+    double RobotConstants::TRAY_LIFT[2] = {75, 1800};
+    double RobotConstants::LIFT_PRESETS[3] = {340, 2200, 3200};
+    double RobotConstants::trayErrorBeforeLiftStart = 1000;
+    double RobotConstants::liftErrorBeforeTrayStart = 100;
 
     double RobotConstants::TRAY_SCORE = 3200;
     double RobotConstants::SCORE_START_INTAKE = 1200;

@@ -7,18 +7,20 @@
 namespace auton {
   namespace actions {
     LiftPosition::LiftPosition(double goal) {
-      LiftPosition(goal, false);
+      goal_ = goal;
+      limit_velo_ = false;
     }
     LiftPosition::LiftPosition(double goal, bool limit_velo) {
       goal_ = goal;
       limit_velo_ = limit_velo;
     }
     bool LiftPosition::isFinished() {
-      //printf("TP %f %f\n", std::fabs(subsystems::Tray::instance->getMotorVelocity()), std::fabs(subsystems::Tray::instance->getPositionError()));
-      return std::fabs(subsystems::Lift::instance->getMotorVelocity()) < 15 && std::fabs(subsystems::Lift::instance->getPositionError()) < 100;
+      printf("LP %f %f\n", std::fabs(subsystems::Lift::instance->get_demand().getValue()), std::fabs(subsystems::Lift::instance->get_position()));
+      return std::fabs(subsystems::Lift::instance->getPositionError()) < 100;
     }
     void LiftPosition::start() {
-      subsystems::Lift::instance->setPosition(goal_);
+      printf("LIFT GOAL %f\n", goal_);
+      subsystems::Lift::instance->setFromMacro(goal_ * 1.0);
     }
     void LiftPosition::update() {
 

@@ -19,6 +19,7 @@ namespace subsystems {
       int scoring_state_;
       int count_stop_states_;
       bool limit_velo_;
+      double score_multi;
 
       double getMultiplier();
 
@@ -34,7 +35,7 @@ namespace subsystems {
       ControlState getState();
       void runPID();
       void updateOutputs();
-      void activateScore();
+      void activateScore(double m = 1);
       bool doneWithScore();
       double getMotorVelocity();
       double getPositionError();

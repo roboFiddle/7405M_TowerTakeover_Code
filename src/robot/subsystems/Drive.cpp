@@ -32,11 +32,6 @@ namespace subsystems {
   }
   void Drive::setOpenLoop(util::DriveSignal signal) {
     currentState = ControlState::OPEN_LOOP;
-    if (currentState != ControlState::OPEN_LOOP) {
-      currentState = ControlState::OPEN_LOOP;
-      setBrakeMode(true);
-    }
-
     left_demand = signal.left();
     right_demand = signal.right();
   }

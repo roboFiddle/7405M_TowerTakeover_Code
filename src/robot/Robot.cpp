@@ -2,6 +2,7 @@
 // Created by alexweiss on 8/9/19.
 //
 
+#include <cmath>
 #include "../lib/meecan_lib.hpp"
 #include "../tests/testsInclude.hpp"
 #include "main.h"
@@ -122,7 +123,7 @@ namespace meecan {
         auton::AutoModeRunner::instance->setAutoMode(activeMode); }
         break;
       case 5: {
-        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FrontAutoMode(FRONT_RED));
+        std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FrontAutoMode(FRONT_BLUE));
         auton::AutoModeRunner::instance->setAutoMode(activeMode); }
         break;
       case 6: {
@@ -155,7 +156,7 @@ namespace meecan {
     pros::lcd::print(1, "%f %f %f", curPos.translation().x().Convert(units::inch), curPos.translation().y().Convert(units::inch), curPos.rotation().getDegrees());
     units::Number throttle = controller_->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) / 127.0;
     units::Number turn = controller_->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X) / 127.0;
-    if(std::fabs(throttle.getValue()) < .075)
+    if(std::fabs(throttle.getValue()) < 0.075)
       throttle = 0;
     if(std::fabs(turn.getValue()) < 0.075)
         turn = 0;
@@ -163,15 +164,18 @@ namespace meecan {
     units::Number sign_throttle = throttle.getValue() > 0.0 ? 1 : -1;
     units::Number sign_turn = turn.getValue() > 0.0 ? 1 : -1;
 
-    throttle *= throttle;
-    throttle *= throttle;
+    throttle = units::Qabs(throttle);
+    turn = units::Qabs(turn);
+
+    turn *= 0.75;
+
+    //throttle = 5.21389*throttle - 35.4471*throttle*throttle + 96.4034*throttle*throttle*throttle-92.6086*throttle*throttle*throttle*throttle+32.0985*throttle*throttle*throttle*throttle*throttle*throttle-4.66012*throttle*throttle*throttle*throttle*throttle*throttle*throttle*throttle*throttle;
+    //turn = 5.21389*turn - 35.4471*turn*turn + 96.4034*turn*turn*turn-92.6086*turn*turn*turn*turn+32.0985*turn*turn*turn*turn*turn*turn-4.66012*turn*turn*turn*turn*turn*turn*turn*turn*turn;
     throttle *= sign_throttle;
-    turn *= turn;
-    turn *= turn;
     turn *= sign_turn;
 
-    if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) != 0.0 || std::fabs(turn.getValue()) != 0.0)
-      subsystems::Drive::instance->setOpenLoop(util::DriveSignal(200*(throttle+turn), 200*(throttle-turn)));
+    //if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) > 0.05 || std::fabs(turn.getValue()) > 0.05)
+    subsystems::Drive::instance->setOpenLoop(util::DriveSignal(200*(throttle+turn), 200*(throttle-turn)));
 
     units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1));
     if(subsystems::Intake::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1))
@@ -188,7 +192,8 @@ namespace meecan {
       std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FlipOutMode());
       auton::AutoModeRunner::instance->setAutoMode(activeMode);
       auton::AutoModeRunner::instance->start();
-      pros::Task::delay(4000);
+      pros::Task::delay(750);
+      subsystems::Tray::instance->setPosition(constants::RobotConstants::TRAY_LIFT[0]);
     }
 
     units::Number lift = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1));
@@ -203,13 +208,15 @@ namespace meecan {
       lift_state ++;
 
     if(lift_state < 0) lift_state = 0;
-    if(lift_state > 3) lift_state = 3;
+    if(lift_state > 2) lift_state = 2;
 
-    printf("LS %d\n", lift_state);
+    //printf("LS %d\n", lift_state);
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT)  || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) )
       subsystems::Lift::instance->setPosition(constants::RobotConstants::LIFT_PRESETS[lift_state]);
 
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_B))
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
       subsystems::Tray::instance->setPosition(constants::RobotConstants::TRAY_LIFT[0]);
+      subsystems::Lift::instance->setOpenLoop(0.0);
+    }
   }
 }

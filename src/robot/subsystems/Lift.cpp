@@ -8,8 +8,8 @@ namespace subsystems {
   Lift::LiftManager Lift::instance;
 
   Lift::Lift() {
-    motor = new pros::Motor(constants::RobotConstants::motor_lift, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
-    pot = new pros::ADIAnalogIn(2);
+    motor = new pros::Motor(constants::RobotConstants::motor_lift, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+    pot = new pros::ADIAnalogIn(7);
     motor->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     state = ControlState::OPEN_LOOP;
     lastTray = 0;
@@ -23,49 +23,40 @@ namespace subsystems {
     state = ControlState::POSITION_CONTROL;
     demand = control;
     last_error = 0;
+    fromMacro = false;
+  }
+  void Lift::setFromMacro(units::Number control) {
+    state = ControlState::POSITION_CONTROL;
+    demand = control;
+    last_error = 0;
+    fromMacro = true;
   }
   units::Number Lift::get_demand() {
     return demand;
   }
   double Lift::getPositionError() {
-    return demand.getValue() - pot->get_value();
+    return demand.getValue() - get_position();
   }
   double Lift::getMotorVelocity() {
     return motor->get_actual_velocity();
   }
   double Lift::get_position() {
-    return motor->get_position();
+    return pot->get_value();
   }
   ControlState Lift::getState() {
     return state;
   }
-  double Lift::getTrayForDemand() {
-    if(demand.getValue() > pot->get_value()) { // going up
-      if(demand.getValue() < constants::RobotConstants::LIFT_STAGE[1]) { // levels 1/2
-        return constants::RobotConstants::TRAY_LIFT[1];
-      }
-      else { // level 3
-        return constants::RobotConstants::TRAY_LIFT[3];
-      }
-    }
-    else { // going down
-      if(demand.getValue() < constants::RobotConstants::LIFT_STAGE[2]) { // level 0
-        if(pot->get_value() > constants::RobotConstants::LIFT_STAGE[1]) { // top of two level drop
-          return constants::RobotConstants::TRAY_LIFT[2];
-        }
-        else {
-          return constants::RobotConstants::TRAY_LIFT[1];
-        }
-      }
-      else { // going down to 1/2
-        return constants::RobotConstants::TRAY_LIFT[1];
-      }
-    }
+  double Lift::getTrayForDemand(double current) {
+    printf("LIFT DEMAND %f %f\n", demand.getValue(), current);
+    if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[0])
+      return constants::RobotConstants::TRAY_LIFT[1];
+    else
+      return constants::RobotConstants::TRAY_LIFT[0];
   }
   void Lift::runPID() {
     double error = demand.getValue() - pot->get_value();
     double error_change = error - last_error;
-    motor->move_velocity( (int) (error * -0.5 + error_change * -10));
+    motor->move_velocity( (int) (error * -0.075));
     last_error = error;
   }
   void Lift::updateOutputs() {
@@ -73,12 +64,24 @@ namespace subsystems {
     if(state == ControlState::OPEN_LOOP)
       motor->move_velocity(demand.getValue());
     else if(state == ControlState::POSITION_CONTROL) {
-      Tray::instance->setPosition(getTrayForDemand(), false);
-      lastTray = getTrayForDemand();
-      double tray_error = std::fabs(Tray::instance->get_position() - getTrayForDemand());
-      //printf("LIFT MACRO %f %f\n", lastTray, tray_error);
-      if(tray_error < 250 || Tray::instance->get_position() > 700 && lastTray < 1900)
+      if(fromMacro) {
         runPID();
+      }
+      else {
+        lastTray = getTrayForDemand(Tray::instance->get_position());
+        if(lastTray == constants::RobotConstants::TRAY_LIFT[0]) {
+          runPID();
+          double lift_error = get_position() - demand.getValue();
+          if(lift_error < constants::RobotConstants::liftErrorBeforeTrayStart)
+            Tray::instance->setPosition(lastTray);
+        }
+        else {
+          double tray_error = std::fabs(Tray::instance->get_position() - lastTray);
+          Tray::instance->setPosition(lastTray);
+          if(tray_error < constants::RobotConstants::trayErrorBeforeLiftStart)
+            runPID();
+        }
+      }
     }
   }
   void Lift::stop() {

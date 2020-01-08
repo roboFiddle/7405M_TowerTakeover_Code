@@ -3,7 +3,8 @@
 namespace auton {
   namespace actions {
     TrayPosition::TrayPosition(double goal) {
-      TrayPosition(goal, false);
+      goal_ = goal;
+      limit_velo_ = false;
     }
     TrayPosition::TrayPosition(double goal, bool limit_velo) {
       goal_ = goal;

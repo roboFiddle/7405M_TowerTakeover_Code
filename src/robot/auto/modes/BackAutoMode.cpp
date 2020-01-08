@@ -8,6 +8,7 @@
 #include "../actions/OpenLoopDriveAction.hpp"
 #include "../actions/OpenLoopIntakeAction.hpp"
 #include "../actions/ParallelAction.hpp"
+#include "../actions/SeriesAction.hpp"
 #include "../actions/TrayEnableStackAction.hpp"
 #include "../../paths/TrajectorySet.hpp"
 #include "../actions/TrayPosition.hpp"
@@ -20,11 +21,22 @@ namespace auton {
     flipOut();
 
     std::list<actions::Action*> driveAndIntake;
-    driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backForward").get(false)));
+
+
     driveAndIntake.push_back(new actions::OpenLoopIntakeAction(200, -1));
     driveAndIntake.push_back(new actions::OpenLoopLiftAction(50, 0));
     driveAndIntake.push_back(new actions::TrayPosition(500, false));
+    driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backForward").get(false)));
     runAction(new actions::ParallelAction(driveAndIntake));
+
+    std::list<actions::Action*> drivesA;
+    std::list<actions::Action*> drivesB;
+    drivesA.push_back(new actions::WaitAction(0.25));
+    drivesA.push_back(new actions::OpenLoopIntakeAction(200, -1));
+    drivesB.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsIntakeLastTower").get(false)));
+    drivesB.push_back(new actions::OpenLoopIntakeAction(200, -1));
+    runAction(new actions::ParallelAction(drivesA));
+    runAction(new actions::ParallelAction(drivesB));
 
     std::list<actions::Action*> driveAndIntake2;
     driveAndIntake2.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backS").get(flip_))));
@@ -32,7 +44,7 @@ namespace auton {
     runAction(new actions::ParallelAction(driveAndIntake2));
 
     std::list<actions::Action*> turnSetup;
-    turnSetup.push_back(new actions::DriveTurnAction(-132 * units::degree * (flip_ ? -1 : 1)));
+    turnSetup.push_back(new actions::DriveTurnAction(-129 * units::degree * (flip_ ? -1 : 1)));
     turnSetup.push_back(new actions::OpenLoopIntakeAction(200, -1));
     runAction(new actions::ParallelAction(turnSetup));
 
