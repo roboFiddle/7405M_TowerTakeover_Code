@@ -9,10 +9,11 @@
 #include "../actions/TrayEnableStackAction.hpp"
 #include "../../Constants.hpp"
 #include "../../paths/TrajectorySet.hpp"
+#include "../../subsystems/Odometry.hpp"
 
 namespace auton {
   void TestMode::routine() {
-    int enabledTest = 3;
+    int enabledTest = 5;
     // TEST 0 - Lift Position
     if(enabledTest == 0) {
       runAction(new actions::TrayPosition(1750, false));
@@ -45,6 +46,20 @@ namespace auton {
       runAction(new actions::TrayEnableStackAction());
       runAction(new actions::TrayPosition(1600));
       runAction(new actions::LiftPosition(1800));
+    }
+    if(enabledTest == 5) {
+      runAction(new actions::DriveTurnAction(130 * units::degree));
+      pros::lcd::print(4, "%f", subsystems::Odometry::instance->getPosition().rotation().getDegrees());
+      //pros::Task::delay(500);
+      runAction(new actions::DriveTurnAction(130 * units::degree));
+      pros::lcd::print(5, "%f", subsystems::Odometry::instance->getPosition().rotation().getDegrees());
+      //pros::Task::delay(500);
+      runAction(new actions::DriveTurnAction(130 * units::degree));
+      pros::lcd::print(6, "%f", subsystems::Odometry::instance->getPosition().rotation().getDegrees());
+      //pros::Task::delay(500);
+      runAction(new actions::DriveTurnAction(130 * units::degree));
+      pros::lcd::print(7, "%f", subsystems::Odometry::instance->getPosition().rotation().getDegrees());
+      //pros::Task::delay(500);
     }
   }
 

@@ -48,16 +48,22 @@ namespace subsystems {
   }
   double Lift::getTrayForDemand(double current) {
     printf("LIFT DEMAND %f %f\n", demand.getValue(), current);
-    if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[0])
+    if(demand.getValue() < 0)
+      return current;
+    else if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[0])
       return constants::RobotConstants::TRAY_LIFT[1];
     else
       return constants::RobotConstants::TRAY_LIFT[0];
   }
   void Lift::runPID() {
     double error = demand.getValue() - pot->get_value();
-    double error_change = error - last_error;
-    motor->move_velocity( (int) (error * -0.075));
-    last_error = error;
+    if(std::fabs(error) < 50.0)
+      setOpenLoop(0);
+    else {
+      if(demand.getValue() < 0)
+        error += 75;
+      motor->move_velocity(error < 0 ? 200 : -200);
+    }
   }
   void Lift::updateOutputs() {
     //("LIFT MOTOR STATE %f %d %d\n", motor->get_temperature(), motor->is_over_current(), motor->is_over_temp());

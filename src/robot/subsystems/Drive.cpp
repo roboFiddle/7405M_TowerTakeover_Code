@@ -118,8 +118,8 @@ namespace subsystems {
       units::Angle deltaError = error - lastTurnError;
       totalTurnError += error;
       double velo = constants::RobotConstants::turnKP * error.getValue();
-      velo += constants::RobotConstants::turnKI * totalTurnError.getValue();
-      velo += constants::RobotConstants::turnKD * deltaError.getValue();
+      //velo += constants::RobotConstants::turnKI * totalTurnError.getValue();
+      //velo += constants::RobotConstants::turnKD * deltaError.getValue();
 
       frontLeft->move_velocity(-velo);
       backLeft->move_velocity(-velo);
@@ -127,7 +127,10 @@ namespace subsystems {
       backRight->move_velocity(velo);
       printf("ROT FUCK %f \n",Odometry::instance->getPosition().rotation().getDegrees());
       printf("TURN %f %f %f\n", std::fabs(goalAngle.getValue() - currentHeading.getValue()), Odometry::instance->getPosition().rotation().getRadians(), velo);
-
+      if(std::fabs(goalAngle.getValue() - currentHeading.getValue()) < 0.2)
+        turnFinishCount++;
+      else
+        turnFinishCount = 0;
       lastTurnError = error;
     }
   }
@@ -156,8 +159,9 @@ namespace subsystems {
     currentState = ControlState::TURN_FOLLOWING;
     subsystems::Odometry::instance->resetPosition();
     goalAngle = heading;
-    lastTurnError = 0;
-    totalTurnError = 0;
+    lastTurnError = 0.0;
+    totalTurnError = 0.0;
+    turnFinishCount = 0;
   }
   bool Drive::isDoneWithTrajectory() {
     if(forceStopTrajectory_) {
@@ -165,10 +169,9 @@ namespace subsystems {
       return true;
     }
     if(currentState == ControlState::TURN_FOLLOWING) {
-      units::Angle cur =  subsystems::Odometry::instance->getPosition().rotation().getAngle();
-      return std::fabs(goalAngle.getValue() - cur.getValue()) < 0.25;
+      return turnFinishCount > 10;
     }
-    return currentFollower->isDone();
+    return currentFollower->isDone() && pros::millis() - startTime.getValue()*1000 > 100;
   }
   void Drive::overrideTrajectory() {
     forceStopTrajectory_= true;

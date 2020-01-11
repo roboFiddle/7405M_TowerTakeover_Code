@@ -9,14 +9,14 @@ namespace constants {
     units::Number RobotConstants::kTrackScrubFactor = 1.0;
 
     units::QLength RobotConstants::kDeadwheelRadius = 1.375*units::inch;
-    units::QLength RobotConstants::kDeadwheelBaseWidth = 3.56*units::inch;
+    units::QLength RobotConstants::kDeadwheelBaseWidth = 4.22*units::inch;
     units::QLength RobotConstants::kDeadwheelBackTurningRadius = 9.45 * units::inch;
 
     units::QAngularSpeed RobotConstants::kDriveSpeedPerVolt = 1.09; // RADIANS / SECOND / VOTL
     units::QTorque RobotConstants::kDriveTorquePerVolt = 0.56; // Nm / VOLT
     units::Number RobotConstants::kDriveFrictionVoltage = 1.0; // voltage to overcome friction (V)
 
-    double RobotConstants::turnKP = 50;
+    double RobotConstants::turnKP = 35;
     double RobotConstants::turnKI = 0;
     double RobotConstants::turnKD = 5;
 
@@ -24,8 +24,8 @@ namespace constants {
     int RobotConstants::motor_drive_backleft = 10;
     int RobotConstants::motor_drive_frontright = 2;
     int RobotConstants::motor_drive_backright = 5;
-    int RobotConstants::motor_intake_left = 8;
-    int RobotConstants::motor_intake_right = 13;
+    int RobotConstants::motor_intake_left = 7;
+    int RobotConstants::motor_intake_right = 1;
     int RobotConstants::motor_tray = 3;
     int RobotConstants::motor_lift = 18;
 
@@ -38,7 +38,7 @@ namespace constants {
     double RobotConstants::trayErrorBeforeLiftStart = 1000;
     double RobotConstants::liftErrorBeforeTrayStart = 100;
 
-    double RobotConstants::TRAY_SCORE = 3200;
-    double RobotConstants::SCORE_START_INTAKE = 1200;
-    double RobotConstants::SCORE_END_INTAKE = 1800;
+    double RobotConstants::TRAY_SCORE = 3000;
+    double RobotConstants::SCORE_START_INTAKE = 700;
+    double RobotConstants::SCORE_END_INTAKE = 1700;
 }

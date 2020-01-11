@@ -29,6 +29,7 @@ namespace subsystems {
     double left_demand = 0, right_demand = 0;
     double left_accel, right_accel;
     double left_feed_forward, right_feed_forward;
+    int turnFinishCount;
 
    public:
     Drive();

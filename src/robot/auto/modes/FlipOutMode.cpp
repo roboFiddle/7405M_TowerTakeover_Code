@@ -18,6 +18,9 @@
 
 namespace auton {
   void FlipOutMode::routine() {
+    runAction(new actions::OpenLoopDriveAction(util::DriveSignal(200.0, 200.0), 1));
+    runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-200.0, -200.0), 1));
+
     flipOut();
   }
 

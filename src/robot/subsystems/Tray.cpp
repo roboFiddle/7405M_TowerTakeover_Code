@@ -39,7 +39,7 @@ namespace subsystems {
       return 1;
     }
     else {
-      return 1 - (pot->get_value() - 1100) * (0.75/1425);
+      return 1 - (pot->get_value() - 1500) * (0.635/1425);
     }
   }
   double Tray::get_position() {
@@ -61,14 +61,14 @@ namespace subsystems {
     else if(current_state == ControlState::SCORE_TRAY) {
       demand = constants::RobotConstants::TRAY_SCORE;
       runPID();
-      if(std::fabs(pot->get_value() - constants::RobotConstants::SCORE_START_INTAKE) < 100*score_multi || std::fabs(pot->get_value() - constants::RobotConstants::SCORE_END_INTAKE) < 100*score_multi) {
+      if(std::fabs(pot->get_value() - constants::RobotConstants::SCORE_START_INTAKE) < 200*score_multi || std::fabs(pot->get_value() - constants::RobotConstants::SCORE_END_INTAKE) < 200*score_multi) {
         Intake::instance->setFromMacro(200);
         //Drive::instance->setFromMacro(util::DriveSignal(30, 30));
       } else {
         Intake::instance->setFromMacro(0);
         Drive::instance->setFromMacro(util::DriveSignal(0, 0));
       }
-      if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 900) {
+      if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 400) {
         count_stop_states_++;
       }
       else {
