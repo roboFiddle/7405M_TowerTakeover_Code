@@ -18,6 +18,7 @@ namespace subsystems {
     backRight = new pros::Motor(constants::RobotConstants::motor_drive_backright, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
     setBrakeMode(false);
     setOpenLoop(util::DriveSignal::NEUTRAL);
+    forceStopTrajectory_ = false;
   }
 
   void Drive::stop()  {

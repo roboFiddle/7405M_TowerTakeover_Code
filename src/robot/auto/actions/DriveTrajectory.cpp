@@ -11,6 +11,7 @@ namespace auton {
     DriveTrajectory::DriveTrajectory(std::string name) : DriveTrajectory(name, false) {};
     DriveTrajectory::DriveTrajectory(std::string name, bool reset_pose) {
       trajectory_ = path_planning::TrajectorySet::instance->get(name).get(0);
+      printf("TRAJECTORY ACTION LENGTH %d\n", trajectory_.length());
       reset_pose_ = reset_pose;
     }
     DriveTrajectory::DriveTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory)

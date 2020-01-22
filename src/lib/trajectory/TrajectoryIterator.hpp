@@ -26,12 +26,12 @@ namespace trajectory {
     static_assert(std::is_base_of<geometry::State<S>, S>::value, "S must derive from State");
     protected:
       std::shared_ptr<TrajectoryView<S>> view_;
-      double progress_ = 0.0;
+      double progress_;
       TrajectorySamplePoint<S> current_sample_;
 
     public:
       TrajectoryIterator(std::shared_ptr<TrajectoryView<S>> view)  :
-          current_sample_(S(), 0, 0)
+          current_sample_(S(), 0, 0), progress_(0.0)
       {
         view_ = view;
       }

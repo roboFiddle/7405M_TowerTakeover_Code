@@ -25,7 +25,7 @@ namespace constants {
     int RobotConstants::motor_drive_frontright = 2;
     int RobotConstants::motor_drive_backright = 5;
     int RobotConstants::motor_intake_left = 7;
-    int RobotConstants::motor_intake_right = 1;
+    int RobotConstants::motor_intake_right = 6;
     int RobotConstants::motor_tray = 3;
     int RobotConstants::motor_lift = 18;
 
