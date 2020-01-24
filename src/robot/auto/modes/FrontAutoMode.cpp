@@ -23,9 +23,12 @@ namespace auton {
     std::list<actions::Action*> driveAndIntake;
     driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontForward").get(false)));
     driveAndIntake.push_back(new actions::OpenLoopIntakeAction(200, -1));
-    driveAndIntake.push_back(new actions::OpenLoopLiftAction(50, 0));
-    driveAndIntake.push_back(new actions::TrayPosition(500, false));
     runAction(new actions::ParallelAction(driveAndIntake));
+
+    std::list<actions::Action*> driveAndIntakeB;
+    driveAndIntakeB.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontIntake").get(false)));
+    driveAndIntakeB.push_back(new actions::OpenLoopIntakeAction(200, -1));
+    runAction(new actions::ParallelAction(driveAndIntakeB));
 
     std::list<actions::Action*> turnSetup;
     turnSetup.push_back(new actions::DriveTurnAction(-135 * units::degree * (flip_ ? -1 : 1)));
@@ -42,15 +45,13 @@ namespace auton {
     IntakeSetup.push_back(new actions::OpenLoopIntakeAction(200, -1));
     runAction(new actions::ParallelAction(IntakeSetup));
 
-    runAction(new actions::OpenLoopIntakeAction(-100, 0.8));
-    runAction(new actions::TrayEnableStackAction(0.75));
+    runAction(new actions::OpenLoopIntakeAction(-80, 0.75));
+    runAction(new actions::TrayEnableStackAction(1.15));
+    runAction(new actions::WaitAction(0.3));
 
     std::list<actions::Action*> pullBackFromStack;
-    std::list<actions::Action*> drives;
-    pullBackFromStack.push_back(new actions::OpenLoopIntakeAction(-200, 1));
-    drives.push_back(new actions::WaitAction(0.1));
-    drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("stackPullBack").get(flip_)));
-    pullBackFromStack.push_back(new actions::SeriesAction(drives));
+    pullBackFromStack.push_back(new actions::OpenLoopIntakeAction(-100, 0));
+    pullBackFromStack.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("stackPullBack").get(flip_)));
     runAction(new actions::ParallelAction(pullBackFromStack));
   }
 

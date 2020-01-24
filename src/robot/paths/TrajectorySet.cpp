@@ -34,17 +34,17 @@ namespace path_planning {
   MirroredTrajectory TrajectorySet::get(std::string name) {
     return trajectories_.at(name);
   }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getBackForward() {
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backJForward() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(26 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(28 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
         constants::PathConstants::kMaxVelocity * 0.65, constants::PathConstants::kMaxAccel, 8.0);
   }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getBackForward2() {
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backLineForward() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
     waypoints.push_back(geometry::Pose2d(35 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
@@ -52,20 +52,9 @@ namespace path_planning {
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity * 0.65, constants::PathConstants::kMaxAccel * 1.2, 8.0);
+        constants::PathConstants::kMaxVelocity * 0.55, constants::PathConstants::kMaxAccel, 8.0);
   }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getBackFastForward() {
-    std::vector<geometry::Pose2d> waypoints;
-    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(34 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel * 0.85, 8.0);
-  }
-
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getBackSCurve() {
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backToLine() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
     waypoints.push_back(geometry::Pose2d(34 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
@@ -75,8 +64,40 @@ namespace path_planning {
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
         constants::PathConstants::kMaxVelocity * 1.5, constants::PathConstants::kMaxAccel, 8.0);
   }
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backAlign() {
+    std::vector<geometry::Pose2d> waypoints;
+
+    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(30 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+
+    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
+
+    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
+                                                  constants::PathConstants::kMaxVelocity * 0.75, constants::PathConstants::kMaxAccel, 8.0);
+  }
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getBackSetup() {
+    std::vector<geometry::Pose2d> waypoints;
+
+    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(10 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+
+    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
+
+    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
+                                                  constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
+  }
 
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getFrontForward() {
+    std::vector<geometry::Pose2d> waypoints;
+    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(40 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
+
+    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
+
+    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
+                                                  constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel, 8.0);
+  }
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getFrontIntake() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
     waypoints.push_back(geometry::Pose2d(30 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
@@ -86,44 +107,11 @@ namespace path_planning {
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
                                                   constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel, 8.0);
   }
-
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPSkillsForward() {
-    std::vector<geometry::Pose2d> waypoints;
-    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(94 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel, 8.0);
-  }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getBackS() {
-    std::vector<geometry::Pose2d> waypoints;
-
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(30 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity * 0.75, constants::PathConstants::kMaxAccel, 8.0);
-  }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getBackS2() {
-    std::vector<geometry::Pose2d> waypoints;
-
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(6 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity * 0.65, constants::PathConstants::kMaxAccel, 8.0);
-  }
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getFrontS() {
     std::vector<geometry::Pose2d> waypoints;
 
     waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(18 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(50 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
@@ -141,72 +129,7 @@ namespace path_planning {
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
         constants::PathConstants::kMaxVelocity * 0.65, constants::PathConstants::kMaxAccel, 8.0);
   }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getBackSetup() {
-    std::vector<geometry::Pose2d> waypoints;
 
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(10 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
-  }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPSetup() {
-    std::vector<geometry::Pose2d> waypoints;
-
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(17 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
-  }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPFirstTower() {
-    std::vector<geometry::Pose2d> waypoints;
-
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(32 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity * 0.8, constants::PathConstants::kMaxAccel, 8.0);
-  }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPBackFirstTower() {
-    std::vector<geometry::Pose2d> waypoints;
-
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(5 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
-  }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPIntakeSlowFirstTower() {
-    std::vector<geometry::Pose2d> waypoints;
-
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(5 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel, 8.0);
-  }
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPurePursuitTest() {
-    std::vector<geometry::Pose2d> waypoints;
-
-    waypoints.push_back(geometry::Pose2d(0 * units::inch, 0 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(36 * units::inch, 36 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-        constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
-  }
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getStackPullBack() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
@@ -218,86 +141,22 @@ namespace path_planning {
         constants::PathConstants::kMaxVelocity * 1.5, constants::PathConstants::kMaxAccel * 2, 8.0));
   }
 
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPSkillsLongBackSecondTower() {
-    std::vector<geometry::Pose2d> waypoints;
-    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(16 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-                                                                                       constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0);
-  }
-
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPSkillsIntakeSecondTower() {
-    std::vector<geometry::Pose2d> waypoints;
-    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(12 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return trajectory::TimingUtil::reverseTimed(DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-                                                                                       constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0));
-  }
-
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPSkillsLineUpBackSecondStack() {
-    std::vector<geometry::Pose2d> waypoints;
-    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(15 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return trajectory::TimingUtil::reverseTimed(DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-                                                                                       constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0));
-  }
-
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPSkillsLineUpForwardSecondStack() {
-    std::vector<geometry::Pose2d> waypoints;
-    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(20 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return trajectory::TimingUtil::reverseTimed(DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-                                                                                       constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0));
-  }
-
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::getPSkillsIntakeLastTower() {
-    std::vector<geometry::Pose2d> waypoints;
-    waypoints.push_back(geometry::Pose2d(0, 0, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(40 * units::inch, 0, geometry::Rotation2d::fromDegrees(0)));
-
-    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
-
-    return trajectory::TimingUtil::reverseTimed(DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-                                                                                       constants::PathConstants::kMaxVelocity, constants::PathConstants::kMaxAccel, 8.0));
-  }
 
   void TrajectorySet::generatorCalls() {
     printf("start\n");
-    addToMap("backForward", MirroredTrajectory(getBackForward()));
-    addToMap("backForward2", MirroredTrajectory(getBackForward2()));
-    addToMap("backFastForward", MirroredTrajectory(getBackFastForward()));
-    addToMap("frontForward", MirroredTrajectory(getBackForward()));
-    addToMap("backS", MirroredTrajectory(getBackS()));
-    addToMap("backS2", MirroredTrajectory(getBackS2()));
-    addToMap("backSCurve", MirroredTrajectory(getBackSCurve()));
-    addToMap("frontSetup", MirroredTrajectory(getFrontSetup()));
+    addToMap("backJForward", MirroredTrajectory(backJForward()));
+    addToMap("backLineForward", MirroredTrajectory(backLineForward()));
+    addToMap("backToLine", MirroredTrajectory(backToLine()));
+    addToMap("backAlign", MirroredTrajectory(backAlign()));
     addToMap("backSetup", MirroredTrajectory(getBackSetup()));
+
+    addToMap("frontForward", MirroredTrajectory(getFrontForward()));
+    addToMap("frontIntake", MirroredTrajectory(getFrontIntake()));
+    addToMap("frontStack", MirroredTrajectory(getFrontS()));
+    addToMap("frontSetup", MirroredTrajectory(getFrontSetup()));
+
     addToMap("stackPullBack", MirroredTrajectory(getStackPullBack()));
-    addToMap("pSkillsIntakeLastTower", MirroredTrajectory(getPIntakeSlowFirstTower()));
-    addToMap("pptest", MirroredTrajectory(getPurePursuitTest()));
 
-    /* addToMap("programmingSkillsForward", MirroredTrajectory(getPSkillsForward()));
-    addToMap("programmingSkillsSetup", MirroredTrajectory(getPSetup()));
-    addToMap("pSkillsIntakeFirstTower", MirroredTrajectory(getPFirstTower()));
-    addToMap("pSkillsBackTower", MirroredTrajectory(getPBackFirstTower()));
-    addToMap("pSkillsLongBackSecondTower", MirroredTrajectory(getPSkillsLongBackSecondTower()));
-    addToMap("pSkillsIntakeSecondTower", MirroredTrajectory(getPSkillsIntakeSecondTower()));
-    addToMap("pSkillsLineUpBackSecondStack", MirroredTrajectory(getPSkillsLineUpBackSecondStack()));
-    addToMap("pSkillsLineUpForwardSecondStack", MirroredTrajectory(getPSkillsLineUpForwardSecondStack()));
-
-    addToMap("pSkillsIntakeCloseTower", MirroredTrajectory(getPIntakeSlowFirstTower())); */
     complete_ = true;
     printf("end\n");
   }

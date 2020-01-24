@@ -21,29 +21,20 @@ namespace path_planning {
   class TrajectorySet {
    private:
     std::map<std::string, MirroredTrajectory> trajectories_;
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackForward();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackForward2();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backJForward();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backLineForward();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backToLine();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backAlign();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackSetup();
+
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontForward();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackS();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackS2();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontIntake();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontS();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontSetup();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackSetup();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getStackPullBack();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsForward();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSetup();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPFirstTower();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPBackFirstTower();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsLongBackSecondTower();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsIntakeSecondTower();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsLineUpBackSecondStack();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsLineUpForwardSecondStack();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPSkillsIntakeLastTower();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPIntakeSlowFirstTower();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackFastForward();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackSCurve();
 
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getPurePursuitTest();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getStackPullBack();
+
+
 
 
    public:
