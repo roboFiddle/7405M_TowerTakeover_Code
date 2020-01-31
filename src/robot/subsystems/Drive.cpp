@@ -98,17 +98,17 @@ namespace subsystems {
       backRight->move_velocity(right_demand);
     }
     else if(currentState == ControlState::PATH_FOLLOWING) {
-      double leftScaled = left_demand * 9.5493; // 9.5493 = rad/s to RPM (60/2pi)
+      double leftScaled = left_demand * 9.5493 * 0.8; // 9.5493 = rad/s to RPM (60/2pi)
       //leftScaled += left_feed_forward;
 
-      double rightScaled = right_demand * 9.5493;
+      double rightScaled = right_demand * 9.5493 * (.8);
       //rightScaled += right_feed_forward;
 
 
       printf("setting velo %f %f \n\n", leftScaled, rightScaled);
       frontLeft->move_velocity(leftScaled);
-      backLeft->move_velocity(leftScaled);
       frontRight->move_velocity(rightScaled);
+      backLeft->move_velocity(leftScaled);
       backRight->move_velocity(rightScaled);
     }
     else if(currentState == ControlState::TURN_FOLLOWING) {
@@ -134,6 +134,14 @@ namespace subsystems {
         turnFinishCount = 0;
       lastTurnError = error;
     }
+    else if(currentState == ControlState::TURN_BACK_WHEEL) {
+      frontLeft->move_velocity(backLeft->get_actual_velocity());
+      frontRight->move_velocity(backRight->get_actual_velocity());
+      if(std::fabs(backRight->get_actual_velocity()) < 10)
+        turnFinishCount++;
+      else
+        turnFinishCount = 0;
+    }
   }
   void Drive::setBrakeMode(bool set) {
     frontLeft->set_brake_mode(set ? pros::E_MOTOR_BRAKE_BRAKE : pros::E_MOTOR_BRAKE_COAST);
@@ -152,7 +160,7 @@ namespace subsystems {
     currentTimedView = new trajectory::TimedView(&currentTrajectory);
     std::shared_ptr<trajectory::TimedView<geometry::Pose2dWithCurvature>> ptr(currentTimedView);
     trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> iterator(ptr);
-    currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::FEEDFORWARD_ONLY);
+    currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::NONLINEAR_FEEDBACK);
     currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }
@@ -164,12 +172,21 @@ namespace subsystems {
     totalTurnError = 0.0;
     turnFinishCount = 0;
   }
+  void Drive::setTurnWheel(units::Angle heading) {
+    currentState = ControlState::TURN_BACK_WHEEL;
+    clicksWheel = heading.getValue() * constants::RobotConstants::BACK_WHEELBASE_RADIUS  / 12.56 * 180 / 3.1415;
+    backRight->tare_position();
+    backLeft->tare_position();
+    backRight->move_absolute(clicksWheel, 600);
+    backLeft->move_absolute(-clicksWheel, 600);
+    turnFinishCount = 0;
+  }
   bool Drive::isDoneWithTrajectory() {
     if(forceStopTrajectory_) {
       forceStopTrajectory_ = false;
       return true;
     }
-    if(currentState == ControlState::TURN_FOLLOWING) {
+    if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::TURN_BACK_WHEEL) {
       return turnFinishCount > 10;
     }
     return currentFollower->isDone() && pros::millis() - startTime.getValue()*1000 > 100;

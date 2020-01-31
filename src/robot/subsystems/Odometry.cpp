@@ -17,11 +17,13 @@ namespace subsystems {
     units::QLength leftTravel = (left->get_value()) * 0.0174533 * constants::RobotConstants::kDeadwheelRadius; // .0174533 = PI/180
     units::QLength rightTravel = (right->get_value()) * 0.0174533 * constants::RobotConstants::kDeadwheelRadius;
     units::QLength backTravel = (back->get_value()) * 0.0174533 * constants::RobotConstants::kDeadwheelRadius;
-    printf("deadwheels %f %f %f\n", leftTravel, rightTravel, backTravel);
+    //units::QLength backTravel = 0;
+    //printf("deadwheels %f %f %f\n", leftTravel, rightTravel, backTravel);
 
     units::Number dTheta = (rightTravel - leftTravel) / (constants::RobotConstants::kDeadwheelBaseWidth);
     units::QLength dY =  (0.5 * (leftTravel + rightTravel));
-    units::QLength dX = backTravel - (constants::RobotConstants::kDeadwheelBackTurningRadius *  dTheta);
+    units::QLength dX = backTravel;// - (constants::RobotConstants::kDeadwheelBackTurningRadius *  dTheta);
+    //units::QLength dX = 0;
 
     geometry::Twist2d delta(dY, dX, dTheta * units::radian);
     geometry::Pose2d change = geometry::Pose2d::exp(delta);

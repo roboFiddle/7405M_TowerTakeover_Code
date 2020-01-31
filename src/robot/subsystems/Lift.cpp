@@ -57,7 +57,7 @@ namespace subsystems {
   }
   void Lift::runPID() {
     double error = demand.getValue() - pot->get_value();
-    if(std::fabs(error) < 50.0)
+    if(std::fabs(error) < 50.0 || (pot->get_value() < 250 && demand.getValue() < 300))
       setOpenLoop(0);
     else {
       if(demand.getValue() < 0)

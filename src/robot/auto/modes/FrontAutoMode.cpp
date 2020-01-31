@@ -18,14 +18,12 @@
 
 namespace auton {
   void FrontAutoMode::routine() {
-    flipOut();
 
     std::list<actions::Action*> driveAndIntake;
-    driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontForward").get(false)));
-    driveAndIntake.push_back(new actions::OpenLoopIntakeAction(200, -1));
+    driveAndIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("testCode").get(false)));
     runAction(new actions::ParallelAction(driveAndIntake));
 
-    std::list<actions::Action*> driveAndIntakeB;
+    /* std::list<actions::Action*> driveAndIntakeB;
     driveAndIntakeB.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontIntake").get(false)));
     driveAndIntakeB.push_back(new actions::OpenLoopIntakeAction(200, -1));
     runAction(new actions::ParallelAction(driveAndIntakeB));
@@ -52,7 +50,7 @@ namespace auton {
     std::list<actions::Action*> pullBackFromStack;
     pullBackFromStack.push_back(new actions::OpenLoopIntakeAction(-100, 0));
     pullBackFromStack.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("stackPullBack").get(flip_)));
-    runAction(new actions::ParallelAction(pullBackFromStack));
+    runAction(new actions::ParallelAction(pullBackFromStack)); */
   }
 
 }

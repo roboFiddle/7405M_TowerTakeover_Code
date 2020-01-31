@@ -51,6 +51,7 @@ namespace constants {
     static double SCORE_START_INTAKE;
     static double SCORE_END_INTAKE;
 
+    static double BACK_WHEELBASE_RADIUS;
   };
 }
 

@@ -14,14 +14,14 @@ namespace constants {
     static constexpr units::QLength kMaxDy = 0.0l;
     static constexpr units::Angle kMaxDtheta = 0.05;
 
-    static constexpr units::QSpeed kMaxVelocity = 0.85;
+    static constexpr units::QSpeed kMaxVelocity = 1;
     static constexpr units::QAcceleration kMaxAccel = 1.35;
     static constexpr units::QAngularAcceleration kMaxCentripetalAccel = 2.5;
     static constexpr units::Number kMaxVoltage = 12.0;
 
-    static constexpr units::QTime kPathLookaheadTime = 0.4;
+    static constexpr units::QTime kPathLookaheadTime = 0.05;
     static constexpr units::QLength kPathMinLookaheadDistance = .05;
-    static constexpr units::QAngularSpeed kPathKX = .05;
+    static constexpr units::QAngularSpeed kPathKX = .02;
   };
 
 }

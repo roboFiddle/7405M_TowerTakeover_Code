@@ -30,6 +30,7 @@ namespace subsystems {
     double left_accel, right_accel;
     double left_feed_forward, right_feed_forward;
     int turnFinishCount;
+    double clicksWheel;
 
    public:
     Drive();
@@ -41,6 +42,7 @@ namespace subsystems {
     void registerEnabledLoops(loops::Looper* enabledLooper);
     void setTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory);
     void setTurn(units::Angle heading);
+    void setTurnWheel(units::Angle heading);
     void updatePathFollower();
     void updateOutputs();
     void setBrakeMode(bool set);

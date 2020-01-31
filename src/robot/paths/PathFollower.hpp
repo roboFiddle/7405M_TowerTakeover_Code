@@ -44,6 +44,7 @@ namespace path_planning {
     units::QTime dt_;
     units::QTime last_time_;
     bool is_reversed_;
+    double sinc(double x);
    protected:
     Output updatePID(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state);
     Output updatePurePursuit(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state);

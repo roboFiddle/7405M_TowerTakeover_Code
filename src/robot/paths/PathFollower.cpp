@@ -147,58 +147,64 @@ namespace path_planning {
           , lookahead_state.velocity(), lookahead_state.acceleration());
     }
 
-    physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> adjusted_velocity;
-    // Feedback on longitudinal error (distance).
-    adjusted_velocity.linear_ = dynamics.chassis_velocity.linear_ + constants::PathConstants::kPathKX * error_.translation().x();
 
+
+    physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> adjusted_velocity;
+    adjusted_velocity.linear_ = dynamics.chassis_velocity.linear_ + constants::PathConstants::kPathKX * error_.translation().y();
     // Use pure pursuit to peek ahead along the trajectory and generate a new curvature.
     trajectory::Arc<geometry::Pose2dWithCurvature> arc(current_state, lookahead_state.state());
-
     units::QCurvature curvature = 1.0 / arc.radius;
-    if (std::isinf(curvature.getValue())) {
-      adjusted_velocity.linear_ = 0.0;
-      adjusted_velocity.angular_ = dynamics.chassis_velocity.angular_;
-    } else {
-      adjusted_velocity.angular_ = curvature * dynamics.chassis_velocity.linear_;
-    }
+
+    //printf("%f %f\n", adjusted_velocity.linear_, curvature);
+
+    //adjusted_velocity.angular_ = (dynamics.chassis_velocity.angular_);
+    adjusted_velocity.angular_ = curvature * dynamics.chassis_velocity.linear_;
 
     dynamics.chassis_velocity = adjusted_velocity;
     dynamics.wheel_velocity = model_->solveInverseKinematics(adjusted_velocity);
     return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_, dynamics.voltage.left_, dynamics.voltage.right_);
   }
 
-  Output PathFollower::updateNonlinearFeedback(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
+double PathFollower::sinc(double x) {
+    if(x < 0.0001) {
+        return 1.0;
+    }
+    return sin(x) / x;
+}
+
+Output PathFollower::updateNonlinearFeedback(physics::DifferentialDrive::DriveDynamics dynamics, geometry::Pose2d current_state) {
+  printf("\n\n(%f, %f)\n(%f, %f)\n\n", setpoint_.state().translation().x(), setpoint_.state().translation().y(),
+          current_state.translation().x(), current_state.translation().y());
+
     error_ = current_state.inverse().transformBy(setpoint_.state().pose());
+    printf("%f\n", error_.normal());
 
-    std::cout << "ERROR " << error_.toString() << std::endl;
-    std::cout << "SETPOINT " << setpoint_.toString() << std::endl;
+    units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> kBeta = 0.2;  // >0.
+    units::Number kZeta = 0.7;  // Damping coefficient, [0, 1].
 
-    units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> kBeta = 0.5;  // >0.
-    units::Number kZeta = 1;  // Damping coefficient, [0, 1].
+    units::QSpeed targetV = dynamics.chassis_velocity.linear_;
+    units::QAngularSpeed targetOmega = dynamics.chassis_velocity.angular_;
 
-    // Compute gain parameter.
-    units::QAngularSpeed k = 2.0 * kZeta * units::Qsqrt((kBeta * dynamics.chassis_velocity.linear_ * dynamics.chassis_velocity.linear_) + (dynamics.chassis_velocity.angular_ * dynamics.chassis_velocity.angular_));
+    units::QAngularSpeed k1 = 2 * kZeta * units::Qsqrt(targetOmega * targetOmega + kBeta * targetV * targetV);
+    units::QAngularSpeed k3 = k1;
+    units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> k2 = kBeta;
 
-    // Compute error components.
-    units::Number angle_error_rads = error_.rotation().getRadians();
-    units::Number sin_x_over_x = FEQUALS(angle_error_rads, 0 * units::num) ? 1.0 : error_.rotation().sin() / angle_error_rads;
-    physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> adjusted_velocity (
-        dynamics.chassis_velocity.linear_ * error_.rotation().cos() + k * error_.translation().x(),
-        dynamics.chassis_velocity.angular_ + k * angle_error_rads + dynamics.chassis_velocity.linear_ * kBeta * sin_x_over_x * error_.translation().y());
+    units::QSpeed v = targetV * cos(error_.rotation().getRadians()) +
+                      k1 * (cos(current_state.rotation().getRadians()) * error_.translation().x() +
+                      sin(current_state.rotation().getRadians()) * error_.translation().y());
+    units::QAngularSpeed omega = targetOmega + (k2 * targetV * sinc(error_.rotation().getRadians()) *
+                (cos(current_state.rotation().getRadians()) * error_.translation().x() - sin(current_state.rotation().getRadians()) * error_.translation().y()) +
+                k3 * error_.rotation().getRadians()).getValue();
+
+    physics::DifferentialDrive::ChassisState<units::QSpeed, units::QAngularSpeed> adjusted_velocity;
+    adjusted_velocity.linear_ = v;
+    adjusted_velocity.angular_ = omega;
 
     // Compute adjusted left and right wheel velocities.
     dynamics.chassis_velocity = adjusted_velocity;
     dynamics.wheel_velocity = model_->solveInverseKinematics(adjusted_velocity);
-
-    dynamics.chassis_acceleration.linear_ = (dt_ == 0*units::second) ? 0.0 : (dynamics.chassis_velocity.linear_ - prev_velocity_
-        .linear_) / dt_;
-    dynamics.chassis_acceleration.angular_ = (dt_ == 0*units::second) ? 0.0 : (dynamics.chassis_velocity.angular_ - prev_velocity_
-        .angular_) / dt_;
-
     prev_velocity_ = dynamics.chassis_velocity;
 
-    physics::DifferentialDrive::WheelState<units::Number> feedforward_voltages = model_->solveInverseDynamics(dynamics.chassis_velocity, dynamics.chassis_acceleration).voltage;
-
-    return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, dynamics.wheel_acceleration.left_, dynamics.wheel_acceleration.right_, feedforward_voltages.left_, feedforward_voltages.right_);
+    return Output(dynamics.wheel_velocity.left_, dynamics.wheel_velocity.right_, 0.0, 0.0, 0.0, 0.0);
   }
 }

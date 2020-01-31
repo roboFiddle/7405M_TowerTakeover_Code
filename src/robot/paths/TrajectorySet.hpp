@@ -24,7 +24,8 @@ namespace path_planning {
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backJForward();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backLineForward();
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backToLine();
-    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backAlign();
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backAlign(bool dist);
+    static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backCube(bool dist);
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getBackSetup();
 
     static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontForward();
