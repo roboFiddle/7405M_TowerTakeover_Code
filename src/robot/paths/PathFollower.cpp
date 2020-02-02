@@ -177,9 +177,9 @@ Output PathFollower::updateNonlinearFeedback(physics::DifferentialDrive::DriveDy
           current_state.translation().x(), current_state.translation().y());
 
     error_ = current_state.inverse().transformBy(setpoint_.state().pose());
-    printf("%f\n", error_.normal());
+    printf("%f\n", error_.translation().norm());
 
-    units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> kBeta = 0.2;  // >0.
+    units::RQuantity<std::ratio<0>, std::ratio<0-2>, std::ratio<0>, std::ratio<0>> kBeta = 2;  // >0.
     units::Number kZeta = 0.7;  // Damping coefficient, [0, 1].
 
     units::QSpeed targetV = dynamics.chassis_velocity.linear_;

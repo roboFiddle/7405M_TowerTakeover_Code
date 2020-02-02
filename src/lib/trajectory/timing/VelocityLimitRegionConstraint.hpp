@@ -18,9 +18,9 @@ namespace trajectory {
    protected:
     geometry::Translation2d min_corner_;
     geometry::Translation2d max_corner_;
-    double velocity_limit_;
+    units::QSpeed velocity_limit_;
    public:
-    VelocityLimitRegionConstraint(geometry::Translation2d min_corner, geometry::Translation2d max_corner, double velocity_limit)  {
+    VelocityLimitRegionConstraint(geometry::Translation2d min_corner, geometry::Translation2d max_corner, units::QSpeed velocity_limit)  {
       min_corner_ = min_corner;
       max_corner_ = max_corner;
       velocity_limit_ = velocity_limit;

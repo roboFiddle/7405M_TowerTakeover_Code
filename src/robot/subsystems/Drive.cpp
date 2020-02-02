@@ -160,7 +160,7 @@ namespace subsystems {
     currentTimedView = new trajectory::TimedView(&currentTrajectory);
     std::shared_ptr<trajectory::TimedView<geometry::Pose2dWithCurvature>> ptr(currentTimedView);
     trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> iterator(ptr);
-    currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::NONLINEAR_FEEDBACK);
+    currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::FEEDFORWARD_ONLY);
     currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }
@@ -189,7 +189,7 @@ namespace subsystems {
     if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::TURN_BACK_WHEEL) {
       return turnFinishCount > 10;
     }
-    return currentFollower->isDone() && pros::millis() - startTime.getValue()*1000 > 100;
+    return currentFollower->isDone();
   }
   void Drive::overrideTrajectory() {
     forceStopTrajectory_= true;
