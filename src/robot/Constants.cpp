@@ -5,7 +5,7 @@ namespace constants {
     units::QMass RobotConstants::kRobotMass = 4*units::kg;
     units::QMoment RobotConstants::kRobotMoment = 4*units::kgm2;
     units::QAngularDrag RobotConstants::kRobotAngularDrag = 0.0;
-    units::QLength RobotConstants::kDriveWheelTrackWidth = 10 * units::inch;
+    units::QLength RobotConstants::kDriveWheelTrackWidth = 20 * units::inch;
     units::Number RobotConstants::kTrackScrubFactor = 1.0;
 
     units::QLength RobotConstants::kDeadwheelRadius = 1.375*units::inch;
@@ -16,9 +16,9 @@ namespace constants {
     units::QTorque RobotConstants::kDriveTorquePerVolt = 0.56; // Nm / VOLT
     units::Number RobotConstants::kDriveFrictionVoltage = 1.0; // voltage to overcome friction (V)
 
-    double RobotConstants::turnKP = 35;
+    double RobotConstants::turnKP = 50;
     double RobotConstants::turnKI = 0;
-    double RobotConstants::turnKD = 5;
+    double RobotConstants::turnKD = 3;
 
     int RobotConstants::motor_drive_frontleft = 9;
     int RobotConstants::motor_drive_backleft = 10;

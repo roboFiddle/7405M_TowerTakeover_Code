@@ -22,7 +22,7 @@ namespace subsystems {
 
     units::Number dTheta = (rightTravel - leftTravel) / (constants::RobotConstants::kDeadwheelBaseWidth);
     units::QLength dY =  (0.5 * (leftTravel + rightTravel));
-    units::QLength dX = backTravel;// - (constants::RobotConstants::kDeadwheelBackTurningRadius *  dTheta);
+    units::QLength dX = 0;// - (constants::RobotConstants::kDeadwheelBackTurningRadius *  dTheta);
     //units::QLength dX = 0;
 
     geometry::Twist2d delta(dY, dX, dTheta * units::radian);

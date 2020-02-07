@@ -106,8 +106,8 @@ namespace subsystems {
 
 
       printf("setting velo %f %f \n\n", leftScaled, rightScaled);
-      frontLeft->move_velocity(leftScaled);
       frontRight->move_velocity(rightScaled);
+      frontLeft->move_velocity(leftScaled);
       backLeft->move_velocity(leftScaled);
       backRight->move_velocity(rightScaled);
     }
@@ -177,8 +177,8 @@ namespace subsystems {
     clicksWheel = heading.getValue() * constants::RobotConstants::BACK_WHEELBASE_RADIUS  / 12.56 * 180 / 3.1415;
     backRight->tare_position();
     backLeft->tare_position();
-    backRight->move_absolute(clicksWheel, 600);
-    backLeft->move_absolute(-clicksWheel, 600);
+    backRight->move_absolute(clicksWheel, 200);
+    backLeft->move_absolute(-clicksWheel, 200);
     turnFinishCount = 0;
   }
   bool Drive::isDoneWithTrajectory() {

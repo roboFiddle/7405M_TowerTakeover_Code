@@ -15,7 +15,7 @@ namespace constants {
     static constexpr units::Angle kMaxDtheta = 0.05;
 
     static constexpr units::QSpeed kMaxVelocity = 1.3;
-    static constexpr units::QAcceleration kMaxAccel = 2.5;
+    static constexpr units::QAcceleration kMaxAccel = 1.0;
     static constexpr units::QAngularAcceleration kMaxCentripetalAccel = 2;
     static constexpr units::Number kMaxVoltage = 12.0;
 

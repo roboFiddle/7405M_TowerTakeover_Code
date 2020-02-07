@@ -35,11 +35,11 @@ namespace subsystems {
     if(!limit_velo_)
       return 1.5;
 
-    if(pot->get_value() < 1500) {
+    if(pot->get_value() < 1400) {
       return 1;
     }
     else {
-      return 1 - (pot->get_value() - 1500) * (0.635/1425);
+      return 1 - (pot->get_value() - 1400) * (0.725/1425);
     }
   }
   double Tray::get_position() {

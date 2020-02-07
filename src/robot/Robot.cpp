@@ -45,7 +45,7 @@ namespace meecan {
     subsystems::Tray::instance->registerEnabledLoops(enabledLooper);
     subsystems::Lift::instance->registerEnabledLoops(enabledLooper);
     path_planning::TrajectorySet::instance->generatorCalls();
-    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::BackAutoMode(BACK_RED));
+    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FrontAutoMode(FRONT_BLUE));
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
     pros::lcd::initialize();
   }
@@ -101,7 +101,7 @@ namespace meecan {
   void Robot::autonomousInit() {
     enabledLooper->enable();
 
-    switch(current_auton) {
+    /* switch(current_auton) {
       case 0: {
         std::shared_ptr<auton::AutoModeBase> activeMode(new auton::DoNothingMode());
         auton::AutoModeRunner::instance->setAutoMode(activeMode); }
@@ -134,7 +134,7 @@ namespace meecan {
         std::shared_ptr<auton::AutoModeBase> activeMode(new auton::TestMode());
         auton::AutoModeRunner::instance->setAutoMode(activeMode); }
         break;
-    }
+    } */
     auton::AutoModeRunner::instance->start();
 
   }

@@ -24,11 +24,22 @@ namespace auton {
     subsystems::Odometry::instance->setCurrentPosition(9 * units::inch, 50.4 * units::inch, 0);
 
     std::list<actions::Action*> drives;
-    drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backJForward").get(flip_)));
+    /* drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backJForward").get(flip_)));
+    //drives.push_back(new actions::DriveTurnAction(28 * units::degree * (flip_ ? -1 : 1)));
     drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backToLine").get(flip_))));
+    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(-100, -100), 0.3));
+    drives.push_back(new actions::WaitAction(0.35));
+    */
     drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backLineForward").get(flip_)));
     drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backBackForTowerCube").get(flip_))));
+
+    /* drives.push_back(new actions::DriveTurnAction(20 * units::degree * (flip_ ? -1 : 1)));
     drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backGetTowerCube").get(flip_)));
+    drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backGetTowerCube").get(flip_))));
+    drives.push_back(new actions::WaitAction(0.5));
+    drives.push_back(new actions::DriveTurnWheelAction(-20 * units::degree * (flip_ ? -1 : 1)));
+    */
+
     drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backAlign").get(flip_))));
 
     std::list<actions::Action*> driveAndIntake;
@@ -36,12 +47,12 @@ namespace auton {
     driveAndIntake.push_back(new actions::SeriesAction(drives));
     runAction(new actions::ParallelAction(driveAndIntake));
 
-    runAction(new actions::DriveTurnWheelAction(-100 * units::degree * (flip_ ? -1 : 1) - subsystems::Odometry::instance->getPosition().rotation().getRadians()));
+    runAction(new actions::DriveTurnAction(-90 * units::degree * (flip_ ? -1 : 1)));
     runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backSetup").get(false)));
     runAction(new actions::OpenLoopIntakeAction(-65, 0.6));
 
     std::list<actions::Action*> score;
-    score.push_back(new actions::TrayEnableStackAction(1));
+    score.push_back(new actions::TrayEnableStackAction(0.85));
     runAction(new actions::ParallelAction(score));
 
     runAction(new actions::WaitAction(0.3));
