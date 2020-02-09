@@ -45,11 +45,11 @@ namespace subsystems {
   double Tray::get_position() {
     return pot->get_value();
   }
-  void Tray::runPID() {
+  void Tray::runPID(bool l = false) {
     double error = demand.getValue() - pot->get_value();
     double m = limit_velo_ ? 0.08 : 0.4;
     printf("TRAY PID %f %f\n", demand.getValue(), 1.0*pot->get_value());
-    motor->move_velocity((int) error * m);
+    motor->move_velocity((int) error * m * (l ? 0.5 : 1));
   }
   void Tray::updateOutputs() {
     if(current_state == ControlState::OPEN_LOOP) {
@@ -59,8 +59,9 @@ namespace subsystems {
     else if(current_state == ControlState::POSITION_CONTROL)
       runPID();
     else if(current_state == ControlState::SCORE_TRAY) {
+      limit_velo_ = true;
       demand = constants::RobotConstants::TRAY_SCORE;
-      runPID();
+      runPID(true);
       if(std::fabs(pot->get_value() - constants::RobotConstants::SCORE_START_INTAKE) < 200*score_multi || std::fabs(pot->get_value() - constants::RobotConstants::SCORE_END_INTAKE) < 200*score_multi) {
         Intake::instance->setFromMacro(200);
         //Drive::instance->setFromMacro(util::DriveSignal(30, 30));

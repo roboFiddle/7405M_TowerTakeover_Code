@@ -29,6 +29,9 @@ namespace path_planning {
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backAlign();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backSetup();
 
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> pSkillsIntake();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> pSkillsSetup();
+
       /* static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontForward();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontIntake();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontS();

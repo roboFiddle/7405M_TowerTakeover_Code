@@ -33,7 +33,7 @@ namespace subsystems {
       units::Number get_demand();
       double get_position();
       ControlState getState();
-      void runPID();
+      void runPID(bool);
       void updateOutputs();
       void activateScore(double m = 1);
       bool doneWithScore();

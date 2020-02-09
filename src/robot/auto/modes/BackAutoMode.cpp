@@ -21,6 +21,7 @@
 
 namespace auton {
   void BackAutoMode::routine() {
+    flipOut();
     subsystems::Odometry::instance->setCurrentPosition(9 * units::inch, 50.4 * units::inch, 0);
 
     std::list<actions::Action*> drives;
@@ -31,7 +32,7 @@ namespace auton {
     drives.push_back(new actions::WaitAction(0.35));
     */
     drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backLineForward").get(flip_)));
-    drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backBackForTowerCube").get(flip_))));
+    //drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backBackForTowerCube").get(flip_))));
 
     /* drives.push_back(new actions::DriveTurnAction(20 * units::degree * (flip_ ? -1 : 1)));
     drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backGetTowerCube").get(flip_)));
