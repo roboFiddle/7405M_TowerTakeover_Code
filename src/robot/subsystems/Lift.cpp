@@ -67,8 +67,9 @@ namespace subsystems {
   }
   void Lift::updateOutputs() {
     //("LIFT MOTOR STATE %f %d %d\n", motor->get_temperature(), motor->is_over_current(), motor->is_over_temp());
-    if(state == ControlState::OPEN_LOOP)
+    if(state == ControlState::OPEN_LOOP) {
       motor->move_velocity(demand.getValue());
+    }
     else if(state == ControlState::POSITION_CONTROL) {
       if(fromMacro) {
         runPID();
@@ -88,6 +89,20 @@ namespace subsystems {
             runPID();
         }
       }
+    }
+    if(std::fabs(pot->get_value() - 270) < 50) {
+      setBrake(false);
+    }
+    else{
+      setBrake(true);
+    }
+  }
+  void Lift::setBrake(bool brake) {
+    if (brake) {
+      motor->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    }
+    else {
+      motor->set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     }
   }
   void Lift::stop() {

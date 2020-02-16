@@ -36,6 +36,11 @@ namespace subsystems {
     left_demand = signal.left();
     right_demand = signal.right();
   }
+  void Drive::setVoltage(util::DriveSignal signal) {
+    currentState = ControlState::VOLTAGE;
+    left_demand = signal.left();
+    right_demand = signal.right();
+  }
   void Drive::setFromMacro(util::DriveSignal signal) {
     if (currentState != ControlState::POSITION_CONTROL) {
       currentState = ControlState::POSITION_CONTROL;
@@ -96,6 +101,12 @@ namespace subsystems {
       backLeft->move_velocity(left_demand);
       frontRight->move_velocity(right_demand);
       backRight->move_velocity(right_demand);
+    }
+    else if(currentState == ControlState::VOLTAGE) {
+      frontLeft->move_voltage(left_demand);
+      backLeft->move_voltage(left_demand);
+      frontRight->move_voltage(right_demand);
+      backRight->move_voltage(right_demand);
     }
     else if(currentState == ControlState::PATH_FOLLOWING) {
       double leftScaled = left_demand * 9.5493 * 0.8; // 9.5493 = rad/s to RPM (60/2pi)

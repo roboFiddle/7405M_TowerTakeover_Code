@@ -34,6 +34,7 @@ namespace subsystems {
       ControlState getState();
       void runPID();
       void updateOutputs();
+      void setBrake(bool);
       void stop();
       void tare();
       void registerEnabledLoops(loops::Looper* enabledLooper);

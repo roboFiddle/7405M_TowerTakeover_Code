@@ -62,12 +62,10 @@ namespace subsystems {
       limit_velo_ = true;
       demand = constants::RobotConstants::TRAY_SCORE;
       runPID(true);
-      if(std::fabs(pot->get_value() - constants::RobotConstants::SCORE_START_INTAKE) < 200*score_multi || std::fabs(pot->get_value() - constants::RobotConstants::SCORE_END_INTAKE) < 200*score_multi) {
-        Intake::instance->setFromMacro(200);
-        //Drive::instance->setFromMacro(util::DriveSignal(30, 30));
+      if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 350) {
+        Intake::instance->setFromMacro(-20);
       } else {
         Intake::instance->setFromMacro(0);
-        Drive::instance->setFromMacro(util::DriveSignal(0, 0));
       }
       if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 400) {
         count_stop_states_++;

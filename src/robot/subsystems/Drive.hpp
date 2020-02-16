@@ -37,6 +37,7 @@ namespace subsystems {
     void stop() ;
     void zeroSensors();
     void setOpenLoop(util::DriveSignal voltage);
+    void setVoltage(util::DriveSignal voltage);
     void setFromMacro(util::DriveSignal voltage);
     void setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward);
     void registerEnabledLoops(loops::Looper* enabledLooper);

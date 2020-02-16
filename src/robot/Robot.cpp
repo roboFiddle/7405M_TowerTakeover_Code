@@ -168,21 +168,21 @@ namespace meecan {
     turn = units::Qabs(turn);
 
     throttle =  1.2/127 * pow(1.0356, 127*throttle.getValue()) - 1.2/127 + 0.2 * throttle;
-    turn =  1.2/127 * pow(1.0356, 127*turn.getValue()) - 1.2/127 + 0.2 * turn;
-    turn *= .4;
+    //turn =  1.2/127 * pow(1.0356, 127*turn.getValue()) - 1.2/127 + 0.2 * turn;
+    //turn *= .4;
 
     throttle *= sign_throttle;
     turn *= sign_turn;
 
     //if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) > 0.05 || std::fabs(turn.getValue()) > 0.05)
-    subsystems::Drive::instance->setOpenLoop(util::DriveSignal(200*(throttle+turn), 200*(throttle-turn)));
+    subsystems::Drive::instance->setVoltage(util::DriveSignal(10000*(throttle+turn), 10000*(throttle-turn)));
 
-    units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1));
+    units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2));
     if(subsystems::Intake::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1))
       subsystems::Intake::instance->setOpenLoop(intake * 200);
 
-    units::Number tray = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y));
-    if(subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+    units::Number tray = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2));
+    if(subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
       subsystems::Tray::instance->setOpenLoop(tray * constants::RobotConstants::MAX_TRAY_RPM);
     }
 
@@ -196,8 +196,8 @@ namespace meecan {
       subsystems::Tray::instance->setPosition(constants::RobotConstants::TRAY_LIFT[0]);
     }
 
-    units::Number lift = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1));
-    if(subsystems::Lift::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+    units::Number lift = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A));
+    if(subsystems::Lift::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
       subsystems::Lift::instance->setOpenLoop(lift * constants::RobotConstants::MAX_LIFT_RPM);
 
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
