@@ -90,7 +90,7 @@ namespace subsystems {
         }
       }
     }
-    if(std::fabs(pot->get_value() - 270) < 50) {
+    if(std::fabs(pot->get_value() - 270) < 50 && subsystems::Tray::instance->get_position() < 700) {
       setBrake(false);
     }
     else{
