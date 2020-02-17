@@ -175,6 +175,7 @@ namespace meecan {
     turn *= sign_turn;
 
     //if(subsystems::Drive::instance->getState() == subsystems::ControlState::OPEN_LOOP || std::fabs(throttle.getValue()) > 0.05 || std::fabs(turn.getValue()) > 0.05)
+    int max_voltage = lift_state > 0 ? 5000 : 10000;
     subsystems::Drive::instance->setVoltage(util::DriveSignal(10000*(throttle+turn), 10000*(throttle-turn)));
 
     units::Number intake = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L1) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_L2));
