@@ -34,7 +34,7 @@ namespace constants {
 
     double RobotConstants::LIFT_STAGE[1] = {500};
     double RobotConstants::TRAY_LIFT[2] = {75, 1800};
-    double RobotConstants::LIFT_PRESETS[3] = {340, 2300, 3250};
+    double RobotConstants::LIFT_PRESETS[3] = {340, 2200, 3250};
     double RobotConstants::trayErrorBeforeLiftStart = 1000;
     double RobotConstants::liftErrorBeforeTrayStart = 100;
 
