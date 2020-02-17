@@ -16,7 +16,7 @@ namespace subsystems {
     frontRight = new pros::Motor(constants::RobotConstants::motor_drive_frontright, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
     backLeft = new pros::Motor(constants::RobotConstants::motor_drive_backleft, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
     backRight = new pros::Motor(constants::RobotConstants::motor_drive_backright, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
-    setBrakeMode(true);
+    //setBrakeMode(true);
     setOpenLoop(util::DriveSignal::NEUTRAL);
     forceStopTrajectory_ = false;
   }
@@ -33,11 +33,13 @@ namespace subsystems {
   }
   void Drive::setOpenLoop(util::DriveSignal signal) {
     currentState = ControlState::OPEN_LOOP;
+    setBrakeMode(false);
     left_demand = signal.left();
     right_demand = signal.right();
   }
   void Drive::setVoltage(util::DriveSignal signal) {
     currentState = ControlState::VOLTAGE;
+    setBrakeMode(false);
     left_demand = signal.left();
     right_demand = signal.right();
   }
