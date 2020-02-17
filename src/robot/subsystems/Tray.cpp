@@ -47,8 +47,12 @@ namespace subsystems {
   }
   void Tray::runPID(bool l = false) {
     double error = demand.getValue() - pot->get_value();
-    double m = limit_velo_ ? 0.08 : 0.4;
+    double m = 0.1;
     printf("TRAY PID %f %f\n", demand.getValue(), 1.0*pot->get_value());
+    if(demand.getValue() > 700)
+      motor->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    else
+      motor->set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     motor->move_velocity((int) error * m * (l ? 0.5 : 1));
   }
   void Tray::updateOutputs() {
