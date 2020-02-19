@@ -2,6 +2,9 @@
 // Created by alexweiss on 8/14/19.
 //
 
+#ifndef __TRAYPOSITION_HPP__
+#define __TRAYPOSITION_HPP__
+
 #include "Action.hpp"
 #include "../../../lib/meecan_lib.hpp"
 #include "../../subsystems/Tray.hpp"
@@ -24,3 +27,5 @@ namespace auton {
     };
   }
 }
+
+#endif
