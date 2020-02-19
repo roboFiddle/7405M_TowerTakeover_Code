@@ -38,7 +38,7 @@ namespace constants {
     double RobotConstants::trayErrorBeforeLiftStart = 1000;
     double RobotConstants::liftErrorBeforeTrayStart = 100;
 
-    double RobotConstants::TRAY_SCORE = 3600;
+    double RobotConstants::TRAY_SCORE = 3500;
     double RobotConstants::SCORE_START_INTAKE = 1000;
     double RobotConstants::SCORE_END_INTAKE = 1400;
 

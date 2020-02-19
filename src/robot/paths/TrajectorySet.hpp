@@ -31,11 +31,13 @@ namespace path_planning {
 
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> pSkillsIntake();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> pSkillsSetup();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> pSkillsSecondIntake();
 
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> longWallBump();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> alignWithFirstTower();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> intakeFirstTower();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> shortTower(bool l);
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backCurve();
 
       /* static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontForward();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontIntake();
