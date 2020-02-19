@@ -55,8 +55,8 @@ namespace subsystems {
   void Drive::setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward) {
     if (currentState != ControlState::PATH_FOLLOWING) {
       currentState = ControlState::PATH_FOLLOWING;
-      setBrakeMode(true);
     }
+    setBrakeMode(true);
 
     left_demand = velocity.left();
     right_demand = velocity.right();
@@ -148,12 +148,28 @@ namespace subsystems {
       lastTurnError = error;
     }
     else if(currentState == ControlState::TURN_BACK_WHEEL) {
-      frontLeft->move_velocity(backLeft->get_actual_velocity());
-      frontRight->move_velocity(backRight->get_actual_velocity());
-      if(std::fabs(backRight->get_actual_velocity()) < 10)
+      setBrakeMode(true);
+      double delta = goalAngle.getValue() + (double) backLeft->get_position();
+      int sign = orgDel > 0.0 ? -1 : 1;
+      if(std::fabs(delta) > std::fabs(orgDel * 0.3)) {
+          frontRight->move_voltage(sign * -7000);
+          backRight->move_voltage(sign * -7000);
+          backLeft->move_voltage(sign * 7000);
+          frontLeft->move_voltage(sign * 7000);
+      }
+      else if(delta > 0.0)  {
+          frontRight->move_voltage(sign * -2000);
+          backRight->move_voltage(sign * -2000);
+          backLeft->move_voltage(sign * 2000);
+          frontLeft->move_voltage(sign * 2000);
+      }
+      else {
+        frontRight->move_velocity(0);
+        backRight->move_velocity(0);
+        backLeft->move_velocity(0);
+        frontLeft->move_velocity(0);
         turnFinishCount++;
-      else
-        turnFinishCount = 0;
+      }
     }
   }
   void Drive::setBrakeMode(bool set) {
@@ -184,15 +200,15 @@ namespace subsystems {
     lastTurnError = 0.0;
     totalTurnError = 0.0;
     turnFinishCount = 0;
+    setBrakeMode(true);
   }
   void Drive::setTurnWheel(units::Angle heading) {
     currentState = ControlState::TURN_BACK_WHEEL;
     clicksWheel = heading.getValue() * constants::RobotConstants::BACK_WHEELBASE_RADIUS  / 12.56 * 180 / 3.1415;
-    backRight->tare_position();
-    backLeft->tare_position();
-    backRight->move_absolute(clicksWheel, 200);
-    backLeft->move_absolute(-clicksWheel, 200);
+    goalAngle = clicksWheel - backLeft->get_position();
+    orgDel = clicksWheel;
     turnFinishCount = 0;
+    setBrakeMode(true);
   }
   bool Drive::isDoneWithTrajectory() {
     if(forceStopTrajectory_) {

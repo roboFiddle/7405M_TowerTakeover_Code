@@ -3,7 +3,7 @@
 //
 
 #include "TestMode.hpp"
-#include "../actions/DriveTurnAction.hpp"
+#include "../actions/DriveTurnWheelAction.hpp"
 #include "../actions/LiftPosition.hpp"
 #include "../actions/TrayPosition.hpp"
 #include "../actions/TrayEnableStackAction.hpp"
@@ -48,16 +48,16 @@ namespace auton {
       runAction(new actions::LiftPosition(1800));
     }
     if(enabledTest == 5) {
-      runAction(new actions::DriveTurnAction(130 * units::degree));
+      runAction(new actions::DriveTurnWheelAction(90 * units::degree));
       pros::lcd::print(4, "%f", subsystems::Odometry::instance->getPosition().rotation().getDegrees());
-      //pros::Task::delay(500);
-      runAction(new actions::DriveTurnAction(130 * units::degree));
+      pros::Task::delay(500);
+      runAction(new actions::DriveTurnWheelAction(180 * units::degree));
       pros::lcd::print(5, "%f", subsystems::Odometry::instance->getPosition().rotation().getDegrees());
-      //pros::Task::delay(500);
-      runAction(new actions::DriveTurnAction(130 * units::degree));
+      pros::Task::delay(500);
+      runAction(new actions::DriveTurnWheelAction(-90 * units::degree));
       pros::lcd::print(6, "%f", subsystems::Odometry::instance->getPosition().rotation().getDegrees());
-      //pros::Task::delay(500);
-      runAction(new actions::DriveTurnAction(130 * units::degree));
+      pros::Task::delay(500);
+      runAction(new actions::DriveTurnWheelAction(-180 * units::degree));
       pros::lcd::print(7, "%f", subsystems::Odometry::instance->getPosition().rotation().getDegrees());
       //pros::Task::delay(500);
     }
