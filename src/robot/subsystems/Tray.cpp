@@ -66,7 +66,8 @@ namespace subsystems {
       limit_velo_ = true;
       demand = constants::RobotConstants::TRAY_SCORE;
       runPID(true);
-      if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 350) {
+      //if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 350) {
+      if(false) {
         Intake::instance->setFromMacro(-20);
       } else {
         Intake::instance->setFromMacro(0);

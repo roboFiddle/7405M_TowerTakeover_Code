@@ -31,6 +31,7 @@ namespace subsystems {
     double left_feed_forward, right_feed_forward;
     int turnFinishCount;
     double clicksWheel;
+    double orgDel;
 
    public:
     Drive();
