@@ -39,6 +39,9 @@ namespace path_planning {
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> shortTower(bool l);
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backCurve();
 
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> alignInThirdTower();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> placeInThirdTower();
+
       /* static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontForward();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontIntake();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontS();

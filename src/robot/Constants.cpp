@@ -25,7 +25,7 @@ namespace constants {
     int RobotConstants::motor_drive_frontright = 2;
     int RobotConstants::motor_drive_backright = 5;
     int RobotConstants::motor_intake_left = 11; //changed from port 4 to port 13 on 1/25/2020 (not due to a dead wire, switched because the 900 didn't fit down to the 4)
-    int RobotConstants::motor_intake_right = 19; //port 20 bricked on 1/24/2020 -- changed to port 12 on 1/25/2020
+    int RobotConstants::motor_intake_right = 17; //port 20 bricked on 1/24/2020 -- changed to port 12 on 1/25/2020
     int RobotConstants::motor_tray = 3;
     int RobotConstants::motor_lift = 18;
 

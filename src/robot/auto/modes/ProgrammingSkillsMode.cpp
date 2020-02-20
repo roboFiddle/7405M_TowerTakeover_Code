@@ -44,13 +44,13 @@ namespace auton {
 
         runAction(new actions::DriveTurnWheelAction(45 * units::degree));
         runAction(new actions::TrayPosition(1800));
-        runAction(new actions::LiftPosition(1400));
+        runAction(new actions::LiftPosition(1550));
 
         runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longWallBump").get(false)));
         runAction(new actions::WaitAction(0.5));
         runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("alignWithFirstTower").get(false))));
         runAction(new actions::WaitAction(0.5));
-        runAction(new actions::DriveTurnWheelAction(92 * units::degree));
+        runAction(new actions::DriveTurnWheelAction(90 * units::degree));
         runAction(new actions::LiftPosition(300));
 
         runAction(new actions::TrayPosition(500));
@@ -62,19 +62,40 @@ namespace auton {
 
         runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed((path_planning::TrajectorySet::instance->get("shortTower").get(false)))));
         runAction(new actions::OpenLoopIntakeAction(-100, 0.5));
+
         runAction(new actions::TrayPosition(1800));
         runAction(new actions::LiftPosition(3300));
         runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longTower").get(false)));
         runAction(new actions::OpenLoopIntakeAction(-150, 1));
+        //runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed((path_planning::TrajectorySet::instance->get("shortTower").get(false)))));
 
-        runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed((path_planning::TrajectorySet::instance->get("backCurve").get(true)))));
+        runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed((path_planning::TrajectorySet::instance->get("backCurve").get(false)))));
+
         runAction(new actions::LiftPosition(300));
         runAction(new actions::TrayPosition(300));
+
+        runAction(new actions::DriveTurnWheelAction(90 * units::degree));
+
 
         std::list<actions::Action*> secondIntake;
         secondIntake.push_back(new actions::OpenLoopIntakeAction(200, 0));
         secondIntake.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsSecondIntake").get(false)));
         runAction(new actions::ParallelAction(secondIntake));
+
+        runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed((path_planning::TrajectorySet::instance->get("shortTower").get(false)))));
+        runAction(new actions::OpenLoopIntakeAction(-100, 0.5));
+
+        runAction(new actions::TrayPosition(1800));
+        runAction(new actions::LiftPosition(2400));
+        runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longTower").get(false)));
+        runAction(new actions::OpenLoopIntakeAction(-150, 1));
+
+
+
+
+
+
+
 
 
 

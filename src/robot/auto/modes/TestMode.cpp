@@ -3,17 +3,27 @@
 //
 
 #include "TestMode.hpp"
-#include "../actions/DriveTurnWheelAction.hpp"
-#include "../actions/LiftPosition.hpp"
-#include "../actions/TrayPosition.hpp"
+#include "../actions/DriveTrajectory.hpp"
+#include "../actions/WaitAction.hpp"
+#include "../actions/OpenLoopDriveAction.hpp"
+#include "../actions/OpenLoopIntakeAction.hpp"
+#include "../actions/ParallelAction.hpp"
+#include "../actions/SeriesAction.hpp"
 #include "../actions/TrayEnableStackAction.hpp"
-#include "../../Constants.hpp"
 #include "../../paths/TrajectorySet.hpp"
+#include "../actions/TrayPosition.hpp"
+#include "../actions/OpenLoopLiftAction.hpp"
+#include "../actions/OpenLoopTrayAction.hpp"
+#include "../actions/DriveTurnAction.hpp"
+#include "../actions/DriveTurnWheelAction.hpp"
+#include "../actions/ResetLiftTrayPosition.hpp"
+#include "../actions/LiftPosition.hpp"
 #include "../../subsystems/Odometry.hpp"
+#include "../../Constants.hpp"
 
 namespace auton {
   void TestMode::routine() {
-    int enabledTest = 5;
+    int enabledTest = 4;
     // TEST 0 - Lift Position
     if(enabledTest == 0) {
       runAction(new actions::TrayPosition(1750, false));
@@ -43,9 +53,15 @@ namespace auton {
     }
     // TEST 4 - Stack & Tray/Lift
     if(enabledTest == 4) {
-      runAction(new actions::TrayEnableStackAction());
-      runAction(new actions::TrayPosition(1600));
-      runAction(new actions::LiftPosition(1800));
+      runAction(new actions::TrayPosition(1800));
+      runAction(new actions::LiftPosition(3300));
+      runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longTower").get(false)));
+      runAction(new actions::OpenLoopIntakeAction(-150, 1));
+
+      runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed((path_planning::TrajectorySet::instance->get("backCurve").get(true)))));
+      runAction(new actions::LiftPosition(300));
+      runAction(new actions::TrayPosition(300));
+      //runAction(new actions::DriveTurnWheelAction(10 * units::degree));
     }
     if(enabledTest == 5) {
       runAction(new actions::DriveTurnWheelAction(90 * units::degree));
