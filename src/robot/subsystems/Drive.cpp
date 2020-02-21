@@ -132,6 +132,8 @@ namespace subsystems {
       units::Angle deltaError = error - lastTurnError;
       totalTurnError += error;
       double velo = constants::RobotConstants::turnKP * error.getValue();
+      if(fast_turn_)
+        velo *= 2;
       //velo += constants::RobotConstants::turnKI * totalTurnError.getValue();
       //velo += constants::RobotConstants::turnKD * deltaError.getValue();
 
@@ -141,7 +143,7 @@ namespace subsystems {
       backRight->move_velocity(velo);
       printf("ROT FUCK %f \n",Odometry::instance->getPosition().rotation().getDegrees());
       printf("TURN %f %f %f\n", std::fabs(goalAngle.getValue() - currentHeading.getValue()), Odometry::instance->getPosition().rotation().getRadians(), velo);
-      if(std::fabs(goalAngle.getValue() - currentHeading.getValue()) < 0.2)
+      if(std::fabs(goalAngle.getValue() - currentHeading.getValue()) < 0.2*(fast_turn_ ? 2 : 1))
         turnFinishCount++;
       else
         turnFinishCount = 0;
@@ -193,7 +195,7 @@ namespace subsystems {
     currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }
-  void Drive::setTurn(units::Angle heading) {
+  void Drive::setTurn(units::Angle heading, bool speed) {
     currentState = ControlState::TURN_FOLLOWING;
     subsystems::Odometry::instance->resetPosition();
     goalAngle = heading;
@@ -201,6 +203,7 @@ namespace subsystems {
     totalTurnError = 0.0;
     turnFinishCount = 0;
     setBrakeMode(true);
+    fast_turn_ = speed;
   }
   void Drive::setTurnWheel(units::Angle heading) {
     currentState = ControlState::TURN_BACK_WHEEL;

@@ -32,6 +32,7 @@ namespace subsystems {
     int turnFinishCount;
     double clicksWheel;
     double orgDel;
+    bool fast_turn_;
 
    public:
     Drive();
@@ -43,7 +44,7 @@ namespace subsystems {
     void setVelocity(util::DriveSignal velocity, util::DriveSignal feedforward);
     void registerEnabledLoops(loops::Looper* enabledLooper);
     void setTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory);
-    void setTurn(units::Angle heading);
+    void setTurn(units::Angle heading, bool speed);
     void setTurnWheel(units::Angle heading);
     void updatePathFollower();
     void updateOutputs();

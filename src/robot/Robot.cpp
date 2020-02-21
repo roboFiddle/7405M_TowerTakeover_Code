@@ -45,7 +45,7 @@ namespace meecan {
     subsystems::Tray::instance->registerEnabledLoops(enabledLooper);
     subsystems::Lift::instance->registerEnabledLoops(enabledLooper);
     path_planning::TrajectorySet::instance->generatorCalls();
-    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::ProgrammingSkillsMode());
+    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::BackAutoMode(BACK_BLUE));
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
     pros::lcd::initialize();
   }
@@ -170,6 +170,7 @@ namespace meecan {
     throttle =  1.2/127 * pow(1.0356, 127*throttle.getValue()) - 1.2/127 + 0.2 * throttle;
     //turn =  1.2/127 * pow(1.0356, 127*turn.getValue()) - 1.2/127 + 0.2 * turn;
     //turn *= .4;
+    turn *= .8;
 
     throttle *= sign_throttle;
     turn *= sign_turn;

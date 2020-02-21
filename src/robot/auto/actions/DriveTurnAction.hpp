@@ -14,9 +14,10 @@ namespace auton {
     class DriveTurnAction : public Action {
       private:
         units::Angle angle_;
+        bool speed_;
 
       public:
-        DriveTurnAction(units::Angle angle);
+        DriveTurnAction(units::Angle angle, bool speed = false);
         bool isFinished();
         void start();
         void update();

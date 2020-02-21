@@ -16,7 +16,7 @@ namespace constants {
     units::QTorque RobotConstants::kDriveTorquePerVolt = 0.56; // Nm / VOLT
     units::Number RobotConstants::kDriveFrictionVoltage = 1.0; // voltage to overcome friction (V)
 
-    double RobotConstants::turnKP = 40;
+    double RobotConstants::turnKP = 25;
     double RobotConstants::turnKI = 0;
     double RobotConstants::turnKD = 3;
 
@@ -24,7 +24,7 @@ namespace constants {
     int RobotConstants::motor_drive_backleft = 10;
     int RobotConstants::motor_drive_frontright = 2;
     int RobotConstants::motor_drive_backright = 5;
-    int RobotConstants::motor_intake_left = 11; //changed from port 4 to port 13 on 1/25/2020 (not due to a dead wire, switched because the 900 didn't fit down to the 4)
+    int RobotConstants::motor_intake_left = 12; //bricked 11 on 2/21/2020
     int RobotConstants::motor_intake_right = 17; //port 20 bricked on 1/24/2020 -- changed to port 12 on 1/25/2020
     int RobotConstants::motor_tray = 3;
     int RobotConstants::motor_lift = 18;
