@@ -169,7 +169,7 @@ namespace meecan {
 
     throttle =  1.2/127 * pow(1.0356, 127*throttle.getValue()) - 1.2/127 + 0.2 * throttle;
     //turn =  1.2/127 * pow(1.0356, 127*turn.getValue()) - 1.2/127 + 0.2 * turn;
-    turn *= .8;
+    //turn *= .4;
 
     throttle *= sign_throttle;
     turn *= sign_turn;
