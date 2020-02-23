@@ -39,7 +39,8 @@ namespace subsystems {
       return 1;
     }
     else {
-      return 1 - (pot->get_value() - 1400) * (0.725/1425);
+      return 1 - (pot->get_value() - 1335) * (0.725/1375);
+      //2/22 changed from -1400 to -1330  because tray was going too far forwards when stacking
     }
   }
   double Tray::get_position() {
@@ -59,6 +60,10 @@ namespace subsystems {
     if(current_state == ControlState::OPEN_LOOP) {
       //printf("TRAY M %f\n", getMultiplier());
       motor->move_velocity(demand.getValue() * (demand.getValue() > 0 ? getMultiplier() : 1));
+      if(pot->get_value() > 700)
+        motor->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+      else
+        motor->set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     }
     else if(current_state == ControlState::POSITION_CONTROL)
       runPID();
