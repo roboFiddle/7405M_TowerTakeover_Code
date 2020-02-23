@@ -18,7 +18,12 @@
 
 namespace auton {
   void ProgrammingSkillsMode::routine() {
-        /*std::list<actions::Action*> drives;
+        flipOut();
+          runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-5000, -5000), 0.5));
+
+
+
+        std::list<actions::Action*> drives;
         drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsIntake").get(false)));
         drives.push_back(new actions::DriveTurnWheelAction(-45 * units::degree));
         drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsSetup").get(false)));
@@ -26,7 +31,7 @@ namespace auton {
         std::list<actions::Action*> driveAndIntake;
         driveAndIntake.push_back(new actions::OpenLoopIntakeAction(200, 0));
         driveAndIntake.push_back(new actions::SeriesAction(drives));
-        runAction(new actions::ParallelAction(driveAndIntake)); */
+        runAction(new actions::ParallelAction(driveAndIntake));
 
         std::list<actions::Action*> score;
         score.push_back(new actions::TrayEnableStackAction(80));
