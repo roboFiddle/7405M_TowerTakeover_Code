@@ -120,7 +120,7 @@ namespace path_planning {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(7.5 * units::inch, 18 * units::inch, geometry::Rotation2d::fromDegrees(-90)));
     //waypoints.push_back(geometry::Pose2d(40 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(7.5 * units::inch, 13 * units::inch, geometry::Rotation2d::fromDegrees(-90)));
+    waypoints.push_back(geometry::Pose2d(7.5 * units::inch, 11 * units::inch, geometry::Rotation2d::fromDegrees(-90)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
