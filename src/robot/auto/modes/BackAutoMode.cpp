@@ -50,16 +50,16 @@ namespace auton {
 
     runAction(new actions::DriveTurnAction(-95 * units::degree * (flip_ ? -1 : 1), true));
     runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backSetup").get(false)));
-    runAction(new actions::OpenLoopIntakeAction(-50, 0.75));
+    runAction(new actions::OpenLoopIntakeAction(-50, 0.6));
     std::list<actions::Action*> score;
-    score.push_back(new actions::TrayEnableStackAction(110));
+    score.push_back(new actions::TrayEnableStackAction(95));
     //score.push_back(new actions::OpenLoopIntakeAction(-40, 0));
     runAction(new actions::ParallelAction(score));
 
 
     //stacking stack
     std::list<actions::Action*> pullBackFromStack;
-    pullBackFromStack.push_back(new actions::OpenLoopIntakeAction(-125, 0));
+    pullBackFromStack.push_back(new actions::OpenLoopIntakeAction(-100, 0));
     pullBackFromStack.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("skillsStackPullBack").get(false)));
     runAction(new actions::ParallelAction(pullBackFromStack));
 
