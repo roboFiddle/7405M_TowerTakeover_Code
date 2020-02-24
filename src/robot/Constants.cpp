@@ -43,4 +43,10 @@ namespace constants {
     double RobotConstants::SCORE_END_INTAKE = 1400;
 
     double RobotConstants::BACK_WHEELBASE_RADIUS = 25;
+
+    int RobotConstants::SIDE_VISION_PORT = 0;
+    int RobotConstants::FORWARD_VISION_PORT = 0;
+    int RobotConstants::GREEN_SIG = 0;
+    int RobotConstants::ORANGE_SIG = 0;
+    int RobotConstants::PURPLE_SIG = 0;
 }

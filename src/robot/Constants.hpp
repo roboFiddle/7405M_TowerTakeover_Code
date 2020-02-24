@@ -52,6 +52,12 @@ namespace constants {
     static double SCORE_END_INTAKE;
 
     static double BACK_WHEELBASE_RADIUS;
+
+    static int SIDE_VISION_PORT;
+    static int FORWARD_VISION_PORT;
+    static int GREEN_SIG;
+    static int ORANGE_SIG;
+    static int PURPLE_SIG;
   };
 }
 
