@@ -14,7 +14,6 @@
 #include "auto/modes/TestTrajectoryMode.hpp"
 #include "auto/modes/BackAutoMode.hpp"
 #include "auto/modes/FrontAutoMode.hpp"
-#include "auto/modes/FlipOutMode.hpp"
 #include "auto/modes/ProgrammingSkillsMode.hpp"
 #include "loops/Loop.hpp"
 #include "loops/Looper.hpp"
@@ -186,16 +185,6 @@ namespace meecan {
     units::Number tray = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2));
     if(subsystems::Tray::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R1) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
       subsystems::Tray::instance->setOpenLoop(tray * constants::RobotConstants::MAX_TRAY_RPM);
-    }
-
-
-
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
-      std::shared_ptr<auton::AutoModeBase> activeMode(new auton::FlipOutMode());
-      auton::AutoModeRunner::instance->setAutoMode(activeMode);
-      auton::AutoModeRunner::instance->start();
-      pros::Task::delay(750);
-      subsystems::Tray::instance->setPosition(constants::RobotConstants::TRAY_LIFT[0]);
     }
 
     units::Number lift = 1.0*(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y) - controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A));

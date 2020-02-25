@@ -1,4 +1,4 @@
-#include "WaitForVisionCrossAction.hpp"
+ #include "WaitForVisionCrossAction.hpp"
 
 namespace auton {
   namespace actions {
