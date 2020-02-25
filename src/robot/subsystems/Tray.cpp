@@ -38,8 +38,11 @@ namespace subsystems {
     if(pot->get_value() < 1400) {
       return 1;
     }
+    else if(pot->get_value() > 3200) {
+      return .1;
+    }
     else {
-      return 1 - (pot->get_value() - 1335) * (0.725/1375);
+      return 1 - (pot->get_value() - 1300) * (0.9/1900);
       //2/22 changed from -1400 to -1330  because tray was going too far forwards when stacking
     }
   }
