@@ -10,6 +10,7 @@ namespace subsystems {
   VisionSystem::VisionSystem() {
     side = new pros::Vision(constants::RobotConstants::SIDE_VISION_PORT, pros::E_VISION_ZERO_CENTER);
     forward = new pros::Vision(constants::RobotConstants::FORWARD_VISION_PORT, pros::E_VISION_ZERO_CENTER);
+    intakeSensor = new pros::ADIAnalogIn(5);
 
     pros::vision_signature_s_t GREEN_SIG = pros::Vision::signature_from_utility(0, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
     pros::vision_signature_s_t ORANGE_SIG = pros::Vision::signature_from_utility(constants::RobotConstants::ORANGE_SIG, 8973, 11143, 10058, -2119, -1053, -1586, 5.4, 0);
@@ -77,6 +78,9 @@ namespace subsystems {
   }
   int VisionSystem::findXExtreme(Camera cam, Position where, CubeColor what) {
     return findExtreme(cam, where, what).x;
+  }
+  bool VisionSystem::cubeInIntake() {
+    return intakeSensor->get_value() > 2000;
   }
   void VisionSystem::registerEnabledLoops(loops::Looper* enabledLooper) {
 

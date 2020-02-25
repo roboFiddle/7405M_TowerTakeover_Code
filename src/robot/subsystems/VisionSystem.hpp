@@ -20,10 +20,12 @@ namespace subsystems {
    private:
     pros::Vision* side;
     pros::Vision* forward;
+    pros::ADIAnalogIn* intakeSensor;
    public:
     VisionSystem();
     VisionPoint findExtreme(Camera cam, Position where, CubeColor what);
     int findXExtreme(Camera cam, Position where, CubeColor what);
+    bool cubeInIntake();
     void registerEnabledLoops(loops::Looper* enabledLooper);
     void stop();
     struct VisionManager : util::Singleton<VisionSystem, VisionManager> {};
