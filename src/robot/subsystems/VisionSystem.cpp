@@ -5,7 +5,7 @@
 #include <cmath>
 
 namespace subsystems {
-  VisionSystem::VisionManager VisionSystem::instance;
+  //VisionSystem::VisionManager VisionSystem::instance;
 
   VisionSystem::VisionSystem() {
     side = new pros::Vision(constants::RobotConstants::SIDE_VISION_PORT, pros::E_VISION_ZERO_CENTER);
