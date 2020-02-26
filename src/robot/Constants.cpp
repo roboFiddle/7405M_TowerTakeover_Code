@@ -5,7 +5,7 @@ namespace constants {
     units::QMass RobotConstants::kRobotMass = 4*units::kg;
     units::QMoment RobotConstants::kRobotMoment = 4*units::kgm2;
     units::QAngularDrag RobotConstants::kRobotAngularDrag = 0.0;
-    units::QLength RobotConstants::kDriveWheelTrackWidth = 20 * units::inch;
+    units::QLength RobotConstants::kDriveWheelTrackWidth = 10 * units::inch;
     units::Number RobotConstants::kTrackScrubFactor = 1.0;
 
     units::QLength RobotConstants::kDeadwheelRadius = 1.375*units::inch;
