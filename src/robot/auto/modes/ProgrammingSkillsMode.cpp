@@ -12,19 +12,20 @@
 #include "../actions/OpenLoopTrayAction.hpp"
 #include "../actions/DriveTurnAction.hpp"
 #include "../actions/DriveTurnWheelAction.hpp"
+#include "../actions/DriveMoveWheelAction.hpp"
 #include "../actions/ResetLiftTrayPosition.hpp"
 #include "../actions/LiftPosition.hpp"
 #include "../../Constants.hpp"
 
 namespace auton {
   void ProgrammingSkillsMode::routine() {
-        flipOut();
-          runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-5000, -5000), 0.5));
+        //flipOut();
 
-
+        runAction(new actions::WaitAction(1.0));
 
         std::list<actions::Action*> drives;
-        drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsIntake").get(false)));
+        //drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsIntake").get(false)));
+        drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backCurve").get(false))));
         drives.push_back(new actions::DriveTurnWheelAction(-45 * units::degree));
         drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsSetup").get(false)));
 
@@ -34,7 +35,7 @@ namespace auton {
         runAction(new actions::ParallelAction(driveAndIntake));
 
         std::list<actions::Action*> score;
-        score.push_back(new actions::TrayEnableStackAction(80));
+        score.push_back(new actions::TrayEnableStackAction(100));
         //score.push_back(new actions::OpenLoopIntakeAction(-40, 0));
         runAction(new actions::ParallelAction(score));
 
@@ -57,6 +58,10 @@ namespace auton {
         //aligining robot for first tower
         runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longWallBump").get(false)));
         runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5));
+        runAction(new actions::DriveMoveWheelAction(-12 * units::inch));
+
+
+        /*runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5));
         runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("alignWithFirstTower").get(false))));
         runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5));
         runAction(new actions::DriveTurnWheelAction(87 * units::degree));
@@ -106,7 +111,7 @@ namespace auton {
         runAction(new actions::TrayPosition(1800));
         runAction(new actions::LiftPosition(2250));
         runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longTower").get(false)));
-        runAction(new actions::OpenLoopIntakeAction(-150, 1));
+        runAction(new actions::OpenLoopIntakeAction(-150, 1)); */
 
 
 

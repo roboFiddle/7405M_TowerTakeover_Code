@@ -166,10 +166,34 @@ namespace subsystems {
           frontLeft->move_voltage(sign * 2000);
       }
       else {
-        frontRight->move_velocity(0);
-        backRight->move_velocity(0);
-        backLeft->move_velocity(0);
-        frontLeft->move_velocity(0);
+        frontRight->move_velocity(sign * 500);
+        backRight->move_velocity(sign * 500);
+        backLeft->move_velocity(sign * -500);
+        frontLeft->move_velocity(sign * -500);
+        turnFinishCount++;
+      }
+    }
+    else if(currentState == ControlState::ENCODER_WHEEL) {
+      setBrakeMode(true);
+      double delta = goalAngle.getValue() - (double) backLeft->get_position();
+      int sign = orgDel > 0.0 ? -1 : 1;
+      if(std::fabs(delta) > std::fabs(orgDel * 0.3)) {
+          frontRight->move_voltage(sign * 7000);
+          backRight->move_voltage(sign * 7000);
+          backLeft->move_voltage(sign * 7000);
+          frontLeft->move_voltage(sign * 7000);
+      }
+      else if(delta > 0.0)  {
+          frontRight->move_voltage(sign * 2000);
+          backRight->move_voltage(sign * 2000);
+          backLeft->move_voltage(sign * 2000);
+          frontLeft->move_voltage(sign * 2000);
+      }
+      else {
+        frontRight->move_velocity(sign * -500);
+        backRight->move_velocity(sign * -500);
+        backLeft->move_velocity(sign * -500);
+        frontLeft->move_velocity(sign * -500);
         turnFinishCount++;
       }
     }
@@ -213,12 +237,20 @@ namespace subsystems {
     turnFinishCount = 0;
     setBrakeMode(true);
   }
+  void Drive::setEncoderWheel(units::QLength dist) {
+    currentState = ControlState::ENCODER_WHEEL;
+    clicksWheel = dist.getValue() / 12.56 * 360;
+    goalAngle = clicksWheel + backLeft->get_position();
+    orgDel = clicksWheel;
+    turnFinishCount = 0;
+    setBrakeMode(true);
+  }
   bool Drive::isDoneWithTrajectory() {
     if(forceStopTrajectory_) {
       forceStopTrajectory_ = false;
       return true;
     }
-    if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::TURN_BACK_WHEEL) {
+    if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::TURN_BACK_WHEEL || ControlState::ENCODER_WHEEL) {
       return turnFinishCount > 10;
     }
     return currentFollower->isDone();
