@@ -28,7 +28,7 @@ namespace path_planning {
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backGetTowerCube();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backOffTower();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backGetSecondCube();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backAlign();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backAlign(bool l);
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backSetup();
 
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> pSkillsIntake();

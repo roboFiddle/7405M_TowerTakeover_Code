@@ -73,15 +73,15 @@ namespace subsystems {
     else if(current_state == ControlState::SCORE_TRAY) {
       limit_velo_ = true;
       demand = constants::RobotConstants::TRAY_SCORE;
-      if(pot->get_value() < 3400) {
+      if(pot->get_value() < 3200) {
         motor->move_velocity(score_multi * getMultiplier());
       }
       else {
         motor->move_velocity(0);
       }
       //if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 350) {
-      if(true) {
-        Intake::instance->setFromMacro(-20);
+      if(pot->get_value() > 900 && pot->get_value() < 2500) {
+        Intake::instance->setFromMacro(-30);
       } else {
         Intake::instance->setFromMacro(0);
       }

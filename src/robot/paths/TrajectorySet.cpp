@@ -127,10 +127,10 @@ namespace path_planning {
                                                   constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel, 8.0);
   }
 
-  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backAlign() {
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backAlign(bool l) {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(9 * units::inch, 24 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(39 * units::inch, 24 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d((l ? 40 : 35) * units::inch, 24 * units::inch, geometry::Rotation2d::fromDegrees(0)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
@@ -141,7 +141,7 @@ namespace path_planning {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(7.5 * units::inch, 18 * units::inch, geometry::Rotation2d::fromDegrees(-90)));
     //waypoints.push_back(geometry::Pose2d(40 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(7.5 * units::inch, 11 * units::inch, geometry::Rotation2d::fromDegrees(-90)));
+    waypoints.push_back(geometry::Pose2d(7.5 * units::inch, 8 * units::inch, geometry::Rotation2d::fromDegrees(-90)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
@@ -322,7 +322,8 @@ trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> Tr
     addToMap("backOffTower", MirroredTrajectory(backOffTower()));
     addToMap("backGetTowerCube", MirroredTrajectory(backGetTowerCube()));
     addToMap("backGetSecondCube", MirroredTrajectory(backGetSecondCube()));
-    addToMap("backAlign", MirroredTrajectory(backAlign()));
+    addToMap("backAlign", MirroredTrajectory(backAlign(false)));
+    addToMap("backLongAlign", MirroredTrajectory(backAlign(true)));
     addToMap("backSetup", MirroredTrajectory(backSetup()));
 
     addToMap("pSkillsIntake", MirroredTrajectory(pSkillsIntake()));
