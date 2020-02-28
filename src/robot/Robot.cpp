@@ -44,7 +44,7 @@ namespace meecan {
     subsystems::Tray::instance->registerEnabledLoops(enabledLooper);
     subsystems::Lift::instance->registerEnabledLoops(enabledLooper);
     path_planning::TrajectorySet::instance->generatorCalls();
-    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::ProgrammingSkillsMode());
+    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::BackAutoMode(BACK_RED));
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
     pros::lcd::initialize();
   }
@@ -191,10 +191,17 @@ namespace meecan {
     if(subsystems::Lift::instance->getState() == subsystems::ControlState::OPEN_LOOP || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_Y))
       subsystems::Lift::instance->setOpenLoop(lift * constants::RobotConstants::MAX_LIFT_RPM);
 
-    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
-      lift_state = -1;
+    if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+      if((lift_state == 0 || lift_state == -1) && subsystems::Lift::instance->get_position() < 500)  {
+        subsystems::Tray::instance->setPosition(constants::RobotConstants::TRAY_LIFT[0]);
+        lift_state = 0;
+      }
+      else {
+        lift_state = -1;
+      }
+    }
     else if(controller_->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT))
-      lift_state--;
+        lift_state--;
     else if(controller_->get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
       lift_state++;
       if(lift_state == 0) lift_state++;
@@ -204,7 +211,7 @@ namespace meecan {
 
     //printf("LS %d\n", lift_state);
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)  || controller_->get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) )
-      subsystems::Lift::instance->setPosition(lift_state != -1 ? constants::RobotConstants::LIFT_PRESETS[lift_state] : -1.0);
+      subsystems::Lift::instance->setPosition(lift_state != -1 ? constants::RobotConstants::LIFT_PRESETS[lift_state] : constants::RobotConstants::LIFT_PRESETS[0]);
 
     if(controller_->get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
       subsystems::Tray::instance->setPosition(constants::RobotConstants::TRAY_LIFT[0]);

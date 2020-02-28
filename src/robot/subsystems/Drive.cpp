@@ -166,11 +166,11 @@ namespace subsystems {
           frontLeft->move_voltage(sign * 2000);
       }
       else {
-        frontRight->move_velocity(sign * 500);
-        backRight->move_velocity(sign * 500);
-        backLeft->move_velocity(sign * -500);
-        frontLeft->move_velocity(sign * -500);
-        turnFinishCount++;
+        frontRight->move_velocity(sign * 100);
+        backRight->move_velocity(sign * 100);
+        backLeft->move_velocity(sign * -100);
+        frontLeft->move_velocity(sign * -100);
+        turnFinishCount += 5;
       }
     }
     else if(currentState == ControlState::ENCODER_WHEEL) {
@@ -194,7 +194,7 @@ namespace subsystems {
         backRight->move_velocity(sign * -500);
         backLeft->move_velocity(sign * -500);
         frontLeft->move_velocity(sign * -500);
-        turnFinishCount++;
+        turnFinishCount += 5;
       }
     }
   }
@@ -210,13 +210,13 @@ namespace subsystems {
   }
 
   void Drive::setTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> traj) {
+    currentState = ControlState::PATH_FOLLOWING;
     currentTrajectory = traj;
 
     currentTimedView = new trajectory::TimedView(&currentTrajectory);
     std::shared_ptr<trajectory::TimedView<geometry::Pose2dWithCurvature>> ptr(currentTimedView);
     trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> iterator(ptr);
     currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::FEEDFORWARD_ONLY);
-    currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }
   void Drive::setTurn(units::Angle heading, bool speed) {
@@ -250,7 +250,7 @@ namespace subsystems {
       forceStopTrajectory_ = false;
       return true;
     }
-    if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::TURN_BACK_WHEEL || ControlState::ENCODER_WHEEL) {
+    if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::TURN_BACK_WHEEL || currentState == ControlState::ENCODER_WHEEL) {
       return turnFinishCount > 10;
     }
     return currentFollower->isDone();

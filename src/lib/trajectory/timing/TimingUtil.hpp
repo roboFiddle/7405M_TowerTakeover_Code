@@ -35,6 +35,7 @@ namespace trajectory {
     static Trajectory<TimedState<S>> reverseTimed(Trajectory<TimedState<S>> forward) {
       std::vector<TimedState<S>> states;
       int num_states = forward.length();
+      printf("REVERSE %d\n", num_states);
       units::QTime final_t = forward.getState(num_states - 1).t();
       geometry::Pose2d flip = geometry::Pose2d::fromRotation(geometry::Rotation2d(-1, 0));
       for(int i = num_states - 1; i >= 0; i--) {

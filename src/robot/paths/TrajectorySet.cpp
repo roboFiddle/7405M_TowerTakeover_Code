@@ -86,7 +86,7 @@ namespace path_planning {
 
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backBackForTowerCube() {
     std::vector<geometry::Pose2d> waypoints;
-    waypoints.push_back(geometry::Pose2d(50 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(45 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
     waypoints.push_back(geometry::Pose2d(55 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
@@ -98,18 +98,39 @@ namespace path_planning {
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backGetTowerCube() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(40 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(53 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(50 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
     return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-                                                  constants::PathConstants::kMaxVelocity * 0.25, constants::PathConstants::kMaxAccel, 8.0);
+                                                  constants::PathConstants::kMaxVelocity * 0.15, constants::PathConstants::kMaxAccel, 8.0);
+  }
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backGetSecondCube() {
+    std::vector<geometry::Pose2d> waypoints;
+    waypoints.push_back(geometry::Pose2d(40 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(55 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+
+    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
+
+    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
+                                                  constants::PathConstants::kMaxVelocity * 1.5, constants::PathConstants::kMaxAccel, 8.0);
+  }
+
+  trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backOffTower() {
+    std::vector<geometry::Pose2d> waypoints;
+    waypoints.push_back(geometry::Pose2d(40 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+    waypoints.push_back(geometry::Pose2d(45 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+
+    std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
+
+    return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
+                                                  constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel, 8.0);
   }
 
   trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> TrajectorySet::backAlign() {
     std::vector<geometry::Pose2d> waypoints;
     waypoints.push_back(geometry::Pose2d(9 * units::inch, 24 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-    waypoints.push_back(geometry::Pose2d(49 * units::inch, 32 * units::inch, geometry::Rotation2d::fromDegrees(45)));
+    waypoints.push_back(geometry::Pose2d(39 * units::inch, 24 * units::inch, geometry::Rotation2d::fromDegrees(0)));
 
     std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
@@ -298,7 +319,9 @@ trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> Tr
     addToMap("backToLine", MirroredTrajectory(backToLine()));
     addToMap("backLineForward", MirroredTrajectory(backLineForward()));
     addToMap("backBackForTowerCube", MirroredTrajectory(backBackForTowerCube()));
+    addToMap("backOffTower", MirroredTrajectory(backOffTower()));
     addToMap("backGetTowerCube", MirroredTrajectory(backGetTowerCube()));
+    addToMap("backGetSecondCube", MirroredTrajectory(backGetSecondCube()));
     addToMap("backAlign", MirroredTrajectory(backAlign()));
     addToMap("backSetup", MirroredTrajectory(backSetup()));
 

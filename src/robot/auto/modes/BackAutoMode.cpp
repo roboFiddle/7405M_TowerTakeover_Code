@@ -28,13 +28,14 @@ namespace auton {
     std::list<actions::Action*> drives;
     drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backLineForward").get(flip_)));
     drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backBackForTowerCube").get(flip_))));
-    drives.push_back(new actions::DriveTurnWheelAction(-28 * units::degree));
-    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0,0), 0.25));
+    drives.push_back(new actions::DriveTurnAction(30 * units::degree));
     drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backGetTowerCube").get(flip_)));
     drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backGetTowerCube").get(flip_))));
-    drives.push_back(new actions::DriveTurnWheelAction(-120 * units::degree));
-    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0,0), 0.25));
+    drives.push_back(new actions::DriveTurnWheelAction(140 * units::degree));
     drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backAlign").get(flip_)));
+    /*drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0,0), 0.25));
+    drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backAlign").get(flip_)));
+    */
 
     std::list<actions::Action*> driveAndIntake;
     driveAndIntake.push_back(new actions::OpenLoopIntakeAction(200, 0));
@@ -44,18 +45,14 @@ namespace auton {
     //runAction(new actions::DriveTurnAction(-95 * units::degree * (flip_ ? -1 : 1), true));
     //runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backSetup").get(false)));
 
-    std::list<actions::Action*> setupScore;
-    setupScore.push_back(new actions::OpenLoopIntakeAction(-50,0));
-    setupScore.push_back(new actions::WaitForCubeInIntakeAction());
-    //runAction(new actions::ParallelAction(setupScore));
-    /*runAction(new actions::TrayEnableStackAction(95));
+    runAction(new actions::TrayEnableStackAction(95));
     runAction(new actions::OpenLoopIntakeAction(-100, 0.65));
 
     //stacking stack
     std::list<actions::Action*> pullBackFromStack;
     pullBackFromStack.push_back(new actions::OpenLoopIntakeAction(-100, 0));
     pullBackFromStack.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("skillsStackPullBack").get(false)));
-    runAction(new actions::ParallelAction(pullBackFromStack));*/
+    runAction(new actions::ParallelAction(pullBackFromStack));
 
   }
 

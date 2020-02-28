@@ -80,7 +80,7 @@ namespace subsystems {
         motor->move_velocity(0);
       }
       //if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 350) {
-      if(false) {
+      if(true) {
         Intake::instance->setFromMacro(-20);
       } else {
         Intake::instance->setFromMacro(0);
