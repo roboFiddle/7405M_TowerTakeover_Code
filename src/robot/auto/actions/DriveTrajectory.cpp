@@ -19,6 +19,7 @@ namespace auton {
     DriveTrajectory::DriveTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory, bool reset_pose) :
     trajectory_(trajectory), reset_pose_(reset_pose ) {}
     bool DriveTrajectory::isFinished() {
+      printf("open loop finish\n");
       return subsystems::Drive::instance->isDoneWithTrajectory();
     }
     void DriveTrajectory::start() {

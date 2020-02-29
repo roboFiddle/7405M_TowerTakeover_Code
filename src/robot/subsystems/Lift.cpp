@@ -53,11 +53,14 @@ namespace subsystems {
     else if(demand.getValue() > constants::RobotConstants::LIFT_STAGE[0])
       return constants::RobotConstants::TRAY_LIFT[1];
     else
-      return constants::RobotConstants::TRAY_LIFT[0];
+      if(pot->get_value() > 700)
+        return constants::RobotConstants::TRAY_LIFT[1];
+      else
+        return constants::RobotConstants::TRAY_LIFT[0];
   }
   void Lift::runPID() {
     double error = demand.getValue() - pot->get_value();
-    if(std::fabs(error) < 50.0 || (pot->get_value() < 250 && demand.getValue() < 300))
+    if(std::fabs(error) < 50.0 || (pot->get_value() < 500 && demand.getValue() < 500))
       setOpenLoop(0);
     else {
       if(demand.getValue() < 0)
@@ -79,7 +82,7 @@ namespace subsystems {
         if(lastTray == constants::RobotConstants::TRAY_LIFT[0]) {
           runPID();
           double lift_error = get_position() - demand.getValue();
-          if(lift_error < constants::RobotConstants::liftErrorBeforeTrayStart)
+          if(lift_error < 500)
             Tray::instance->setPosition(lastTray);
         }
         else {

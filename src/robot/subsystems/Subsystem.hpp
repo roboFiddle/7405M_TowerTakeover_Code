@@ -15,6 +15,7 @@ namespace subsystems {
     POSITION_CONTROL, // position PID control
     SCORE_TRAY,
     TURN_BACK_WHEEL,
+    ENCODER_WHEEL,
     VOLTAGE,
   };
   class Subsystem {

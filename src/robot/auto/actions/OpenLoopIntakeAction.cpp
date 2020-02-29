@@ -11,6 +11,7 @@ namespace auton {
       signal_ = signal.getValue();
     }
     bool OpenLoopIntakeAction::isFinished() {
+      printf("open loop finish\n");
       return start_time_ + duration_ < (pros::millis() * units::millisecond);
     }
     void OpenLoopIntakeAction::start() {

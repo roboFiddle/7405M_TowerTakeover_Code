@@ -26,7 +26,9 @@ namespace path_planning {
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backToLine();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backBackForTowerCube();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backGetTowerCube();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backAlign();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backOffTower();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backGetSecondCube();
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backAlign(bool l);
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> backSetup();
 
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> pSkillsIntake();
@@ -45,7 +47,7 @@ namespace path_planning {
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontForward();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontIntake();
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontS();
-      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontSetup(); 
+      static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> getFrontSetup();
 
       static trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> stackPullBack(bool skills);
 

@@ -166,11 +166,35 @@ namespace subsystems {
           frontLeft->move_voltage(sign * 2000);
       }
       else {
-        frontRight->move_velocity(0);
-        backRight->move_velocity(0);
-        backLeft->move_velocity(0);
-        frontLeft->move_velocity(0);
-        turnFinishCount++;
+        frontRight->move_velocity(sign * 100);
+        backRight->move_velocity(sign * 100);
+        backLeft->move_velocity(sign * -100);
+        frontLeft->move_velocity(sign * -100);
+        turnFinishCount += 5;
+      }
+    }
+    else if(currentState == ControlState::ENCODER_WHEEL) {
+      setBrakeMode(true);
+      double delta = goalAngle.getValue() - (double) backLeft->get_position();
+      int sign = orgDel > 0.0 ? -1 : 1;
+      if(std::fabs(delta) > std::fabs(orgDel * 0.3)) {
+          frontRight->move_voltage(sign * 7000);
+          backRight->move_voltage(sign * 7000);
+          backLeft->move_voltage(sign * 7000);
+          frontLeft->move_voltage(sign * 7000);
+      }
+      else if(delta > 0.0)  {
+          frontRight->move_voltage(sign * 2000);
+          backRight->move_voltage(sign * 2000);
+          backLeft->move_voltage(sign * 2000);
+          frontLeft->move_voltage(sign * 2000);
+      }
+      else {
+        frontRight->move_velocity(sign * -500);
+        backRight->move_velocity(sign * -500);
+        backLeft->move_velocity(sign * -500);
+        frontLeft->move_velocity(sign * -500);
+        turnFinishCount += 5;
       }
     }
   }
@@ -186,13 +210,13 @@ namespace subsystems {
   }
 
   void Drive::setTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> traj) {
+    currentState = ControlState::PATH_FOLLOWING;
     currentTrajectory = traj;
 
     currentTimedView = new trajectory::TimedView(&currentTrajectory);
     std::shared_ptr<trajectory::TimedView<geometry::Pose2dWithCurvature>> ptr(currentTimedView);
     trajectory::TrajectoryIterator<trajectory::TimedState<geometry::Pose2dWithCurvature>> iterator(ptr);
     currentFollower = new path_planning::PathFollower(iterator, path_planning::FollowerType::FEEDFORWARD_ONLY);
-    currentState = ControlState::PATH_FOLLOWING;
     startTime = pros::millis() * units::millisecond;
   }
   void Drive::setTurn(units::Angle heading, bool speed) {
@@ -213,12 +237,20 @@ namespace subsystems {
     turnFinishCount = 0;
     setBrakeMode(true);
   }
+  void Drive::setEncoderWheel(units::QLength dist) {
+    currentState = ControlState::ENCODER_WHEEL;
+    clicksWheel = dist.getValue() / 12.56 * 360;
+    goalAngle = clicksWheel + backLeft->get_position();
+    orgDel = clicksWheel;
+    turnFinishCount = 0;
+    setBrakeMode(true);
+  }
   bool Drive::isDoneWithTrajectory() {
     if(forceStopTrajectory_) {
       forceStopTrajectory_ = false;
       return true;
     }
-    if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::TURN_BACK_WHEEL) {
+    if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::TURN_BACK_WHEEL || currentState == ControlState::ENCODER_WHEEL) {
       return turnFinishCount > 10;
     }
     return currentFollower->isDone();
