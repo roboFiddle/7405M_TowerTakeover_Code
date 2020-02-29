@@ -90,7 +90,7 @@ namespace subsystems {
         }
       }
     }
-    if(pot->get_value() < 1000 && subsystems::Tray::instance->get_position() < 700) {
+    if(pot->get_value() < 1000) {
       setBrake(false);
     }
     else{
