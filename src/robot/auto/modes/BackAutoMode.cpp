@@ -29,7 +29,7 @@ namespace auton {
     if(true) {
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backLineForward").get(flip_)));
       drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backBackForTowerCube").get(flip_))));
-      drives.push_back(new actions::DriveTurnAction(-37 * units::degree * (flip_ ? -1 : 1) - subsystems::Odometry::instance->getPosition().rotation().getAngle() + 90*units::degree, true));
+      drives.push_back(new actions::DriveTurnAction((flip_ ? 37 : -34) * units::degree - subsystems::Odometry::instance->getPosition().rotation().getAngle() + 90*units::degree, true));
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backGetSecondCube").get(flip_)));
       drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backOffTower").get(flip_))));
       //drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.375));
