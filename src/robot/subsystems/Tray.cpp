@@ -57,7 +57,7 @@ namespace subsystems {
       motor->set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     else
       motor->set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    motor->move_velocity((int) error * m * (l ? 0.5 : 1));
+    motor->move_velocity(error * m * (l ? 0.5 : 1));
   }
   void Tray::updateOutputs() {
     if(current_state == ControlState::OPEN_LOOP) {
@@ -73,14 +73,14 @@ namespace subsystems {
     else if(current_state == ControlState::SCORE_TRAY) {
       limit_velo_ = true;
       demand = constants::RobotConstants::TRAY_SCORE;
-      if(pot->get_value() < 3200) {
+      if(pot->get_value() < 3135) {
         motor->move_velocity(score_multi * getMultiplier());
       }
       else {
         motor->move_velocity(0);
       }
       //if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 350) {
-      if(pot->get_value() > 900 && pot->get_value() < 2500) {
+      if(pot->get_value() > 800 && pot->get_value() < 2600) {
         Intake::instance->setFromMacro(-30);
       } else {
         Intake::instance->setFromMacro(0);

@@ -9,7 +9,7 @@ namespace constants {
     units::Number RobotConstants::kTrackScrubFactor = 1.0;
 
     units::QLength RobotConstants::kDeadwheelRadius = 1.375*units::inch;
-    units::QLength RobotConstants::kDeadwheelBaseWidth = 3.75*units::inch;
+    units::QLength RobotConstants::kDeadwheelBaseWidth = 4.1*units::inch;
     units::QLength RobotConstants::kDeadwheelBackTurningRadius = 9.45 * units::inch;
 
     units::QAngularSpeed RobotConstants::kDriveSpeedPerVolt = 1.09; // RADIANS / SECOND / VOTL
@@ -18,7 +18,7 @@ namespace constants {
 
     double RobotConstants::turnKP = 25;
     double RobotConstants::turnKI = 0;
-    double RobotConstants::turnKD = 3;
+    double RobotConstants::turnKD = 6;
 
     int RobotConstants::motor_drive_frontleft = 9;
     int RobotConstants::motor_drive_backleft = 10;
@@ -42,7 +42,7 @@ namespace constants {
     double RobotConstants::SCORE_START_INTAKE = 1000;
     double RobotConstants::SCORE_END_INTAKE = 1400;
 
-    double RobotConstants::BACK_WHEELBASE_RADIUS = 25;
+    double RobotConstants::BACK_WHEELBASE_RADIUS = 20;
 
     int RobotConstants::SIDE_VISION_PORT = 0;
     int RobotConstants::FORWARD_VISION_PORT = 0;

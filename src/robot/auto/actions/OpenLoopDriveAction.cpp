@@ -17,14 +17,14 @@ namespace auton {
     void OpenLoopDriveAction::start() {
       printf("started open loop drive\n");
       start_time_ = pros::millis() * units::millisecond;
-      subsystems::Drive::instance->setOpenLoop(util::DriveSignal(left_, right_));
+      subsystems::Drive::instance->setVoltage(util::DriveSignal(left_, right_));
     }
     void OpenLoopDriveAction::update() {
 
     }
     void OpenLoopDriveAction::done() {
       printf("finished open loop drive\n");
-      subsystems::Drive::instance->setOpenLoop(util::DriveSignal(0.0, 0.0));
+      subsystems::Drive::instance->setVoltage(util::DriveSignal(0.0, 0.0));
     }
   }
 }

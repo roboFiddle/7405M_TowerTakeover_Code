@@ -19,7 +19,7 @@ namespace auton {
     void DriveTurnWheelAction::update() {
     }
     void DriveTurnWheelAction::done() {
-      subsystems::Drive::instance->setOpenLoop(util::DriveSignal(0, 0));
+      subsystems::Drive::instance->setVoltage(util::DriveSignal(0, 0));
     }
   }
 }

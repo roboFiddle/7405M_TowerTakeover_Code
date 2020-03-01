@@ -152,6 +152,7 @@ namespace subsystems {
     else if(currentState == ControlState::TURN_BACK_WHEEL) {
       setBrakeMode(true);
       double delta = goalAngle.getValue() + (double) backLeft->get_position();
+      printf("TURN WHEEL %f %f\n", delta, orgDel);
       int sign = orgDel > 0.0 ? -1 : 1;
       if(std::fabs(delta) > std::fabs(orgDel * 0.3)) {
           frontRight->move_voltage(sign * -7000);
@@ -159,31 +160,31 @@ namespace subsystems {
           backLeft->move_voltage(sign * 7000);
           frontLeft->move_voltage(sign * 7000);
       }
-      else if(delta > 0.0)  {
+      else if(delta*(-sign) > 0.0)  {
           frontRight->move_voltage(sign * -2000);
           backRight->move_voltage(sign * -2000);
           backLeft->move_voltage(sign * 2000);
           frontLeft->move_voltage(sign * 2000);
       }
       else {
-        frontRight->move_velocity(sign * 100);
-        backRight->move_velocity(sign * 100);
-        backLeft->move_velocity(sign * -100);
-        frontLeft->move_velocity(sign * -100);
-        turnFinishCount += 5;
+        frontRight->move_velocity(sign * 500);
+        backRight->move_velocity(sign * 500);
+        backLeft->move_velocity(sign * -500);
+        frontLeft->move_velocity(sign * -500);
+        turnFinishCount += 2;
       }
     }
     else if(currentState == ControlState::ENCODER_WHEEL) {
       setBrakeMode(true);
       double delta = goalAngle.getValue() - (double) backLeft->get_position();
-      int sign = orgDel > 0.0 ? -1 : 1;
+      int sign = orgDel > 0.0 ? 1 : -1;
       if(std::fabs(delta) > std::fabs(orgDel * 0.3)) {
-          frontRight->move_voltage(sign * 7000);
-          backRight->move_voltage(sign * 7000);
-          backLeft->move_voltage(sign * 7000);
-          frontLeft->move_voltage(sign * 7000);
+          frontRight->move_voltage(sign * 4000);
+          backRight->move_voltage(sign * 4000);
+          backLeft->move_voltage(sign * 4000);
+          frontLeft->move_voltage(sign * 4000);
       }
-      else if(delta > 0.0)  {
+      else if(delta*sign > 0.0)  {
           frontRight->move_voltage(sign * 2000);
           backRight->move_voltage(sign * 2000);
           backLeft->move_voltage(sign * 2000);
@@ -239,7 +240,7 @@ namespace subsystems {
   }
   void Drive::setEncoderWheel(units::QLength dist) {
     currentState = ControlState::ENCODER_WHEEL;
-    clicksWheel = dist.getValue() / 12.56 * 360;
+    clicksWheel = dist.Convert(units::inch) / 12.56 * 360;
     goalAngle = clicksWheel + backLeft->get_position();
     orgDel = clicksWheel;
     turnFinishCount = 0;

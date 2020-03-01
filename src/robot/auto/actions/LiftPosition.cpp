@@ -16,11 +16,11 @@ namespace auton {
     }
     bool LiftPosition::isFinished() {
       printf("LP %f %f\n", std::fabs(subsystems::Lift::instance->get_demand().getValue()), std::fabs(subsystems::Lift::instance->get_position()));
-      return std::fabs(subsystems::Lift::instance->getPositionError()) < 100;
+      return std::fabs(goal_ - subsystems::Lift::instance->get_position()) < 100;
     }
     void LiftPosition::start() {
       printf("LIFT GOAL %f\n", goal_);
-      subsystems::Lift::instance->setFromMacro(goal_ * 1.0);
+      subsystems::Lift::instance->setFromMacro(goal_ );
     }
     void LiftPosition::update() {
 

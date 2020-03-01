@@ -44,7 +44,7 @@ namespace meecan {
     subsystems::Tray::instance->registerEnabledLoops(enabledLooper);
     subsystems::Lift::instance->registerEnabledLoops(enabledLooper);
     path_planning::TrajectorySet::instance->generatorCalls();
-    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::BackAutoMode(BACK_RED));
+    std::shared_ptr<auton::AutoModeBase> activeMode(new auton::ProgrammingSkillsMode());
     auton::AutoModeRunner::instance->setAutoMode(activeMode);
     pros::lcd::initialize();
   }
@@ -140,6 +140,9 @@ namespace meecan {
   void Robot::autonomousLoop() {
     //printf("%f, %f\n", subsystems::Drive::instance->getLeftVoltage(), subsystems::Drive::instance->getRightVoltage());
     geometry::Pose2d curPos = subsystems::Odometry::instance->getPosition();
+    char buffer[20];
+    //sprintf(buffer, "%f", curPos.rotation().getDegrees());
+    //controller_->set_text(0, 0, buffer);
     pros::lcd::print(1, "%f %f %f", curPos.translation().x().Convert(units::inch), curPos.translation().y().Convert(units::inch), curPos.rotation().getDegrees());
   }
   void Robot::driverInit() {
