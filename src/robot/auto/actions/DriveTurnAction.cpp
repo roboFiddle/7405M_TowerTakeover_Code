@@ -20,7 +20,7 @@ namespace auton {
     void DriveTurnAction::update() {
     }
     void DriveTurnAction::done() {
-      subsystems::Drive::instance->setVoltage(util::DriveSignal(0, 0));
+      subsystems::Drive::instance->setOpenLoop(util::DriveSignal(0, 0));
     }
   }
 }

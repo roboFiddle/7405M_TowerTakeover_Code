@@ -29,7 +29,6 @@ namespace auton {
 
     }
     void DriveTrajectory::done() {
-      subsystems::Drive::instance->setVoltage(util::DriveSignal(0, 0));
     }
   }
 }
