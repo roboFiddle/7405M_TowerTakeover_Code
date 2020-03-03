@@ -11,14 +11,21 @@
 #include "../actions/OpenLoopLiftAction.hpp"
 #include "../actions/OpenLoopTrayAction.hpp"
 #include "../actions/DriveTurnAction.hpp"
+#include "../actions/DriveInertialTurnAction.hpp"
 #include "../actions/DriveTurnWheelAction.hpp"
 #include "../actions/DriveMoveWheelAction.hpp"
 #include "../actions/ResetLiftTrayPosition.hpp"
 #include "../actions/LiftPosition.hpp"
+#include "../../subsystems/Inertial.hpp"
 #include "../../Constants.hpp"
 
 namespace auton {
   void ProgrammingSkillsMode::routine() {
+
+        std::list<actions::Action*> liftDown;
+        liftDown.push_back(new actions::LiftPosition(300));
+        liftDown.push_back(new actions::TrayPosition(500));
+
         //flipOut();
 
         //runAction(new actions::WaitAction(1.0));
@@ -44,16 +51,35 @@ namespace auton {
         runAction(new actions::OpenLoopIntakeAction(-150, 0.5));
 
         //stacking stack
+
         std::list<actions::Action*> pullBackFromStack;
         pullBackFromStack.push_back(new actions::OpenLoopIntakeAction(-125, 0));
         pullBackFromStack.push_back(new actions::DriveMoveWheelAction(-14 * units::inch));
         runAction(new actions::ParallelAction(pullBackFromStack));
-        runAction(new actions::WaitAction(1.0));
+        runAction(new actions::WaitAction(0.5));
 
         //turning after stacking
-        runAction(new actions::DriveTurnWheelAction(190 * units::degree));
-        runAction(new actions::TrayPosition(300));
-        runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-3500, -3500), 1));
+        std::list<actions::Action*> C;
+        std::list<actions::Action*> D;
+
+        C.push_back(new actions::TrayPosition(1800));
+        C.push_back(new actions::LiftPosition(1400));
+        D.push_back(new actions::DriveInertialTurnAction(45 * units::degree, false, false));
+        D.push_back(new actions::SeriesAction(C));
+        runAction(new actions::ParallelAction(D));
+
+        runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longWallBump").get(false)));
+        runAction(new actions::OpenLoopDriveAction(util::DriveSignal(2000, 2000), 1));
+        runAction(new actions::WaitAction(0.5));
+        subsystems::Inertial::instance->resetRotation();
+        runAction(new actions::DriveMoveWheelAction(-12.5 * units::inch));
+        runAction(new actions::WaitAction(0.5));
+        runAction(new actions::DriveInertialTurnAction(100 * units::degree, false, true));
+        runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0));
+
+        runAction(new actions::LiftPosition(300));
+        runAction(new actions::TrayPosition(500));
+
 
         std::list<actions::Action*> intakeFirstTower;
         intakeFirstTower.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("intakeFirstTower").get(false)));
@@ -66,9 +92,9 @@ namespace auton {
         runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longTower").get(false)));
         runAction(new actions::OpenLoopIntakeAction(-150, 1));
 
-        runAction(new actions::DriveMoveWheelAction(-15.75 * units::inch));
-        runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5));
-        runAction(new actions::DriveTurnWheelAction(110 * units::degree));
+        runAction(new actions::DriveMoveWheelAction(-17 * units::inch));
+        runAction(new actions::WaitAction(0.5));
+        runAction(new actions::DriveInertialTurnAction(90 * units::degree, false, true));
         runAction(new actions::LiftPosition(300));
         runAction(new actions::TrayPosition(500));
 
@@ -77,14 +103,40 @@ namespace auton {
         intakeSecondTower.push_back(new actions::OpenLoopIntakeAction(200, 0));
         runAction(new actions::ParallelAction(intakeSecondTower));
 
-        runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed((path_planning::TrajectorySet::instance->get("midTower").get(false)))));
+        runAction(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed((path_planning::TrajectorySet::instance->get("longTower").get(false)))));
         runAction(new actions::OpenLoopIntakeAction(-100, 0.5));
         runAction(new actions::TrayPosition(1800));
         runAction(new actions::LiftPosition(2200));
         runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("midTower").get(false)));
         runAction(new actions::OpenLoopIntakeAction(-150, 1));
 
-        std::list<actions::Action*> liftTray;
+        std::list<actions::Action*> A;
+        std::list<actions::Action*> B;
+
+        A.push_back(new actions::DriveMoveWheelAction(-10 * units::inch));
+        A.push_back(new actions::DriveInertialTurnAction(45 * units::degree, false, true));
+        B.push_back(new actions::SeriesAction(A));
+        B.push_back(new actions::SeriesAction(liftDown));
+        runAction(new actions::ParallelAction(B));
+
+        std::list<actions::Action*> getCube;
+        getCube.push_back(new actions::OpenLoopIntakeAction(200, 0));
+        getCube.push_back(new actions::DriveMoveWheelAction(16 * units::inch));
+        runAction(new actions::ParallelAction(getCube));
+
+        runAction(new actions::DriveMoveWheelAction(-14 * units::inch));
+        runAction(new actions::OpenLoopIntakeAction(-100, 0.5));
+        runAction(new actions::DriveInertialTurnAction(50 * units::degree, false, true));
+        runAction(new actions::TrayPosition(1800));
+        runAction(new actions::LiftPosition(2200));
+        runAction(new actions::DriveMoveWheelAction(8 * units::inch));
+        runAction(new actions::OpenLoopIntakeAction(-200, 1));
+
+
+
+
+
+        /*std::list<actions::Action*> liftTray;
         std::list<actions::Action*> align;
         std::list<actions::Action*> fullList;
 
@@ -97,7 +149,7 @@ namespace auton {
         fullList.push_back(new actions::SeriesAction(liftTray));
         fullList.push_back(new actions::SeriesAction(align));
         runAction(new actions::ParallelAction(fullList));
-        runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5));
+        runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5)); */
 
 
 

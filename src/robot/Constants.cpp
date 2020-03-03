@@ -16,14 +16,14 @@ namespace constants {
     units::QTorque RobotConstants::kDriveTorquePerVolt = 0.56; // Nm / VOLT
     units::Number RobotConstants::kDriveFrictionVoltage = 1.0; // voltage to overcome friction (V)
 
-    double RobotConstants::turnKP = 25;
+    double RobotConstants::turnKP = 28;
     double RobotConstants::turnKI = 0;
-    double RobotConstants::turnKD = 6;
+    double RobotConstants::turnKD = 0;
 
     int RobotConstants::motor_drive_frontleft = 9;
     int RobotConstants::motor_drive_backleft = 10;
     int RobotConstants::motor_drive_frontright = 2;
-    int RobotConstants::motor_drive_backright = 5; 
+    int RobotConstants::motor_drive_backright = 5;
     int RobotConstants::motor_intake_left = 12; //bricked 11 on 2/21/2020 changed to 12
     int RobotConstants::motor_intake_right = 16;     //bricked 17 on 2/22/2020 changed to 16
     int RobotConstants::motor_tray = 3;
@@ -49,4 +49,8 @@ namespace constants {
     int RobotConstants::GREEN_SIG = 0;
     int RobotConstants::ORANGE_SIG = 0;
     int RobotConstants::PURPLE_SIG = 0;
+
+    int RobotConstants::IMU_PORT = 1;
+    double RobotConstants::IMU_TURN_KP = 30;
+    double RobotConstants::IMU_TURN_KD = 5;
 }

@@ -47,6 +47,7 @@ namespace subsystems {
     void setTurn(units::Angle heading, bool speed);
     void setTurnWheel(units::Angle heading);
     void setEncoderWheel(units::QLength dist);
+    void setInertialTurn(units::Angle heading, bool speed = false, bool reset = true);
     void updatePathFollower();
     void updateOutputs();
     void setBrakeMode(bool set);

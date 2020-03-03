@@ -17,6 +17,7 @@ namespace subsystems {
     TURN_BACK_WHEEL,
     ENCODER_WHEEL,
     VOLTAGE,
+    INTERIAL_TURN
   };
   class Subsystem {
    public:

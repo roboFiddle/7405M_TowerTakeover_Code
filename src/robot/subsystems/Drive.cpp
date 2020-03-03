@@ -4,6 +4,7 @@
 
 #include "Drive.hpp"
 #include "Odometry.hpp"
+#include "Inertial.hpp"
 #include "../Constants.hpp"
 #include <stdio.h>
 #include <memory>
@@ -124,8 +125,12 @@ namespace subsystems {
       backLeft->move_velocity(leftScaled);
       backRight->move_velocity(rightScaled);
     }
-    else if(currentState == ControlState::TURN_FOLLOWING) {
-      units::Angle currentHeading = Odometry::instance->getPosition().rotation().getRadians() * units::radian;
+    else if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::INTERIAL_TURN) {
+      units::Angle currentHeading;
+      if(currentState == ControlState::TURN_FOLLOWING)
+        currentHeading = Odometry::instance->getPosition().rotation().getRadians() * units::radian;
+      else
+        currentHeading = Inertial::instance->getRotation();
       /* if(goalAngle.getValue() < 0)
         currentHeading = currentHeading - 360*units::degree; */
       units::Angle error = goalAngle - currentHeading;
@@ -230,6 +235,17 @@ namespace subsystems {
     setBrakeMode(true);
     fast_turn_ = speed;
   }
+  void Drive::setInertialTurn(units::Angle heading, bool speed, bool reset) {
+    currentState = ControlState::INTERIAL_TURN;
+    if(reset)
+      subsystems::Inertial::instance->resetRotation();
+    goalAngle = heading;
+    lastTurnError = 0.0;
+    totalTurnError = 0.0;
+    turnFinishCount = 0;
+    setBrakeMode(true);
+    fast_turn_ = speed;
+  }
   void Drive::setTurnWheel(units::Angle heading) {
     currentState = ControlState::TURN_BACK_WHEEL;
     clicksWheel = heading.getValue() * constants::RobotConstants::BACK_WHEELBASE_RADIUS  / 12.56 * 180 / 3.1415;
@@ -251,7 +267,7 @@ namespace subsystems {
       forceStopTrajectory_ = false;
       return true;
     }
-    if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::TURN_BACK_WHEEL || currentState == ControlState::ENCODER_WHEEL) {
+    if(currentState == ControlState::TURN_FOLLOWING || currentState == ControlState::INTERIAL_TURN || currentState == ControlState::TURN_BACK_WHEEL || currentState == ControlState::ENCODER_WHEEL) {
       return turnFinishCount > 10;
     }
     return currentFollower->isDone();

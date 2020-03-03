@@ -58,6 +58,10 @@ namespace constants {
     static int GREEN_SIG;
     static int ORANGE_SIG;
     static int PURPLE_SIG;
+
+    static int IMU_PORT;
+    static double IMU_TURN_KP;
+    static double IMU_TURN_KD;
   };
 }
 

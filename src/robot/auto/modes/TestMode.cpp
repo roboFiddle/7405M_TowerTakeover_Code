@@ -14,6 +14,7 @@
 #include "../actions/TrayPosition.hpp"
 #include "../actions/OpenLoopLiftAction.hpp"
 #include "../actions/OpenLoopTrayAction.hpp"
+#include "../actions/DriveInertialTurnAction.hpp"
 #include "../actions/DriveTurnAction.hpp"
 #include "../actions/DriveTurnWheelAction.hpp"
 #include "../actions/ResetLiftTrayPosition.hpp"
@@ -23,7 +24,7 @@
 
 namespace auton {
   void TestMode::routine() {
-    int enabledTest = 4;
+    int enabledTest = 6;
     // TEST 0 - Lift Position
     if(enabledTest == 0) {
       runAction(new actions::TrayPosition(1750, false));
@@ -76,6 +77,12 @@ namespace auton {
       runAction(new actions::DriveTurnWheelAction(-180 * units::degree));
       pros::lcd::print(7, "%f", subsystems::Odometry::instance->getPosition().rotation().getDegrees());
       //pros::Task::delay(500);
+    }
+    if(enabledTest == 6) {
+      runAction(new actions::DriveInertialTurnAction(90 * units::degree, false, false));
+      //runAction(new actions::DriveInertialTurnAction(-90 * units::degree));
+      //runAction(new actions::DriveInertialTurnAction(180 * units::degree));
+      //runAction(new actions::DriveInertialTurnAction(-180 * units::degree));
     }
   }
 
