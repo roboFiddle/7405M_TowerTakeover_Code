@@ -15,6 +15,7 @@
 #include "../actions/OpenLoopLiftAction.hpp"
 #include "../actions/OpenLoopTrayAction.hpp"
 #include "../actions/DriveTurnAction.hpp"
+#include "../actions/DriveInertialTurnAction.hpp"
 #include "../actions/DriveTurnWheelAction.hpp"
 #include "../actions/ResetLiftTrayPosition.hpp"
 #include "../actions/WaitForCubeInIntakeAction.hpp"
@@ -29,11 +30,11 @@ namespace auton {
     if(true) {
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backLineForward").get(flip_)));
       drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backBackForTowerCube").get(flip_))));
-      drives.push_back(new actions::DriveTurnAction((flip_ ? 37 : -34) * units::degree - subsystems::Odometry::instance->getPosition().rotation().getAngle() + 90*units::degree, true));
+      drives.push_back(new actions::DriveInertialTurnAction((flip_ ? 34 : -34) * units::degree - subsystems::Odometry::instance->getPosition().rotation().getAngle() + 90*units::degree, true));
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backGetSecondCube").get(flip_)));
       drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backOffTower").get(flip_))));
       //drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.375));
-      drives.push_back(new actions::DriveTurnAction((flip_ ? 114 : -118) * units::degree));
+      drives.push_back(new actions::DriveInertialTurnAction((flip_ ? 120 : -120) * units::degree, false, true));
       //drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.375));
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get(flip_ ? "backAlign" : "backLongAlign").get(flip_)));
     }
@@ -41,7 +42,7 @@ namespace auton {
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backLineForward").get(flip_)));
       drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backLongAlign").get(flip_))));
       drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5));
-      drives.push_back(new actions::DriveTurnAction((flip_ ? -135 : -150) * units::degree));
+      drives.push_back(new actions::DriveInertialTurnAction((flip_ ? -135 : -150) * units::degree, false, true));
       drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5));
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backSetup").get(flip_)));
     }

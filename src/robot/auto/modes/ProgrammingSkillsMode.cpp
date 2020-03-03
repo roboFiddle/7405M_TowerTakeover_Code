@@ -32,14 +32,14 @@ namespace auton {
 
         std::list<actions::Action*> drives;
         //drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsIntake").get(false)));
-        /*drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backCurve").get(false))));
-        drives.push_back(new actions::DriveTurnWheelAction(-42 * units::degree));
+        drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backCurve").get(false))));
+        drives.push_back(new actions::DriveInertialTurnAction(-38 * units::degree));
         drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsSetup").get(false)));
 
         std::list<actions::Action*> driveAndIntake;
         driveAndIntake.push_back(new actions::OpenLoopIntakeAction(200, 0));
         driveAndIntake.push_back(new actions::SeriesAction(drives));
-        runAction(new actions::ParallelAction(driveAndIntake));*/
+        runAction(new actions::ParallelAction(driveAndIntake));
 
         std::list<actions::Action*> score;
         score.push_back(new actions::TrayEnableStackAction(100));
@@ -64,7 +64,7 @@ namespace auton {
 
         C.push_back(new actions::TrayPosition(1800));
         C.push_back(new actions::LiftPosition(1400));
-        D.push_back(new actions::DriveInertialTurnAction(45 * units::degree, false, false));
+        D.push_back(new actions::DriveInertialTurnAction(45 * units::degree, false, true));
         D.push_back(new actions::SeriesAction(C));
         runAction(new actions::ParallelAction(D));
 
@@ -74,7 +74,7 @@ namespace auton {
         subsystems::Inertial::instance->resetRotation();
         runAction(new actions::DriveMoveWheelAction(-12.5 * units::inch));
         runAction(new actions::WaitAction(0.5));
-        runAction(new actions::DriveInertialTurnAction(100 * units::degree, false, true));
+        runAction(new actions::DriveInertialTurnAction(105 * units::degree, false, true));
         runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0));
 
         runAction(new actions::LiftPosition(300));
