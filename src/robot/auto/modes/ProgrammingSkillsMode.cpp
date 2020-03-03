@@ -126,10 +126,10 @@ namespace auton {
 
         runAction(new actions::DriveMoveWheelAction(-14 * units::inch));
         runAction(new actions::OpenLoopIntakeAction(-100, 0.5));
-        runAction(new actions::DriveInertialTurnAction(50 * units::degree, false, true));
+        runAction(new actions::DriveInertialTurnAction(48 * units::degree, false, true));
         runAction(new actions::TrayPosition(1800));
         runAction(new actions::LiftPosition(2200));
-        runAction(new actions::DriveMoveWheelAction(8 * units::inch));
+        runAction(new actions::DriveMoveWheelAction(10 * units::inch));
         runAction(new actions::OpenLoopIntakeAction(-200, 1));
 
 
