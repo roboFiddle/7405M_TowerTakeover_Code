@@ -14,9 +14,10 @@ namespace auton {
     class DriveMoveWheelAction : public Action {
       private:
         units::QLength dist_;
+        bool s_;
 
       public:
-        DriveMoveWheelAction(units::QLength distance);
+        DriveMoveWheelAction(units::QLength distance, bool s = false);
         bool isFinished();
         void start();
         void update();

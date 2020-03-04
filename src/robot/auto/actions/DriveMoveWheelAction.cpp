@@ -7,14 +7,15 @@
 
 namespace auton {
   namespace actions {
-    DriveMoveWheelAction::DriveMoveWheelAction(units::QLength distance) {
+    DriveMoveWheelAction::DriveMoveWheelAction(units::QLength distance, bool s) {
       dist_ = distance;
+      s_ = s;
     }
     bool DriveMoveWheelAction::isFinished() {
       return subsystems::Drive::instance->isDoneWithTrajectory();
     }
     void DriveMoveWheelAction::start() {
-      subsystems::Drive::instance->setEncoderWheel(dist_);
+      subsystems::Drive::instance->setEncoderWheel(dist_, s_);
     }
     void DriveMoveWheelAction::update() {
     }

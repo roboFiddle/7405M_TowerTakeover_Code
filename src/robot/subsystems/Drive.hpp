@@ -46,7 +46,7 @@ namespace subsystems {
     void setTrajectory(trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> trajectory);
     void setTurn(units::Angle heading, bool speed);
     void setTurnWheel(units::Angle heading);
-    void setEncoderWheel(units::QLength dist);
+    void setEncoderWheel(units::QLength dist, bool fast = false);
     void setInertialTurn(units::Angle heading, bool speed = false, bool reset = true);
     void updatePathFollower();
     void updateOutputs();

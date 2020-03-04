@@ -183,17 +183,18 @@ namespace subsystems {
       setBrakeMode(true);
       double delta = goalAngle.getValue() - (double) backLeft->get_position();
       int sign = orgDel > 0.0 ? 1 : -1;
+      sign *= (fast_turn_ ? 2 : 1);
       if(std::fabs(delta) > std::fabs(orgDel * 0.3)) {
-          frontRight->move_voltage(sign * 4000);
-          backRight->move_voltage(sign * 4000);
-          backLeft->move_voltage(sign * 4000);
-          frontLeft->move_voltage(sign * 4000);
+          frontRight->move_voltage(sign * 7000);
+          backRight->move_voltage(sign * 7000);
+          backLeft->move_voltage(sign * 7000);
+          frontLeft->move_voltage(sign * 7000);
       }
       else if(delta*sign > 0.0)  {
-          frontRight->move_voltage(sign * 2000);
-          backRight->move_voltage(sign * 2000);
-          backLeft->move_voltage(sign * 2000);
-          frontLeft->move_voltage(sign * 2000);
+          frontRight->move_voltage(sign * 3500);
+          backRight->move_voltage(sign * 3500);
+          backLeft->move_voltage(sign * 3500);
+          frontLeft->move_voltage(sign * 3500);
       }
       else {
         frontRight->move_velocity(sign * -500);
@@ -254,13 +255,14 @@ namespace subsystems {
     turnFinishCount = 0;
     setBrakeMode(true);
   }
-  void Drive::setEncoderWheel(units::QLength dist) {
+  void Drive::setEncoderWheel(units::QLength dist, bool fast) {
     currentState = ControlState::ENCODER_WHEEL;
     clicksWheel = dist.Convert(units::inch) / 12.56 * 360;
     goalAngle = clicksWheel + backLeft->get_position();
     orgDel = clicksWheel;
     turnFinishCount = 0;
     setBrakeMode(true);
+    fast_turn_ = fast;
   }
   bool Drive::isDoneWithTrajectory() {
     if(forceStopTrajectory_) {

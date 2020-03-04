@@ -22,18 +22,25 @@
 namespace auton {
   void ProgrammingSkillsMode::routine() {
 
+
+
         std::list<actions::Action*> liftDown;
         liftDown.push_back(new actions::LiftPosition(300));
         liftDown.push_back(new actions::TrayPosition(500));
 
+        std::list<actions::Action*> deploy;
+        deploy.push_back(new actions::OpenLoopIntakeAction(-200, 1));
+        deploy.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(-5000, -5000), 2));
+        runAction(new actions::ParallelAction(deploy));
+
         //flipOut();
 
-        //runAction(new actions::WaitAction(1.0));
+        runAction(new actions::WaitAction(1.0));
 
         std::list<actions::Action*> drives;
-        //drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsIntake").get(false)));
+        drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsIntake").get(false)));
         drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backCurve").get(false))));
-        drives.push_back(new actions::DriveInertialTurnAction(-38 * units::degree));
+        drives.push_back(new actions::DriveInertialTurnAction(-40 * units::degree));
         drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsSetup").get(false)));
 
         std::list<actions::Action*> driveAndIntake;
@@ -74,7 +81,7 @@ namespace auton {
         subsystems::Inertial::instance->resetRotation();
         runAction(new actions::DriveMoveWheelAction(-12.5 * units::inch));
         runAction(new actions::WaitAction(0.5));
-        runAction(new actions::DriveInertialTurnAction(105 * units::degree, false, true));
+        runAction(new actions::DriveInertialTurnAction(95 * units::degree, false, true));
         runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0));
 
         runAction(new actions::LiftPosition(300));
@@ -92,7 +99,7 @@ namespace auton {
         runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longTower").get(false)));
         runAction(new actions::OpenLoopIntakeAction(-150, 1));
 
-        runAction(new actions::DriveMoveWheelAction(-17 * units::inch));
+        runAction(new actions::DriveMoveWheelAction(-17.25* units::inch));
         runAction(new actions::WaitAction(0.5));
         runAction(new actions::DriveInertialTurnAction(90 * units::degree, false, true));
         runAction(new actions::LiftPosition(300));
@@ -114,22 +121,25 @@ namespace auton {
         std::list<actions::Action*> B;
 
         A.push_back(new actions::DriveMoveWheelAction(-10 * units::inch));
-        A.push_back(new actions::DriveInertialTurnAction(45 * units::degree, false, true));
+        A.push_back(new actions::DriveInertialTurnAction(53 * units::degree, false, true));
         B.push_back(new actions::SeriesAction(A));
         B.push_back(new actions::SeriesAction(liftDown));
         runAction(new actions::ParallelAction(B));
 
         std::list<actions::Action*> getCube;
+        std::list<actions::Action*> d;
+        d.push_back(new actions::DriveMoveWheelAction(18 * units::inch, false));
+        d.push_back(new actions::DriveMoveWheelAction(-6 * units::inch, true));
         getCube.push_back(new actions::OpenLoopIntakeAction(200, 0));
-        getCube.push_back(new actions::DriveMoveWheelAction(16 * units::inch));
+        getCube.push_back(new actions::SeriesAction(d));
         runAction(new actions::ParallelAction(getCube));
 
-        runAction(new actions::DriveMoveWheelAction(-14 * units::inch));
-        runAction(new actions::OpenLoopIntakeAction(-100, 0.5));
-        runAction(new actions::DriveInertialTurnAction(48 * units::degree, false, true));
+
+        runAction(new actions::OpenLoopIntakeAction(-100, 0.75));
+        runAction(new actions::DriveInertialTurnAction(67 * units::degree, false, true));
         runAction(new actions::TrayPosition(1800));
         runAction(new actions::LiftPosition(2200));
-        runAction(new actions::DriveMoveWheelAction(10 * units::inch));
+        runAction(new actions::DriveMoveWheelAction(8 * units::inch));
         runAction(new actions::OpenLoopIntakeAction(-200, 1));
 
 
