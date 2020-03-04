@@ -79,9 +79,9 @@ namespace auton {
         runAction(new actions::OpenLoopDriveAction(util::DriveSignal(2000, 2000), 1));
         runAction(new actions::WaitAction(0.5));
         subsystems::Inertial::instance->resetRotation();
-        runAction(new actions::DriveMoveWheelAction(-12.5 * units::inch));
+        runAction(new actions::DriveMoveWheelAction(-12 * units::inch));
         runAction(new actions::WaitAction(0.5));
-        runAction(new actions::DriveInertialTurnAction(95 * units::degree, false, true));
+        runAction(new actions::DriveInertialTurnAction(100 * units::degree, false, true, true));
         runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0));
 
         runAction(new actions::LiftPosition(300));
@@ -99,7 +99,7 @@ namespace auton {
         runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longTower").get(false)));
         runAction(new actions::OpenLoopIntakeAction(-150, 1));
 
-        runAction(new actions::DriveMoveWheelAction(-17.25* units::inch));
+        runAction(new actions::DriveMoveWheelAction(-16.5* units::inch));
         runAction(new actions::WaitAction(0.5));
         runAction(new actions::DriveInertialTurnAction(90 * units::degree, false, true));
         runAction(new actions::LiftPosition(300));
@@ -134,9 +134,11 @@ namespace auton {
         getCube.push_back(new actions::SeriesAction(d));
         runAction(new actions::ParallelAction(getCube));
 
+        std::list<actions::Action*> turnAndOuttake;
+        turnAndOuttake.push_back(new actions::OpenLoopIntakeAction(-100, 0.75));
+        turnAndOuttake.push_back(new actions::DriveInertialTurnAction(80 * units::degree, false, true));
 
-        runAction(new actions::OpenLoopIntakeAction(-100, 0.75));
-        runAction(new actions::DriveInertialTurnAction(67 * units::degree, false, true));
+        runAction(new actions::ParallelAction(turnAndOuttake));
         runAction(new actions::TrayPosition(1800));
         runAction(new actions::LiftPosition(2200));
         runAction(new actions::DriveMoveWheelAction(8 * units::inch));

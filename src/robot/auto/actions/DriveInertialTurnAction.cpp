@@ -7,10 +7,11 @@
 
 namespace auton {
   namespace actions {
-    DriveInertialTurnAction::DriveInertialTurnAction(units::Angle angle, bool speed, bool r) {
+    DriveInertialTurnAction::DriveInertialTurnAction(units::Angle angle, bool speed, bool r, bool early) {
       angle_ = angle;
       speed_ = speed;
       reset_ = r;
+      stop_ = early;
     }
     bool DriveInertialTurnAction::isFinished() {
       return subsystems::Drive::instance->isDoneWithTrajectory();

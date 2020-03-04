@@ -16,9 +16,10 @@ namespace auton {
         units::Angle angle_;
         bool speed_;
         bool reset_;
+        bool stop_;
 
       public:
-        DriveInertialTurnAction(units::Angle angle, bool speed = false, bool reset = true);
+        DriveInertialTurnAction(units::Angle angle, bool speed = false, bool reset = true, bool stop_early = false);
         bool isFinished();
         void start();
         void update();

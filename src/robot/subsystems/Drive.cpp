@@ -148,7 +148,7 @@ namespace subsystems {
       backRight->move_velocity(velo);
       printf("ROT FUCK %f \n",Odometry::instance->getPosition().rotation().getDegrees());
       printf("TURN %f %f %f\n", std::fabs(goalAngle.getValue() - currentHeading.getValue()), Odometry::instance->getPosition().rotation().getRadians(), velo);
-      if(std::fabs(goalAngle.getValue() - currentHeading.getValue()) < 0.2*(fast_turn_ ? 2 : 1))
+      if(std::fabs(goalAngle.getValue() - currentHeading.getValue()) < 0.2*(fast_turn_ ? 2 : 1) || (stop_ && std::fabs(velo) < 15))
         turnFinishCount++;
       else
         turnFinishCount = 0;
@@ -236,7 +236,7 @@ namespace subsystems {
     setBrakeMode(true);
     fast_turn_ = speed;
   }
-  void Drive::setInertialTurn(units::Angle heading, bool speed, bool reset) {
+  void Drive::setInertialTurn(units::Angle heading, bool speed, bool reset, bool s) {
     currentState = ControlState::INTERIAL_TURN;
     if(reset)
       subsystems::Inertial::instance->resetRotation();
@@ -246,6 +246,7 @@ namespace subsystems {
     turnFinishCount = 0;
     setBrakeMode(true);
     fast_turn_ = speed;
+    stop_ = s;
   }
   void Drive::setTurnWheel(units::Angle heading) {
     currentState = ControlState::TURN_BACK_WHEEL;

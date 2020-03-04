@@ -33,6 +33,7 @@ namespace subsystems {
     double clicksWheel;
     double orgDel;
     bool fast_turn_;
+    bool stop_;
 
    public:
     Drive();
@@ -47,7 +48,7 @@ namespace subsystems {
     void setTurn(units::Angle heading, bool speed);
     void setTurnWheel(units::Angle heading);
     void setEncoderWheel(units::QLength dist, bool fast = false);
-    void setInertialTurn(units::Angle heading, bool speed = false, bool reset = true);
+    void setInertialTurn(units::Angle heading, bool speed = false, bool reset = true, bool stop_early = false);
     void updatePathFollower();
     void updateOutputs();
     void setBrakeMode(bool set);
