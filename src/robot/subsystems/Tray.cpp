@@ -81,7 +81,7 @@ namespace subsystems {
       }
       //if(std::fabs(pot->get_value() - constants::RobotConstants::TRAY_SCORE) < 350) {
       if(pot->get_value() > 900 && pot->get_value() < 2600) {
-        Intake::instance->setFromMacro(-35);
+        Intake::instance->setFromMacro(-intake_speed_);
       } else {
         Intake::instance->setFromMacro(0);
       }
@@ -99,11 +99,12 @@ namespace subsystems {
 
 
   }
-  void Tray::activateScore(double m) {
+  void Tray::activateScore(double m, int s) {
     current_state = SCORE_TRAY;
     count_stop_states_ = 0;
     scoring_state_ = 0;
     score_multi = m;
+    intake_speed_ = s;
   }
   bool Tray::doneWithScore() {
     return scoring_state_;

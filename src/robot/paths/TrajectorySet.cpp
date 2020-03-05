@@ -298,13 +298,13 @@ trajectory::Trajectory<trajectory::TimedState<geometry::Pose2dWithCurvature>> Tr
   std::vector<geometry::Pose2d> waypoints;
   waypoints.push_back(geometry::Pose2d(0 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
   //waypoints.push_back(geometry::Pose2d(50 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
-  waypoints.push_back(geometry::Pose2d(10 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
+  waypoints.push_back(geometry::Pose2d(16 * units::inch, 26.4 * units::inch, geometry::Rotation2d::fromDegrees(0)));
 
   std::vector<trajectory::TimingConstraint<geometry::Pose2dWithCurvature>*> noConstraints;
 
 
   return DriveMotionPlanner::generateTrajectory(false, waypoints, noConstraints,
-                                                constants::PathConstants::kMaxVelocity * 0.5, constants::PathConstants::kMaxAccel, 8.0);
+                                                constants::PathConstants::kMaxVelocity * 0.65, constants::PathConstants::kMaxAccel, 8.0);
 }
 
 

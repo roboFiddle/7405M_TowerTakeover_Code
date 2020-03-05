@@ -34,9 +34,9 @@ namespace auton {
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backGetSecondCube").get(flip_)));
       drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backOffTower").get(flip_))));
       //drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.375));
-      drives.push_back(new actions::DriveInertialTurnAction((flip_ ? 120 : -120) * units::degree, false, true));
+      drives.push_back(new actions::DriveInertialTurnAction((flip_ ? 118 : -120) * units::degree, false, true));
       //drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.375));
-      drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get(flip_ ? "backAlign" : "backLongAlign").get(flip_)));
+      drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get(flip_ ? "backLongAlign" : "backLongAlign").get(flip_)));
     }
     else {
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backLineForward").get(flip_)));
@@ -59,7 +59,7 @@ namespace auton {
     //runAction(new actions::DriveTurnAction(-95 * units::degree * (flip_ ? -1 : 1), true));
     //runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backSetup").get(false)));
 
-    runAction(new actions::TrayEnableStackAction(100));
+    runAction(new actions::TrayEnableStackAction(100, 32));
 
     //stacking stack
     std::list<actions::Action*> pullBackFromStack;

@@ -14,8 +14,9 @@ namespace auton {
     class TrayEnableStackAction : public Action {
      private:
       double s_;
+      int i_;
      public:
-      TrayEnableStackAction(double s = 1);
+      TrayEnableStackAction(double s = 1, int i = 35);
       bool isFinished();
       void start();
       void update();

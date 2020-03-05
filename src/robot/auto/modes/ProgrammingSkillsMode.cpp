@@ -34,8 +34,9 @@ namespace auton {
         runAction(new actions::ParallelAction(deploy));
 
         //flipOut();
-
-        runAction(new actions::WaitAction(1.0));
+        runAction(new actions::WaitAction(0.25));
+        runAction(new actions::OpenLoopDriveAction(util::DriveSignal(-5000, -5000), 0.5));
+        runAction(new actions::WaitAction(0.25));
 
         std::list<actions::Action*> drives;
         drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("pSkillsIntake").get(false)));
@@ -135,14 +136,15 @@ namespace auton {
         runAction(new actions::ParallelAction(getCube));
 
         std::list<actions::Action*> turnAndOuttake;
-        turnAndOuttake.push_back(new actions::OpenLoopIntakeAction(-100, 0.75));
-        turnAndOuttake.push_back(new actions::DriveInertialTurnAction(80 * units::degree, false, true));
+        turnAndOuttake.push_back(new actions::OpenLoopIntakeAction(-100, 0.6));
+        turnAndOuttake.push_back(new actions::DriveInertialTurnAction(75 * units::degree, false, true));
 
         runAction(new actions::ParallelAction(turnAndOuttake));
         runAction(new actions::TrayPosition(1800));
         runAction(new actions::LiftPosition(2200));
         runAction(new actions::DriveMoveWheelAction(8 * units::inch));
         runAction(new actions::OpenLoopIntakeAction(-200, 1));
+        runAction(new actions::DriveMoveWheelAction(-8 * units::inch));
 
 
 
