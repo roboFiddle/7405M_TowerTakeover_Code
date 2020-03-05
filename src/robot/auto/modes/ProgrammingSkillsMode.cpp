@@ -50,7 +50,7 @@ namespace auton {
         runAction(new actions::ParallelAction(driveAndIntake));
 
         std::list<actions::Action*> score;
-        score.push_back(new actions::TrayEnableStackAction(100));
+        score.push_back(new actions::TrayEnableStackAction(105, 38));
         //score.push_back(new actions::OpenLoopIntakeAction(-40, 0));
         runAction(new actions::ParallelAction(score));
 
@@ -80,9 +80,9 @@ namespace auton {
         runAction(new actions::OpenLoopDriveAction(util::DriveSignal(2000, 2000), 1));
         runAction(new actions::WaitAction(0.5));
         subsystems::Inertial::instance->resetRotation();
-        runAction(new actions::DriveMoveWheelAction(-12 * units::inch));
+        runAction(new actions::DriveMoveWheelAction(-12.5 * units::inch));
         runAction(new actions::WaitAction(0.5));
-        runAction(new actions::DriveInertialTurnAction(100 * units::degree, false, true, true));
+        runAction(new actions::DriveInertialTurnAction(97 * units::degree, false, true, true));
         runAction(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0));
 
         runAction(new actions::LiftPosition(300));
@@ -100,7 +100,7 @@ namespace auton {
         runAction(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("longTower").get(false)));
         runAction(new actions::OpenLoopIntakeAction(-150, 1));
 
-        runAction(new actions::DriveMoveWheelAction(-16.5* units::inch));
+        runAction(new actions::DriveMoveWheelAction(-16* units::inch));
         runAction(new actions::WaitAction(0.5));
         runAction(new actions::DriveInertialTurnAction(90 * units::degree, false, true));
         runAction(new actions::LiftPosition(300));
@@ -129,20 +129,21 @@ namespace auton {
 
         std::list<actions::Action*> getCube;
         std::list<actions::Action*> d;
-        d.push_back(new actions::DriveMoveWheelAction(18 * units::inch, false));
+        d.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("alignInThirdTower").get(false)));
         d.push_back(new actions::DriveMoveWheelAction(-6 * units::inch, true));
         getCube.push_back(new actions::OpenLoopIntakeAction(200, 0));
         getCube.push_back(new actions::SeriesAction(d));
         runAction(new actions::ParallelAction(getCube));
 
+        runAction(new actions::DriveInertialTurnAction(80 * units::degree, false, true));
+
         std::list<actions::Action*> turnAndOuttake;
         turnAndOuttake.push_back(new actions::OpenLoopIntakeAction(-100, 0.6));
-        turnAndOuttake.push_back(new actions::DriveInertialTurnAction(75 * units::degree, false, true));
+        turnAndOuttake.push_back(new actions::TrayPosition(1800));
 
         runAction(new actions::ParallelAction(turnAndOuttake));
-        runAction(new actions::TrayPosition(1800));
         runAction(new actions::LiftPosition(2200));
-        runAction(new actions::DriveMoveWheelAction(8 * units::inch));
+        runAction(new actions::DriveMoveWheelAction(6 * units::inch));
         runAction(new actions::OpenLoopIntakeAction(-200, 1));
         runAction(new actions::DriveMoveWheelAction(-8 * units::inch));
 
