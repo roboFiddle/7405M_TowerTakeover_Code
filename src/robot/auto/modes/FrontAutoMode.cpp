@@ -6,6 +6,7 @@
 #include "../actions/DriveTrajectory.hpp"
 #include "../actions/DriveMoveWheelAction.hpp"
 #include "../actions/DriveInertialTurnAction.hpp"
+#include "../actions/DriveTurnWheelAction.hpp"
 #include "../actions/WaitAction.hpp"
 #include "../actions/OpenLoopDriveAction.hpp"
 #include "../actions/OpenLoopIntakeAction.hpp"
@@ -23,18 +24,14 @@ namespace auton {
     flipOut();
 
     std::list<actions::Action*> drives;
-    drives.push_back(new actions::DriveMoveWheelAction(24 * units::inch));
-    drives.push_back(new actions::WaitAction(0.25));
-    drives.push_back(new actions::DriveInertialTurnAction(-35 * units::degree));
-    drives.push_back(new actions::WaitAction(0.25));
-    drives.push_back(new actions::DriveMoveWheelAction(12 * units::inch));
-    drives.push_back(new actions::WaitAction(0.25));
-    drives.push_back(new actions::DriveMoveWheelAction(-12 * units::inch));
-    drives.push_back(new actions::WaitAction(0.25));
-    drives.push_back(new actions::DriveInertialTurnAction(-80 * units::degree));
-    drives.push_back(new actions::DriveMoveWheelAction(10 * units::inch));
-    drives.push_back(new actions::WaitAction(0.25));
-    drives.push_back(new actions::DriveInertialTurnAction(-130 * units::degree));
+    drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontIntake").get(false)));
+    drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(4500, -4500), 0.25));
+    drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("midTower").get(false)));
+    drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("midTower").get(false))));
+    drives.push_back(new actions::DriveInertialTurnAction(-28 * units::degree));
+    drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("midTower").get(false)));
+    drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("midTower").get(false))));
+    drives.push_back(new actions::DriveInertialTurnAction(-173 * units::degree));
     drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("frontSetup").get(false)));
 
     std::list<actions::Action*> driveAndIntakeB;
@@ -42,7 +39,7 @@ namespace auton {
     driveAndIntakeB.push_back(new actions::OpenLoopIntakeAction(200, 0));
     runAction(new actions::ParallelAction(driveAndIntakeB));
 
-    runAction(new actions::TrayEnableStackAction(100, 35));
+    runAction(new actions::TrayEnableStackAction(100, 45));
 
     //stacking stack
     std::list<actions::Action*> pullBackFromStack;

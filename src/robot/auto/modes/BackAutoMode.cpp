@@ -40,9 +40,9 @@ namespace auton {
     }
     else {
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backLineForward").get(flip_)));
-      drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backLongAlign").get(flip_))));
+      drives.push_back(new actions::DriveTrajectory(trajectory::TimingUtil::reverseTimed(path_planning::TrajectorySet::instance->get("backToLine").get(flip_))));
       drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5));
-      drives.push_back(new actions::DriveInertialTurnAction((flip_ ? -135 : -150) * units::degree, false, true));
+      drives.push_back(new actions::DriveInertialTurnAction((flip_ ?  120 : -120) * units::degree, false, true));
       drives.push_back(new actions::OpenLoopDriveAction(util::DriveSignal(0, 0), 0.5));
       drives.push_back(new actions::DriveTrajectory(path_planning::TrajectorySet::instance->get("backSetup").get(flip_)));
     }
